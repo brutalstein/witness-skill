@@ -1,0 +1,80 @@
+{
+  "overall_status": "goal_reached",
+  "personas_run": [
+    "Game visual QA director"
+  ],
+  "findings": [],
+  "report_path": "validation/results/game-remediation/retest/report.md",
+  "trace_path": "validation/results/game-remediation/retest/logs/session_trace.json",
+  "profile": {
+    "target": "validation/results/game-remediation/workspace",
+    "project_root": "validation/results/game-remediation/workspace",
+    "project_type": "game",
+    "entry_point": null,
+    "reachable_address": null,
+    "confidence": "medium",
+    "raw_signals": [
+      {
+        "source": "filesystem",
+        "project_type": "game",
+        "weight": 6.0,
+        "detail": "Game/UI screenshot sequence detected"
+      }
+    ],
+    "candidates": [
+      {
+        "project_type": "game",
+        "score": 6.0
+      }
+    ],
+    "metadata": {
+      "readme": "README.md",
+      "readme_excerpt": "# Game visual review example\n\nThis fixture contains three intentionally defective gameplay frames and three approved reference frames.\n\n```bash\nwitness run --project examples/game_visual_review/frames \\\n  --adapter game \\\n  --persona game-visual-director \\\n  --provider command \\\n  --agent-command './your-model-wrapper'\n```\n\nUse `witness.yaml` to connect a running Godot/Unity/Unreal build through engine-specific `capture_command` and `input_command` bridges. Browser games can be tested directly with `WebAdapter`.\n",
+      "readme_commands": [],
+      "package_scripts": {},
+      "detected_port": null,
+      "scan_file_count": 11,
+      "frames": [
+        "frames/frame_01.png",
+        "frames/frame_02.png",
+        "frames/frame_03.png"
+      ],
+      "capture_command": null,
+      "input_command": null,
+      "reference_images": [
+        "references/frame_01.png",
+        "references/frame_02.png",
+        "references/frame_03.png"
+      ]
+    }
+  },
+  "metadata": {
+    "adapter": "game",
+    "provider": "scripted",
+    "model": "host-agent-decisions",
+    "project_type": "game",
+    "project_confidence": "medium",
+    "started_at": "2026-07-11T22:01:42.343384Z",
+    "finished_at": "2026-07-11T22:01:42.749568Z",
+    "duration_seconds": 0.406184,
+    "turns": 3,
+    "witness_version": "1.0.0",
+    "project_revision": "",
+    "usage": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "requests": 3,
+      "estimated_cost_usd": 0.0,
+      "provider_latency_seconds": 0.0
+    },
+    "seed": 0
+  },
+  "infrastructure_errors": [],
+  "artifact_paths": {
+    "markdown": "validation/results/game-remediation/retest/report.md",
+    "json": "validation/results/game-remediation/retest/result.json",
+    "html": "validation/results/game-remediation/retest/report.html",
+    "junit": "validation/results/game-remediation/retest/junit.xml",
+    "sarif": "validation/results/game-remediation/retest/witness.sarif.json"
+  }
+}

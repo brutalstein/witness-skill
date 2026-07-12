@@ -1,0 +1,35 @@
+Witness v1.2.0 final verification
+
+- Non-live unit/integration suite: 111 passed
+- Real Chromium E2E suite: 1 passed
+- Total verified tests: 112
+- Ruff lint: passed
+- Ruff format check: passed
+- Non-live coverage: 81.15% (CI threshold 70%)
+- Host daemon timing-safe auth and atomic-write tests: passed
+- Command safety defense-in-depth tests: passed
+- WebAdapter behavior-level coverage: 78%
+- CLI command coverage: 74%
+- Host session coverage: 93%
+- Detection coverage: 85%
+- Cost budget termination and result/report metadata: passed
+- Delta-first prompt and changed-image gating tests: passed
+- GitHub PR comment formatting and mocked HTTP posting: passed
+- Electron detection/CDP/profile/process contract tests: passed
+- Unity/Unreal bridge package, install, protocol, and safety tests: passed
+- Windows child-process-tree lifecycle tests: passed
+- Wheel and source distribution build: passed
+- Fresh virtual-environment wheel install and pip check: passed
+- Installed `witness` console script version: 1.2.0
+- Packaged Unity and Unreal bridge installation: passed
+- Codex installer smoke in isolated runtime/skill/bin directories: passed
+- Repository skill, distributable skill, and plugin metadata consistency: passed
+
+Validation boundaries:
+- No reusable Codex OAuth credential was available; the OAuth subprocess contract was tested without reading credential files.
+- No paid OpenAI/Anthropic request was made.
+- Electron behavior is unit/integration tested but no third-party Electron package was installed in this environment.
+- Unity and Unreal bridges were installed and protocol-tested, but proprietary engine compilers/editors were unavailable.
+- The real Chromium E2E required a temporary local-only policy exception; the system policy was restored and verified.
+
+See validation/HARDENING_VERIFICATION_1.2.0.md for details.

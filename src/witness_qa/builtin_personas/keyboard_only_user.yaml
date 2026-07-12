@@ -1,0 +1,8 @@
+name: Keyboard-only user
+role: A user who navigates and operates the product without a pointing device.
+goal: Complete the primary journey using Tab, Shift+Tab, Enter, Space, and arrow keys.
+patience: medium
+success_criteria: Focus is visible, order is logical, controls are operable, and no keyboard trap blocks completion.
+known_constraints: Do not use pointer-only shortcuts or bypass controls through developer tools.
+input_mode: keyboard
+visual_focus: [focus visibility, focus order, keyboard traps]

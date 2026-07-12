@@ -1,0 +1,112 @@
+{
+  "overall_status": "goal_blocked",
+  "personas_run": [
+    "First-time user"
+  ],
+  "findings": [
+    {
+      "fingerprint": "1fd02dfc68ed806b",
+      "persona": "First-time user",
+      "severity": "high",
+      "summary": "A visible error says 'Unable to create account. Please try again later.' and the user remains on the signup form.",
+      "expectation": "A valid signup submission should end in an unambiguous success state or a specific recoverable validation message.",
+      "observation": "A visible error says 'Unable to create account. Please try again later.' and the user remains on the signup form.",
+      "evidence_path": "screenshots/004_web_state.png",
+      "reasoning": "The core first-use journey is blocked after representative valid input, and the generic message gives no recovery path beyond retrying.",
+      "hypothesis": "The public signup submission boundary may be returning a server-side failure or failing to persist the new account.",
+      "suggested_investigation": "Reproduce the POST triggered by Create account, correlate its status and server logs, and add a specific recoverable error while fixing the failed account-creation path.",
+      "visual_assessment": "The error is visible, but it is generic and does not identify a field or corrective action.",
+      "turn": 4,
+      "occurrences": 1
+    }
+  ],
+  "report_path": "validation/results/web/report.md",
+  "trace_path": "validation/results/web/logs/session_trace.json",
+  "profile": {
+    "target": "examples/buggy_signup",
+    "project_root": "examples/buggy_signup",
+    "project_type": "web",
+    "entry_point": "python app.py --port 4173",
+    "reachable_address": "http://127.0.0.1:4173",
+    "confidence": "high",
+    "raw_signals": [
+      {
+        "source": "filesystem",
+        "project_type": "web",
+        "weight": 5.0,
+        "detail": "index.html detected"
+      },
+      {
+        "source": "app.py",
+        "project_type": "cli",
+        "weight": 4.0,
+        "detail": "CLI framework and executable main guard detected"
+      },
+      {
+        "source": "app.py",
+        "project_type": "web",
+        "weight": 4.0,
+        "detail": "Python web server/framework code detected"
+      },
+      {
+        "source": "README.md",
+        "project_type": "web",
+        "weight": 6.0,
+        "detail": "README run instruction: python app.py --port 4173"
+      }
+    ],
+    "candidates": [
+      {
+        "project_type": "web",
+        "score": 15.0
+      },
+      {
+        "project_type": "cli",
+        "score": 4.0
+      }
+    ],
+    "metadata": {
+      "readme": "README.md",
+      "readme_excerpt": "# Buggy signup demo\n\nThis tiny local app intentionally rejects an otherwise valid signup so Witness has a real visible bug to discover.\n\n```bash\npython app.py --port 4173\n```\n\nThen open `http://127.0.0.1:4173`.\n",
+      "readme_commands": [
+        "python app.py --port 4173"
+      ],
+      "package_scripts": {},
+      "detected_port": 4173,
+      "scan_file_count": 3,
+      "frames": [],
+      "capture_command": null,
+      "input_command": null,
+      "reference_images": []
+    }
+  },
+  "metadata": {
+    "adapter": "web",
+    "provider": "scripted",
+    "model": "host-agent-decisions",
+    "project_type": "web",
+    "project_confidence": "high",
+    "started_at": "2026-07-11T21:54:57.756351Z",
+    "finished_at": "2026-07-11T21:55:03.223040Z",
+    "duration_seconds": 5.466689,
+    "turns": 4,
+    "witness_version": "1.0.0",
+    "project_revision": "",
+    "usage": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "requests": 4,
+      "estimated_cost_usd": 0.0,
+      "provider_latency_seconds": 0.0
+    },
+    "seed": 0
+  },
+  "infrastructure_errors": [],
+  "artifact_paths": {
+    "markdown": "validation/results/web/report.md",
+    "json": "validation/results/web/result.json",
+    "html": "validation/results/web/report.html",
+    "junit": "validation/results/web/junit.xml",
+    "sarif": "validation/results/web/witness.sarif.json"
+  }
+}

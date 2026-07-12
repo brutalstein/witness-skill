@@ -1,0 +1,512 @@
+{
+  "schema_version": "2.0",
+  "manifest": {
+    "witness_version": "1.0.0",
+    "project_revision": "",
+    "provider": "scripted",
+    "model": "host-agent-decisions",
+    "seed": 0
+  },
+  "result": {
+    "overall_status": "goal_blocked",
+    "personas_run": [
+      "Game visual QA director"
+    ],
+    "findings": [
+      {
+        "fingerprint": "05d780799f239587",
+        "persona": "Game visual QA director",
+        "severity": "high",
+        "summary": "The right SHIELDS panel continues beyond the right frame edge and its label is rendered in very low-contrast gray, while the left SCORE panel is fully visible and bright.",
+        "expectation": "The gameplay HUD should remain inside the 1280×720 safe area, use consistent panel geometry, and keep critical shield text readable.",
+        "observation": "The right SHIELDS panel continues beyond the right frame edge and its label is rendered in very low-contrast gray, while the left SCORE panel is fully visible and bright.",
+        "evidence_path": "screenshots/001_game_frame.png",
+        "reasoning": "A critical status display is both partially clipped and substantially less readable than its symmetric counterpart, creating resolution-dependent information loss and inconsistent hierarchy.",
+        "hypothesis": "The right HUD anchor or width may be calculated from an incorrect canvas boundary, and the shield text may be using a disabled/placeholder color token.",
+        "suggested_investigation": "Anchor both top HUD panels to a shared safe-area container, clamp the right edge, and use the approved high-contrast text token; verify at 16:9, ultrawide, and reduced-width resolutions.",
+        "visual_assessment": "Confirmed clipping at the right edge, asymmetric border color, and poor text contrast in the SHIELDS panel.",
+        "turn": 1,
+        "occurrences": 1
+      },
+      {
+        "fingerprint": "ac73e917b72fb101",
+        "persona": "Game visual QA director",
+        "severity": "high",
+        "summary": "A bright magenta rectangle and the text 'STALE DEBUG BOUNDS' remain over the central gameplay object in the final frame.",
+        "expectation": "A player-facing gameplay frame should not expose editor/debug overlays, and debug labels should never occlude the focal object.",
+        "observation": "A bright magenta rectangle and the text 'STALE DEBUG BOUNDS' remain over the central gameplay object in the final frame.",
+        "evidence_path": "screenshots/003_game_frame.png",
+        "reasoning": "The debug overlay is unmistakably player-visible, conflicts with the art direction, and partially occludes the central object.",
+        "hypothesis": "A development-only bounds renderer or stale diagnostic layer may be enabled in the player build or not cleared during a state transition.",
+        "suggested_investigation": "Gate diagnostic rendering behind development-build flags, clear overlay state on scene transitions, and add a release-capture check that rejects debug-layer colors/labels.",
+        "visual_assessment": "Confirmed high-saturation debug bounds and text with incorrect z-order over the gameplay focal point.",
+        "turn": 3,
+        "occurrences": 1
+      },
+      {
+        "fingerprint": "06fa60ee29920954",
+        "persona": "Game visual QA director",
+        "severity": "medium",
+        "summary": "The SCORE panel shifts downward relative to the previous frame, and the MISSION READY panel shifts left and downward while the center object and SHIELDS panel remain stable.",
+        "expectation": "Persistent HUD panels should keep stable anchors and baselines across adjacent frames unless an intentional animation is visible.",
+        "observation": "The SCORE panel shifts downward relative to the previous frame, and the MISSION READY panel shifts left and downward while the center object and SHIELDS panel remain stable.",
+        "evidence_path": "screenshots/002_game_frame.png",
+        "reasoning": "Independent movement of otherwise static HUD containers produces visible jitter and breaks alignment consistency across frames.",
+        "hypothesis": "The panels may be positioned from content-dependent bounds or separate animation/layout systems instead of stable anchors.",
+        "suggested_investigation": "Use fixed safe-area anchors and shared layout constraints for persistent HUD elements; add screenshot assertions for panel bounds across stable gameplay frames.",
+        "visual_assessment": "The top-left and bottom-center containers visibly drift while the rest of the composition is unchanged.",
+        "turn": 2,
+        "occurrences": 1
+      }
+    ],
+    "report_path": "validation/results/game/report.md",
+    "trace_path": "validation/results/game/logs/session_trace.json",
+    "profile": {
+      "target": "examples/game_visual_review",
+      "project_root": "examples/game_visual_review",
+      "project_type": "game",
+      "entry_point": null,
+      "reachable_address": null,
+      "confidence": "medium",
+      "raw_signals": [
+        {
+          "source": "filesystem",
+          "project_type": "game",
+          "weight": 6.0,
+          "detail": "Game/UI screenshot sequence detected"
+        }
+      ],
+      "candidates": [
+        {
+          "project_type": "game",
+          "score": 6.0
+        }
+      ],
+      "metadata": {
+        "readme": "README.md",
+        "readme_excerpt": "# Game visual review example\n\nThis fixture contains three intentionally defective gameplay frames and three approved reference frames.\n\n```bash\nwitness run --project examples/game_visual_review/frames \\\n  --adapter game \\\n  --persona game-visual-director \\\n  --provider command \\\n  --agent-command './your-model-wrapper'\n```\n\nUse `witness.yaml` to connect a running Godot/Unity/Unreal build through engine-specific `capture_command` and `input_command` bridges. Browser games can be tested directly with `WebAdapter`.\n",
+        "readme_commands": [],
+        "package_scripts": {},
+        "detected_port": null,
+        "scan_file_count": 10,
+        "frames": [
+          "frames/frame_01.png",
+          "frames/frame_02.png",
+          "frames/frame_03.png"
+        ],
+        "capture_command": null,
+        "input_command": null,
+        "reference_images": [
+          "references/frame_01.png",
+          "references/frame_02.png",
+          "references/frame_03.png"
+        ]
+      }
+    },
+    "metadata": {
+      "adapter": "game",
+      "provider": "scripted",
+      "model": "host-agent-decisions",
+      "project_type": "game",
+      "project_confidence": "medium",
+      "started_at": "2026-07-11T21:56:39.480466Z",
+      "finished_at": "2026-07-11T21:56:39.871909Z",
+      "duration_seconds": 0.391443,
+      "turns": 3,
+      "witness_version": "1.0.0",
+      "project_revision": "",
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "requests": 3,
+        "estimated_cost_usd": 0.0,
+        "provider_latency_seconds": 0.0
+      },
+      "seed": 0
+    },
+    "infrastructure_errors": [],
+    "artifact_paths": {
+      "markdown": "validation/results/game/report.md",
+      "json": "validation/results/game/result.json",
+      "html": "validation/results/game/report.html",
+      "junit": "validation/results/game/junit.xml",
+      "sarif": "validation/results/game/witness.sarif.json"
+    }
+  },
+  "persona": {
+    "name": "Game visual QA director",
+    "role": "A senior game UI and visual-quality tester evaluating the player-visible experience frame by frame.",
+    "goal": "Identify visual defects, inconsistencies, hierarchy problems, readability failures, and cross-frame state discontinuities that reduce polish or player comprehension.",
+    "patience": "high",
+    "success_criteria": "HUD, menus, feedback, animation states, safe areas, typography, assets, colors, spacing, scale, z-order, and transitions are coherent across supported frames and resolutions.",
+    "known_constraints": "Judge only observable evidence. Distinguish confirmed visual facts from engine/source hypotheses and suggest targeted verification or fixes.",
+    "viewport": "desktop",
+    "locale": "en-US",
+    "network_profile": "normal",
+    "color_scheme": "light",
+    "reduced_motion": false,
+    "input_mode": "pointer",
+    "visual_focus": [
+      "HUD alignment",
+      "clipping",
+      "safe areas",
+      "typography",
+      "contrast",
+      "scale",
+      "aspect ratio",
+      "blur",
+      "aliasing",
+      "z-order",
+      "seams",
+      "flicker",
+      "animation continuity",
+      "feedback consistency"
+    ]
+  },
+  "steps": [
+    {
+      "turn": 1,
+      "action": null,
+      "action_result": null,
+      "observation": {
+        "adapter": "game",
+        "summary": "Game frame 1 of 3 captured",
+        "text": "{\n  \"frame_source\": \"examples/game_visual_review/frames/frame_01.png\",\n  \"frame_index\": 0,\n  \"frame_count\": 3,\n  \"visual_metrics\": {\n    \"width\": 1280,\n    \"height\": 720,\n    \"entropy\": 0.70957,\n    \"edge_density\": 0.00817,\n    \"blank_ratio\": 0.86514,\n    \"dominant_colors\": [\n      \"#182331\",\n      \"#38526a\",\n      \"#121a23\",\n      \"#192331\",\n      \"#182330\",\n      \"#162331\"\n    ],\n    \"perceptual_hash\": \"8000181818180018\",\n    \"change_ratio\": 0.0,\n    \"likely_clipping\": [],\n    \"alignment_warnings\": [],\n    \"contrast_warnings\": [\n      \"The frame has very low global luminance contrast.\"\n    ]\n  },\n  \"reference_comparison\": {\n    \"difference_ratio\": 0.003383,\n    \"reference\": \"examples/game_visual_review/references/frame_01.png\"\n  },\n  \"recent_actions\": [],\n  \"visual_review_checklist\": [\n    \"misaligned HUD and menu elements\",\n    \"text or sprites clipped at screen/safe-area edges\",\n    \"inconsistent spacing, scale, color, shadows, and icon style\",\n    \"low contrast or unreadable text over moving backgrounds\",\n    \"stretched assets, wrong aspect ratio, blur, aliasing, or pixel shimmer\",\n    \"z-order errors, occlusion, seams, flicker, and state-transition residue\",\n    \"inconsistent animation pose, feedback, or affordance across frames\"\n  ]\n}",
+        "screenshot_path": "screenshots/001_game_frame.png",
+        "structured_path": "logs/001_game.json",
+        "exit_code": null,
+        "errors": [
+          "The frame has very low global luminance contrast."
+        ],
+        "visual_metrics": {
+          "width": 1280,
+          "height": 720,
+          "entropy": 0.70957,
+          "edge_density": 0.00817,
+          "blank_ratio": 0.86514,
+          "dominant_colors": [
+            "#182331",
+            "#38526a",
+            "#121a23",
+            "#192331",
+            "#182330",
+            "#162331"
+          ],
+          "perceptual_hash": "8000181818180018",
+          "change_ratio": 0.0,
+          "likely_clipping": [],
+          "alignment_warnings": [],
+          "contrast_warnings": [
+            "The frame has very low global luminance contrast."
+          ]
+        },
+        "delta": {
+          "changed_text": [
+            "{",
+            "  \"frame_source\": \"examples/game_visual_review/frames/frame_01.png\",",
+            "  \"frame_index\": 0,",
+            "  \"frame_count\": 3,",
+            "  \"visual_metrics\": {",
+            "    \"width\": 1280,",
+            "    \"height\": 720,",
+            "    \"entropy\": 0.70957,",
+            "    \"edge_density\": 0.00817,",
+            "    \"blank_ratio\": 0.86514,",
+            "    \"dominant_colors\": [",
+            "      \"#182331\",",
+            "      \"#38526a\",",
+            "      \"#121a23\",",
+            "      \"#192331\",",
+            "      \"#182330\",",
+            "      \"#162331\"",
+            "    ],",
+            "    \"perceptual_hash\": \"8000181818180018\",",
+            "    \"change_ratio\": 0.0,"
+          ],
+          "new_errors": [
+            "The frame has very low global luminance contrast."
+          ],
+          "resolved_errors": [],
+          "visual_change_ratio": 0.0,
+          "changed_interactives": []
+        },
+        "metadata": {
+          "frame_source": "examples/game_visual_review/frames/frame_01.png",
+          "reference": "examples/game_visual_review/references/frame_01.png"
+        },
+        "captured_at": "2026-07-11T21:56:39.603196Z"
+      },
+      "decision": {
+        "expectation": "The gameplay HUD should remain inside the 1280×720 safe area, use consistent panel geometry, and keep critical shield text readable.",
+        "action_taken": "initial_observation",
+        "observation_summary": "The right SHIELDS panel continues beyond the right frame edge and its label is rendered in very low-contrast gray, while the left SCORE panel is fully visible and bright.",
+        "judgment": "mismatch",
+        "confidence": "high",
+        "reasoning": "A critical status display is both partially clipped and substantially less readable than its symmetric counterpart, creating resolution-dependent information loss and inconsistent hierarchy.",
+        "hypothesis_if_mismatch": "The right HUD anchor or width may be calculated from an incorrect canvas boundary, and the shield text may be using a disabled/placeholder color token.",
+        "severity": "high",
+        "suggested_investigation": "Anchor both top HUD panels to a shared safe-area container, clamp the right edge, and use the approved high-contrast text token; verify at 16:9, ultrawide, and reduced-width resolutions.",
+        "visual_assessment": "Confirmed clipping at the right edge, asymmetric border color, and poor text contrast in the SHIELDS panel.",
+        "next_action": {
+          "kind": "next_frame",
+          "target": "",
+          "source": "",
+          "text": "",
+          "key": "",
+          "url": "",
+          "direction": "",
+          "command": "",
+          "method": "",
+          "path": "",
+          "headers": {},
+          "body": null,
+          "files": [],
+          "option": "",
+          "tab_index": 0,
+          "seconds": 0.0,
+          "reason": "Inspect the next gameplay state for cross-frame alignment consistency."
+        }
+      }
+    },
+    {
+      "turn": 2,
+      "action": {
+        "kind": "next_frame",
+        "target": "",
+        "source": "",
+        "text": "",
+        "key": "",
+        "url": "",
+        "direction": "",
+        "command": "",
+        "method": "",
+        "path": "",
+        "headers": {},
+        "body": null,
+        "files": [],
+        "option": "",
+        "tab_index": 0,
+        "seconds": 0.0,
+        "reason": "Inspect the next gameplay state for cross-frame alignment consistency."
+      },
+      "action_result": {
+        "success": true,
+        "summary": "next_frame",
+        "infrastructure_error": "",
+        "metadata": {}
+      },
+      "observation": {
+        "adapter": "game",
+        "summary": "Game frame 2 of 3 captured",
+        "text": "{\n  \"frame_source\": \"examples/game_visual_review/frames/frame_02.png\",\n  \"frame_index\": 1,\n  \"frame_count\": 3,\n  \"visual_metrics\": {\n    \"width\": 1280,\n    \"height\": 720,\n    \"entropy\": 0.73518,\n    \"edge_density\": 0.00976,\n    \"blank_ratio\": 0.85938,\n    \"dominant_colors\": [\n      \"#182331\",\n      \"#3c5167\",\n      \"#121a24\",\n      \"#1f232c\",\n      \"#182330\",\n      \"#172331\"\n    ],\n    \"perceptual_hash\": \"c700181818180038\",\n    \"change_ratio\": 0.0122,\n    \"likely_clipping\": [],\n    \"alignment_warnings\": [],\n    \"contrast_warnings\": [\n      \"The frame has very low global luminance contrast.\"\n    ]\n  },\n  \"reference_comparison\": {\n    \"difference_ratio\": 0.008814,\n    \"reference\": \"examples/game_visual_review/references/frame_02.png\"\n  },\n  \"recent_actions\": [\n    {\n      \"kind\": \"next_frame\",\n      \"summary\": \"next_frame\"\n    }\n  ],\n  \"visual_review_checklist\": [\n    \"misaligned HUD and menu elements\",\n    \"text or sprites clipped at screen/safe-area edges\",\n    \"inconsistent spacing, scale, color, shadows, and icon style\",\n    \"low contrast or unreadable text over moving backgrounds\",\n    \"stretched assets, wrong aspect ratio, blur, aliasing, or pixel shimmer\",\n    \"z-order errors, occlusion, seams, flicker, and state-transition residue\",\n    \"inconsistent animation pose, feedback, or affordance across frames\"\n  ]\n}",
+        "screenshot_path": "screenshots/002_game_frame.png",
+        "structured_path": "logs/002_game.json",
+        "exit_code": null,
+        "errors": [
+          "The frame has very low global luminance contrast."
+        ],
+        "visual_metrics": {
+          "width": 1280,
+          "height": 720,
+          "entropy": 0.73518,
+          "edge_density": 0.00976,
+          "blank_ratio": 0.85938,
+          "dominant_colors": [
+            "#182331",
+            "#3c5167",
+            "#121a24",
+            "#1f232c",
+            "#182330",
+            "#172331"
+          ],
+          "perceptual_hash": "c700181818180038",
+          "change_ratio": 0.0122,
+          "likely_clipping": [],
+          "alignment_warnings": [],
+          "contrast_warnings": [
+            "The frame has very low global luminance contrast."
+          ]
+        },
+        "delta": {
+          "changed_text": [
+            "\"#121a24\",",
+            "\"#172331\"",
+            "\"#1f232c\",",
+            "\"#3c5167\",",
+            "\"blank_ratio\": 0.85938,",
+            "\"change_ratio\": 0.0122,",
+            "\"difference_ratio\": 0.008814,",
+            "\"edge_density\": 0.00976,",
+            "\"entropy\": 0.73518,",
+            "\"frame_index\": 1,",
+            "\"frame_source\": \"examples/game_visual_review/frames/frame_02.png\",",
+            "\"kind\": \"next_frame\",",
+            "\"perceptual_hash\": \"c700181818180038\",",
+            "\"recent_actions\": [",
+            "\"reference\": \"examples/game_visual_review/references/frame_02.png\"",
+            "\"summary\": \"next_frame\""
+          ],
+          "new_errors": [],
+          "resolved_errors": [],
+          "visual_change_ratio": 0.0122,
+          "changed_interactives": []
+        },
+        "metadata": {
+          "frame_source": "examples/game_visual_review/frames/frame_02.png",
+          "reference": "examples/game_visual_review/references/frame_02.png"
+        },
+        "captured_at": "2026-07-11T21:56:39.736001Z"
+      },
+      "decision": {
+        "expectation": "Persistent HUD panels should keep stable anchors and baselines across adjacent frames unless an intentional animation is visible.",
+        "action_taken": "next_frame",
+        "observation_summary": "The SCORE panel shifts downward relative to the previous frame, and the MISSION READY panel shifts left and downward while the center object and SHIELDS panel remain stable.",
+        "judgment": "mismatch",
+        "confidence": "high",
+        "reasoning": "Independent movement of otherwise static HUD containers produces visible jitter and breaks alignment consistency across frames.",
+        "hypothesis_if_mismatch": "The panels may be positioned from content-dependent bounds or separate animation/layout systems instead of stable anchors.",
+        "severity": "medium",
+        "suggested_investigation": "Use fixed safe-area anchors and shared layout constraints for persistent HUD elements; add screenshot assertions for panel bounds across stable gameplay frames.",
+        "visual_assessment": "The top-left and bottom-center containers visibly drift while the rest of the composition is unchanged.",
+        "next_action": {
+          "kind": "next_frame",
+          "target": "",
+          "source": "",
+          "text": "",
+          "key": "",
+          "url": "",
+          "direction": "",
+          "command": "",
+          "method": "",
+          "path": "",
+          "headers": {},
+          "body": null,
+          "files": [],
+          "option": "",
+          "tab_index": 0,
+          "seconds": 0.0,
+          "reason": "Inspect the final frame for state residue or debug-layer defects."
+        }
+      }
+    },
+    {
+      "turn": 3,
+      "action": {
+        "kind": "next_frame",
+        "target": "",
+        "source": "",
+        "text": "",
+        "key": "",
+        "url": "",
+        "direction": "",
+        "command": "",
+        "method": "",
+        "path": "",
+        "headers": {},
+        "body": null,
+        "files": [],
+        "option": "",
+        "tab_index": 0,
+        "seconds": 0.0,
+        "reason": "Inspect the final frame for state residue or debug-layer defects."
+      },
+      "action_result": {
+        "success": true,
+        "summary": "next_frame",
+        "infrastructure_error": "",
+        "metadata": {}
+      },
+      "observation": {
+        "adapter": "game",
+        "summary": "Game frame 3 of 3 captured",
+        "text": "{\n  \"frame_source\": \"examples/game_visual_review/frames/frame_03.png\",\n  \"frame_index\": 2,\n  \"frame_count\": 3,\n  \"visual_metrics\": {\n    \"width\": 1280,\n    \"height\": 720,\n    \"entropy\": 0.76862,\n    \"edge_density\": 0.01022,\n    \"blank_ratio\": 0.84315,\n    \"dominant_colors\": [\n      \"#182331\",\n      \"#304e64\",\n      \"#15232e\",\n      \"#3c2353\",\n      \"#182332\",\n      \"#2f1840\"\n    ],\n    \"perceptual_hash\": \"8200181818180018\",\n    \"change_ratio\": 0.01845,\n    \"likely_clipping\": [],\n    \"alignment_warnings\": [],\n    \"contrast_warnings\": [\n      \"The frame has very low global luminance contrast.\"\n    ]\n  },\n  \"reference_comparison\": {\n    \"difference_ratio\": 0.009637,\n    \"reference\": \"examples/game_visual_review/references/frame_03.png\"\n  },\n  \"recent_actions\": [\n    {\n      \"kind\": \"next_frame\",\n      \"summary\": \"next_frame\"\n    },\n    {\n      \"kind\": \"next_frame\",\n      \"summary\": \"next_frame\"\n    }\n  ],\n  \"visual_review_checklist\": [\n    \"misaligned HUD and menu elements\",\n    \"text or sprites clipped at screen/safe-area edges\",\n    \"inconsistent spacing, scale, color, shadows, and icon style\",\n    \"low contrast or unreadable text over moving backgrounds\",\n    \"stretched assets, wrong aspect ratio, blur, aliasing, or pixel shimmer\",\n    \"z-order errors, occlusion, seams, flicker, and state-transition residue\",\n    \"inconsistent animation pose, feedback, or affordance across frames\"\n  ]\n}",
+        "screenshot_path": "screenshots/003_game_frame.png",
+        "structured_path": "logs/003_game.json",
+        "exit_code": null,
+        "errors": [
+          "The frame has very low global luminance contrast."
+        ],
+        "visual_metrics": {
+          "width": 1280,
+          "height": 720,
+          "entropy": 0.76862,
+          "edge_density": 0.01022,
+          "blank_ratio": 0.84315,
+          "dominant_colors": [
+            "#182331",
+            "#304e64",
+            "#15232e",
+            "#3c2353",
+            "#182332",
+            "#2f1840"
+          ],
+          "perceptual_hash": "8200181818180018",
+          "change_ratio": 0.01845,
+          "likely_clipping": [],
+          "alignment_warnings": [],
+          "contrast_warnings": [
+            "The frame has very low global luminance contrast."
+          ]
+        },
+        "delta": {
+          "changed_text": [
+            "\"#15232e\",",
+            "\"#182332\",",
+            "\"#2f1840\"",
+            "\"#304e64\",",
+            "\"#3c2353\",",
+            "\"blank_ratio\": 0.84315,",
+            "\"change_ratio\": 0.01845,",
+            "\"difference_ratio\": 0.009637,",
+            "\"edge_density\": 0.01022,",
+            "\"entropy\": 0.76862,",
+            "\"frame_index\": 2,",
+            "\"frame_source\": \"examples/game_visual_review/frames/frame_03.png\",",
+            "\"perceptual_hash\": \"8200181818180018\",",
+            "\"reference\": \"examples/game_visual_review/references/frame_03.png\""
+          ],
+          "new_errors": [],
+          "resolved_errors": [],
+          "visual_change_ratio": 0.01845,
+          "changed_interactives": []
+        },
+        "metadata": {
+          "frame_source": "examples/game_visual_review/frames/frame_03.png",
+          "reference": "examples/game_visual_review/references/frame_03.png"
+        },
+        "captured_at": "2026-07-11T21:56:39.871706Z"
+      },
+      "decision": {
+        "expectation": "A player-facing gameplay frame should not expose editor/debug overlays, and debug labels should never occlude the focal object.",
+        "action_taken": "next_frame",
+        "observation_summary": "A bright magenta rectangle and the text 'STALE DEBUG BOUNDS' remain over the central gameplay object in the final frame.",
+        "judgment": "mismatch",
+        "confidence": "high",
+        "reasoning": "The debug overlay is unmistakably player-visible, conflicts with the art direction, and partially occludes the central object.",
+        "hypothesis_if_mismatch": "A development-only bounds renderer or stale diagnostic layer may be enabled in the player build or not cleared during a state transition.",
+        "severity": "high",
+        "suggested_investigation": "Gate diagnostic rendering behind development-build flags, clear overlay state on scene transitions, and add a release-capture check that rejects debug-layer colors/labels.",
+        "visual_assessment": "Confirmed high-saturation debug bounds and text with incorrect z-order over the gameplay focal point.",
+        "next_action": {
+          "kind": "goal_blocked",
+          "target": "",
+          "source": "",
+          "text": "",
+          "key": "",
+          "url": "",
+          "direction": "",
+          "command": "",
+          "method": "",
+          "path": "",
+          "headers": {},
+          "body": null,
+          "files": [],
+          "option": "",
+          "tab_index": 0,
+          "seconds": 0.0,
+          "reason": "The visual-polish goal is blocked by multiple confirmed HUD and debug-overlay defects."
+        }
+      }
+    }
+  ]
+}

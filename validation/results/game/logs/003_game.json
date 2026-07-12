@@ -1,0 +1,50 @@
+{
+  "frame_source": "examples/game_visual_review/frames/frame_03.png",
+  "frame_index": 2,
+  "frame_count": 3,
+  "visual_metrics": {
+    "width": 1280,
+    "height": 720,
+    "entropy": 0.76862,
+    "edge_density": 0.01022,
+    "blank_ratio": 0.84315,
+    "dominant_colors": [
+      "#182331",
+      "#304e64",
+      "#15232e",
+      "#3c2353",
+      "#182332",
+      "#2f1840"
+    ],
+    "perceptual_hash": "8200181818180018",
+    "change_ratio": 0.01845,
+    "likely_clipping": [],
+    "alignment_warnings": [],
+    "contrast_warnings": [
+      "The frame has very low global luminance contrast."
+    ]
+  },
+  "reference_comparison": {
+    "difference_ratio": 0.009637,
+    "reference": "examples/game_visual_review/references/frame_03.png"
+  },
+  "recent_actions": [
+    {
+      "kind": "next_frame",
+      "summary": "next_frame"
+    },
+    {
+      "kind": "next_frame",
+      "summary": "next_frame"
+    }
+  ],
+  "visual_review_checklist": [
+    "misaligned HUD and menu elements",
+    "text or sprites clipped at screen/safe-area edges",
+    "inconsistent spacing, scale, color, shadows, and icon style",
+    "low contrast or unreadable text over moving backgrounds",
+    "stretched assets, wrong aspect ratio, blur, aliasing, or pixel shimmer",
+    "z-order errors, occlusion, seams, flicker, and state-transition residue",
+    "inconsistent animation pose, feedback, or affordance across frames"
+  ]
+}

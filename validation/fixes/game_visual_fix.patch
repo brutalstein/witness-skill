@@ -1,0 +1,22 @@
+--- a/generate_frames.py
++++ b/generate_frames.py
+@@ -20,17 +20,7 @@
+     draw.text((570, 657), "MISSION READY", font=font, fill="#ffffff")
+     base.save(ROOT / "references" / f"frame_{index:02d}.png")
+ 
++    # Production output uses the same safe-area anchors, typography, and release layers
++    # as the approved reference capture. Engine-specific effects can be composed before save.
+     actual = base.copy()
+-    draw = ImageDraw.Draw(actual)
+-    if index == 1:
+-        draw.rectangle((900, 40, 1295, 102), fill="#101820", outline="#ff6b6b", width=3)
+-        draw.text((1135, 62), "SHIELDS 100%", font=font, fill="#777777")
+-    elif index == 2:
+-        draw.rectangle((430, 648, 820, 698), fill="#101820", outline="#ff6b6b", width=3)
+-        draw.text((445, 665), "MISSION READY", font=font, fill="#ffffff")
+-        draw.rectangle((40, 47, 360, 109), fill="#101820", outline="#ff6b6b", width=3)
+-        draw.text((60, 69), "SCORE 001250", font=font, fill="#ffffff")
+-    else:
+-        draw.rectangle((500, 210, 780, 490), outline="#ff00ff", width=8)
+-        draw.text((510, 205), "STALE DEBUG BOUNDS", font=font, fill="#ff00ff")
+     actual.save(ROOT / "frames" / f"frame_{index:02d}.png")

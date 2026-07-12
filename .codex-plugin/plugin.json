@@ -1,0 +1,35 @@
+{
+  "name": "witness-qa",
+  "version": "1.2.0",
+  "description": "Evidence-backed agentic QA for web, Electron desktop, CLI, API, Unity/Unreal games, screenshots, and visual software.",
+  "author": {
+    "name": "Witness contributors"
+  },
+  "license": "MIT",
+  "keywords": [
+    "qa",
+    "testing",
+    "playwright",
+    "codex",
+    "vision",
+    "game-testing"
+  ],
+  "skills": "./skills/codex/",
+  "interface": {
+    "displayName": "Witness QA",
+    "shortDescription": "Test software through real actions and visual evidence",
+    "longDescription": "Drive web apps, Electron renderers, CLIs, APIs, Unity/Unreal builds, games, and screenshot sequences like a human tester; preserve evidence; report reproducible findings; and verify fixes.",
+    "developerName": "Witness contributors",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Read",
+      "Execute",
+      "Vision"
+    ],
+    "defaultPrompt": [
+      "Use Witness to test this project as a real user and report evidence-backed defects.",
+      "Use Witness to inspect this game's visuals across frames and verify any fixes."
+    ],
+    "brandColor": "#4F46E5"
+  }
+}

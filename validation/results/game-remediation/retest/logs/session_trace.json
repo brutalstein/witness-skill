@@ -1,0 +1,445 @@
+{
+  "schema_version": "2.0",
+  "manifest": {
+    "witness_version": "1.0.0",
+    "project_revision": "",
+    "provider": "scripted",
+    "model": "host-agent-decisions",
+    "seed": 0
+  },
+  "result": {
+    "overall_status": "goal_reached",
+    "personas_run": [
+      "Game visual QA director"
+    ],
+    "findings": [],
+    "report_path": "validation/results/game-remediation/retest/report.md",
+    "trace_path": "validation/results/game-remediation/retest/logs/session_trace.json",
+    "profile": {
+      "target": "validation/results/game-remediation/workspace",
+      "project_root": "validation/results/game-remediation/workspace",
+      "project_type": "game",
+      "entry_point": null,
+      "reachable_address": null,
+      "confidence": "medium",
+      "raw_signals": [
+        {
+          "source": "filesystem",
+          "project_type": "game",
+          "weight": 6.0,
+          "detail": "Game/UI screenshot sequence detected"
+        }
+      ],
+      "candidates": [
+        {
+          "project_type": "game",
+          "score": 6.0
+        }
+      ],
+      "metadata": {
+        "readme": "README.md",
+        "readme_excerpt": "# Game visual review example\n\nThis fixture contains three intentionally defective gameplay frames and three approved reference frames.\n\n```bash\nwitness run --project examples/game_visual_review/frames \\\n  --adapter game \\\n  --persona game-visual-director \\\n  --provider command \\\n  --agent-command './your-model-wrapper'\n```\n\nUse `witness.yaml` to connect a running Godot/Unity/Unreal build through engine-specific `capture_command` and `input_command` bridges. Browser games can be tested directly with `WebAdapter`.\n",
+        "readme_commands": [],
+        "package_scripts": {},
+        "detected_port": null,
+        "scan_file_count": 11,
+        "frames": [
+          "frames/frame_01.png",
+          "frames/frame_02.png",
+          "frames/frame_03.png"
+        ],
+        "capture_command": null,
+        "input_command": null,
+        "reference_images": [
+          "references/frame_01.png",
+          "references/frame_02.png",
+          "references/frame_03.png"
+        ]
+      }
+    },
+    "metadata": {
+      "adapter": "game",
+      "provider": "scripted",
+      "model": "host-agent-decisions",
+      "project_type": "game",
+      "project_confidence": "medium",
+      "started_at": "2026-07-11T22:01:42.343384Z",
+      "finished_at": "2026-07-11T22:01:42.749568Z",
+      "duration_seconds": 0.406184,
+      "turns": 3,
+      "witness_version": "1.0.0",
+      "project_revision": "",
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "requests": 3,
+        "estimated_cost_usd": 0.0,
+        "provider_latency_seconds": 0.0
+      },
+      "seed": 0
+    },
+    "infrastructure_errors": [],
+    "artifact_paths": {
+      "markdown": "validation/results/game-remediation/retest/report.md",
+      "json": "validation/results/game-remediation/retest/result.json",
+      "html": "validation/results/game-remediation/retest/report.html",
+      "junit": "validation/results/game-remediation/retest/junit.xml",
+      "sarif": "validation/results/game-remediation/retest/witness.sarif.json"
+    }
+  },
+  "persona": {
+    "name": "Game visual QA director",
+    "role": "A senior game UI and visual-quality tester evaluating the player-visible experience frame by frame.",
+    "goal": "Identify visual defects, inconsistencies, hierarchy problems, readability failures, and cross-frame state discontinuities that reduce polish or player comprehension.",
+    "patience": "high",
+    "success_criteria": "HUD, menus, feedback, animation states, safe areas, typography, assets, colors, spacing, scale, z-order, and transitions are coherent across supported frames and resolutions.",
+    "known_constraints": "Judge only observable evidence. Distinguish confirmed visual facts from engine/source hypotheses and suggest targeted verification or fixes.",
+    "viewport": "desktop",
+    "locale": "en-US",
+    "network_profile": "normal",
+    "color_scheme": "light",
+    "reduced_motion": false,
+    "input_mode": "pointer",
+    "visual_focus": [
+      "HUD alignment",
+      "clipping",
+      "safe areas",
+      "typography",
+      "contrast",
+      "scale",
+      "aspect ratio",
+      "blur",
+      "aliasing",
+      "z-order",
+      "seams",
+      "flicker",
+      "animation continuity",
+      "feedback consistency"
+    ]
+  },
+  "steps": [
+    {
+      "turn": 1,
+      "action": null,
+      "action_result": null,
+      "observation": {
+        "adapter": "game",
+        "summary": "Game frame 1 of 3 captured",
+        "text": "{\n  \"frame_source\": \"validation/results/game-remediation/workspace/frames/frame_01.png\",\n  \"frame_index\": 0,\n  \"frame_count\": 3,\n  \"visual_metrics\": {\n    \"width\": 1280,\n    \"height\": 720,\n    \"entropy\": 0.69002,\n    \"edge_density\": 0.00813,\n    \"blank_ratio\": 0.86784,\n    \"dominant_colors\": [\n      \"#182331\",\n      \"#34556d\",\n      \"#121a24\",\n      \"#182330\",\n      \"#182332\",\n      \"#192331\"\n    ],\n    \"perceptual_hash\": \"8700181818180018\",\n    \"change_ratio\": 0.0,\n    \"likely_clipping\": [],\n    \"alignment_warnings\": [],\n    \"contrast_warnings\": [\n      \"The frame has very low global luminance contrast.\"\n    ]\n  },\n  \"reference_comparison\": {\n    \"difference_ratio\": 0.0,\n    \"reference\": \"validation/results/game-remediation/workspace/references/frame_01.png\"\n  },\n  \"recent_actions\": [],\n  \"visual_review_checklist\": [\n    \"misaligned HUD and menu elements\",\n    \"text or sprites clipped at screen/safe-area edges\",\n    \"inconsistent spacing, scale, color, shadows, and icon style\",\n    \"low contrast or unreadable text over moving backgrounds\",\n    \"stretched assets, wrong aspect ratio, blur, aliasing, or pixel shimmer\",\n    \"z-order errors, occlusion, seams, flicker, and state-transition residue\",\n    \"inconsistent animation pose, feedback, or affordance across frames\"\n  ]\n}",
+        "screenshot_path": "screenshots/001_game_frame.png",
+        "structured_path": "logs/001_game.json",
+        "exit_code": null,
+        "errors": [
+          "The frame has very low global luminance contrast."
+        ],
+        "visual_metrics": {
+          "width": 1280,
+          "height": 720,
+          "entropy": 0.69002,
+          "edge_density": 0.00813,
+          "blank_ratio": 0.86784,
+          "dominant_colors": [
+            "#182331",
+            "#34556d",
+            "#121a24",
+            "#182330",
+            "#182332",
+            "#192331"
+          ],
+          "perceptual_hash": "8700181818180018",
+          "change_ratio": 0.0,
+          "likely_clipping": [],
+          "alignment_warnings": [],
+          "contrast_warnings": [
+            "The frame has very low global luminance contrast."
+          ]
+        },
+        "delta": {
+          "changed_text": [
+            "{",
+            "  \"frame_source\": \"validation/results/game-remediation/workspace/frames/frame_01.png\",",
+            "  \"frame_index\": 0,",
+            "  \"frame_count\": 3,",
+            "  \"visual_metrics\": {",
+            "    \"width\": 1280,",
+            "    \"height\": 720,",
+            "    \"entropy\": 0.69002,",
+            "    \"edge_density\": 0.00813,",
+            "    \"blank_ratio\": 0.86784,",
+            "    \"dominant_colors\": [",
+            "      \"#182331\",",
+            "      \"#34556d\",",
+            "      \"#121a24\",",
+            "      \"#182330\",",
+            "      \"#182332\",",
+            "      \"#192331\"",
+            "    ],",
+            "    \"perceptual_hash\": \"8700181818180018\",",
+            "    \"change_ratio\": 0.0,"
+          ],
+          "new_errors": [
+            "The frame has very low global luminance contrast."
+          ],
+          "resolved_errors": [],
+          "visual_change_ratio": 0.0,
+          "changed_interactives": []
+        },
+        "metadata": {
+          "frame_source": "validation/results/game-remediation/workspace/frames/frame_01.png",
+          "reference": "validation/results/game-remediation/workspace/references/frame_01.png"
+        },
+        "captured_at": "2026-07-11T22:01:42.475908Z"
+      },
+      "decision": {
+        "expectation": "The gameplay HUD should remain inside the safe area, use symmetric panel geometry, and keep all critical labels readable.",
+        "action_taken": "initial_observation",
+        "observation_summary": "The SCORE and SHIELDS panels are fully contained within the frame, use matching borders and readable white labels, and the central composition is unobstructed.",
+        "judgment": "match",
+        "confidence": "high",
+        "reasoning": "The repaired first frame has stable safe-area margins, consistent top-panel styling, and no clipping or low-contrast status text.",
+        "hypothesis_if_mismatch": "",
+        "severity": "none",
+        "suggested_investigation": "",
+        "visual_assessment": "Safe-area containment, symmetry, contrast, and hierarchy are visually consistent.",
+        "next_action": {
+          "kind": "next_frame",
+          "target": "",
+          "source": "",
+          "text": "",
+          "key": "",
+          "url": "",
+          "direction": "",
+          "command": "",
+          "method": "",
+          "path": "",
+          "headers": {},
+          "body": null,
+          "files": [],
+          "option": "",
+          "tab_index": 0,
+          "seconds": 0.0,
+          "reason": "Confirm that persistent HUD anchors remain stable in the next frame."
+        }
+      }
+    },
+    {
+      "turn": 2,
+      "action": {
+        "kind": "next_frame",
+        "target": "",
+        "source": "",
+        "text": "",
+        "key": "",
+        "url": "",
+        "direction": "",
+        "command": "",
+        "method": "",
+        "path": "",
+        "headers": {},
+        "body": null,
+        "files": [],
+        "option": "",
+        "tab_index": 0,
+        "seconds": 0.0,
+        "reason": "Confirm that persistent HUD anchors remain stable in the next frame."
+      },
+      "action_result": {
+        "success": true,
+        "summary": "next_frame",
+        "infrastructure_error": "",
+        "metadata": {}
+      },
+      "observation": {
+        "adapter": "game",
+        "summary": "Game frame 2 of 3 captured",
+        "text": "{\n  \"frame_source\": \"validation/results/game-remediation/workspace/frames/frame_02.png\",\n  \"frame_index\": 1,\n  \"frame_count\": 3,\n  \"visual_metrics\": {\n    \"width\": 1280,\n    \"height\": 720,\n    \"entropy\": 0.69002,\n    \"edge_density\": 0.00813,\n    \"blank_ratio\": 0.86784,\n    \"dominant_colors\": [\n      \"#182331\",\n      \"#34556d\",\n      \"#121a24\",\n      \"#182330\",\n      \"#182332\",\n      \"#192331\"\n    ],\n    \"perceptual_hash\": \"8700181818180018\",\n    \"change_ratio\": 0.0,\n    \"likely_clipping\": [],\n    \"alignment_warnings\": [],\n    \"contrast_warnings\": [\n      \"The frame has very low global luminance contrast.\"\n    ]\n  },\n  \"reference_comparison\": {\n    \"difference_ratio\": 0.0,\n    \"reference\": \"validation/results/game-remediation/workspace/references/frame_02.png\"\n  },\n  \"recent_actions\": [\n    {\n      \"kind\": \"next_frame\",\n      \"summary\": \"next_frame\"\n    }\n  ],\n  \"visual_review_checklist\": [\n    \"misaligned HUD and menu elements\",\n    \"text or sprites clipped at screen/safe-area edges\",\n    \"inconsistent spacing, scale, color, shadows, and icon style\",\n    \"low contrast or unreadable text over moving backgrounds\",\n    \"stretched assets, wrong aspect ratio, blur, aliasing, or pixel shimmer\",\n    \"z-order errors, occlusion, seams, flicker, and state-transition residue\",\n    \"inconsistent animation pose, feedback, or affordance across frames\"\n  ]\n}",
+        "screenshot_path": "screenshots/002_game_frame.png",
+        "structured_path": "logs/002_game.json",
+        "exit_code": null,
+        "errors": [
+          "The frame has very low global luminance contrast."
+        ],
+        "visual_metrics": {
+          "width": 1280,
+          "height": 720,
+          "entropy": 0.69002,
+          "edge_density": 0.00813,
+          "blank_ratio": 0.86784,
+          "dominant_colors": [
+            "#182331",
+            "#34556d",
+            "#121a24",
+            "#182330",
+            "#182332",
+            "#192331"
+          ],
+          "perceptual_hash": "8700181818180018",
+          "change_ratio": 0.0,
+          "likely_clipping": [],
+          "alignment_warnings": [],
+          "contrast_warnings": [
+            "The frame has very low global luminance contrast."
+          ]
+        },
+        "delta": {
+          "changed_text": [
+            "\"frame_index\": 1,",
+            "\"frame_source\": \"validation/results/game-remediation/workspace/frames/frame_02.png\",",
+            "\"kind\": \"next_frame\",",
+            "\"recent_actions\": [",
+            "\"reference\": \"validation/results/game-remediation/workspace/references/frame_02.png\"",
+            "\"summary\": \"next_frame\""
+          ],
+          "new_errors": [],
+          "resolved_errors": [],
+          "visual_change_ratio": 0.0,
+          "changed_interactives": []
+        },
+        "metadata": {
+          "frame_source": "validation/results/game-remediation/workspace/frames/frame_02.png",
+          "reference": "validation/results/game-remediation/workspace/references/frame_02.png"
+        },
+        "captured_at": "2026-07-11T22:01:42.613521Z"
+      },
+      "decision": {
+        "expectation": "Persistent HUD panels should keep stable anchors and baselines across adjacent gameplay frames.",
+        "action_taken": "next_frame",
+        "observation_summary": "The SCORE, SHIELDS, and MISSION READY panels retain the same bounds and alignment as the previous frame.",
+        "judgment": "match",
+        "confidence": "high",
+        "reasoning": "No frame-to-frame HUD drift or jitter is visible after the layout repair.",
+        "hypothesis_if_mismatch": "",
+        "severity": "none",
+        "suggested_investigation": "",
+        "visual_assessment": "Persistent interface geometry is stable across frames.",
+        "next_action": {
+          "kind": "next_frame",
+          "target": "",
+          "source": "",
+          "text": "",
+          "key": "",
+          "url": "",
+          "direction": "",
+          "command": "",
+          "method": "",
+          "path": "",
+          "headers": {},
+          "body": null,
+          "files": [],
+          "option": "",
+          "tab_index": 0,
+          "seconds": 0.0,
+          "reason": "Inspect the final frame for stale overlays or release-only residue."
+        }
+      }
+    },
+    {
+      "turn": 3,
+      "action": {
+        "kind": "next_frame",
+        "target": "",
+        "source": "",
+        "text": "",
+        "key": "",
+        "url": "",
+        "direction": "",
+        "command": "",
+        "method": "",
+        "path": "",
+        "headers": {},
+        "body": null,
+        "files": [],
+        "option": "",
+        "tab_index": 0,
+        "seconds": 0.0,
+        "reason": "Inspect the final frame for stale overlays or release-only residue."
+      },
+      "action_result": {
+        "success": true,
+        "summary": "next_frame",
+        "infrastructure_error": "",
+        "metadata": {}
+      },
+      "observation": {
+        "adapter": "game",
+        "summary": "Game frame 3 of 3 captured",
+        "text": "{\n  \"frame_source\": \"validation/results/game-remediation/workspace/frames/frame_03.png\",\n  \"frame_index\": 2,\n  \"frame_count\": 3,\n  \"visual_metrics\": {\n    \"width\": 1280,\n    \"height\": 720,\n    \"entropy\": 0.69002,\n    \"edge_density\": 0.00813,\n    \"blank_ratio\": 0.86784,\n    \"dominant_colors\": [\n      \"#182331\",\n      \"#34556d\",\n      \"#121a24\",\n      \"#182330\",\n      \"#182332\",\n      \"#192331\"\n    ],\n    \"perceptual_hash\": \"8700181818180018\",\n    \"change_ratio\": 0.0,\n    \"likely_clipping\": [],\n    \"alignment_warnings\": [],\n    \"contrast_warnings\": [\n      \"The frame has very low global luminance contrast.\"\n    ]\n  },\n  \"reference_comparison\": {\n    \"difference_ratio\": 0.0,\n    \"reference\": \"validation/results/game-remediation/workspace/references/frame_03.png\"\n  },\n  \"recent_actions\": [\n    {\n      \"kind\": \"next_frame\",\n      \"summary\": \"next_frame\"\n    },\n    {\n      \"kind\": \"next_frame\",\n      \"summary\": \"next_frame\"\n    }\n  ],\n  \"visual_review_checklist\": [\n    \"misaligned HUD and menu elements\",\n    \"text or sprites clipped at screen/safe-area edges\",\n    \"inconsistent spacing, scale, color, shadows, and icon style\",\n    \"low contrast or unreadable text over moving backgrounds\",\n    \"stretched assets, wrong aspect ratio, blur, aliasing, or pixel shimmer\",\n    \"z-order errors, occlusion, seams, flicker, and state-transition residue\",\n    \"inconsistent animation pose, feedback, or affordance across frames\"\n  ]\n}",
+        "screenshot_path": "screenshots/003_game_frame.png",
+        "structured_path": "logs/003_game.json",
+        "exit_code": null,
+        "errors": [
+          "The frame has very low global luminance contrast."
+        ],
+        "visual_metrics": {
+          "width": 1280,
+          "height": 720,
+          "entropy": 0.69002,
+          "edge_density": 0.00813,
+          "blank_ratio": 0.86784,
+          "dominant_colors": [
+            "#182331",
+            "#34556d",
+            "#121a24",
+            "#182330",
+            "#182332",
+            "#192331"
+          ],
+          "perceptual_hash": "8700181818180018",
+          "change_ratio": 0.0,
+          "likely_clipping": [],
+          "alignment_warnings": [],
+          "contrast_warnings": [
+            "The frame has very low global luminance contrast."
+          ]
+        },
+        "delta": {
+          "changed_text": [
+            "\"frame_index\": 2,",
+            "\"frame_source\": \"validation/results/game-remediation/workspace/frames/frame_03.png\",",
+            "\"reference\": \"validation/results/game-remediation/workspace/references/frame_03.png\""
+          ],
+          "new_errors": [],
+          "resolved_errors": [],
+          "visual_change_ratio": 0.0,
+          "changed_interactives": []
+        },
+        "metadata": {
+          "frame_source": "validation/results/game-remediation/workspace/frames/frame_03.png",
+          "reference": "validation/results/game-remediation/workspace/references/frame_03.png"
+        },
+        "captured_at": "2026-07-11T22:01:42.749308Z"
+      },
+      "decision": {
+        "expectation": "The final player-facing frame should contain no editor or debug overlay and should preserve the approved composition.",
+        "action_taken": "next_frame",
+        "observation_summary": "The final frame contains no magenta debug bounds or diagnostic label, and all HUD elements remain aligned with the approved references.",
+        "judgment": "match",
+        "confidence": "high",
+        "reasoning": "The release frame is clean, readable, and visually consistent with the preceding frames and references.",
+        "hypothesis_if_mismatch": "",
+        "severity": "none",
+        "suggested_investigation": "",
+        "visual_assessment": "No clipping, drift, stale overlay, or unintended z-order issue remains.",
+        "next_action": {
+          "kind": "goal_reached",
+          "target": "",
+          "source": "",
+          "text": "",
+          "key": "",
+          "url": "",
+          "direction": "",
+          "command": "",
+          "method": "",
+          "path": "",
+          "headers": {},
+          "body": null,
+          "files": [],
+          "option": "",
+          "tab_index": 0,
+          "seconds": 0.0,
+          "reason": "All three repaired frames satisfy the visual-polish goal and match their approved references."
+        }
+      }
+    }
+  ]
+}

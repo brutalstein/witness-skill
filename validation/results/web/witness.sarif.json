@@ -1,0 +1,49 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "Witness",
+          "version": "1.0.0",
+          "rules": [
+            {
+              "id": "WITNESS-1fd02dfc68ed806b",
+              "name": "AgenticProductFinding",
+              "shortDescription": {
+                "text": "A visible error says 'Unable to create account. Please try again later.' and the user remains on the signup form."
+              },
+              "help": {
+                "text": "Reproduce the POST triggered by Create account, correlate its status and server logs, and add a specific recoverable error while fixing the failed account-creation path."
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "WITNESS-1fd02dfc68ed806b",
+          "level": "error",
+          "message": {
+            "text": "A visible error says 'Unable to create account. Please try again later.' and the user remains on the signup form.\nExpected: A valid signup submission should end in an unambiguous success state or a specific recoverable validation message."
+          },
+          "properties": {
+            "persona": "First-time user",
+            "severity": "high",
+            "fingerprint": "1fd02dfc68ed806b"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "screenshots/004_web_state.png"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

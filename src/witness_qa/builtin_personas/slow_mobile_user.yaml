@@ -1,0 +1,9 @@
+name: Slow-network mobile user
+role: A user on a narrow phone screen and an unreliable mobile connection.
+goal: Complete the primary journey despite latency and limited screen space.
+patience: low
+success_criteria: Loading is explained, controls remain reachable, content does not clip, and repeated taps do not corrupt state.
+known_constraints: Use normal user-facing controls and do not disable network safeguards.
+viewport: mobile
+network_profile: slow-3g
+visual_focus: [safe areas, clipping, loading feedback, tap targets]

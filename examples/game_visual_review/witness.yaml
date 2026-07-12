@@ -1,0 +1,18 @@
+version: 1
+project:
+  type: game
+  frames:
+    - frames/frame_01.png
+    - frames/frame_02.png
+    - frames/frame_03.png
+session:
+  personas: [game-visual-director]
+visual:
+  enabled: true
+  reference_images:
+    - references/frame_01.png
+    - references/frame_02.png
+    - references/frame_03.png
+  visual_regression_threshold: 0.01
+reporting:
+  formats: [markdown, json, html, junit, sarif]

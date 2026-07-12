@@ -1,0 +1,80 @@
+{
+  "overall_status": "goal_reached",
+  "personas_run": [
+    "Ad-hoc user"
+  ],
+  "findings": [],
+  "report_path": "validation/results/cli/report.md",
+  "trace_path": "validation/results/cli/logs/session_trace.json",
+  "profile": {
+    "target": "examples/friendly_cli",
+    "project_root": "examples/friendly_cli",
+    "project_type": "cli",
+    "entry_point": "python cli.py --help",
+    "reachable_address": null,
+    "confidence": "medium",
+    "raw_signals": [
+      {
+        "source": "cli.py",
+        "project_type": "cli",
+        "weight": 4.0,
+        "detail": "CLI framework and executable main guard detected"
+      },
+      {
+        "source": "README.md",
+        "project_type": "cli",
+        "weight": 4.0,
+        "detail": "README invocation: python cli.py --help"
+      }
+    ],
+    "candidates": [
+      {
+        "project_type": "cli",
+        "score": 8.0
+      }
+    ],
+    "metadata": {
+      "readme": "README.md",
+      "readme_excerpt": "# Friendly CLI example\n\nRun the CLI with:\n\n```bash\npython cli.py --help\n```\n\nA normal invocation is `python cli.py Ada --shout`.\n",
+      "readme_commands": [
+        "python cli.py --help"
+      ],
+      "package_scripts": {},
+      "detected_port": null,
+      "scan_file_count": 2,
+      "frames": [],
+      "capture_command": null,
+      "input_command": null,
+      "reference_images": []
+    }
+  },
+  "metadata": {
+    "adapter": "cli",
+    "provider": "scripted",
+    "model": "host-agent-decisions",
+    "project_type": "cli",
+    "project_confidence": "medium",
+    "started_at": "2026-07-11T21:55:24.605348Z",
+    "finished_at": "2026-07-11T21:55:27.662271Z",
+    "duration_seconds": 3.056923,
+    "turns": 3,
+    "witness_version": "1.0.0",
+    "project_revision": "",
+    "usage": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "requests": 3,
+      "estimated_cost_usd": 0.0,
+      "provider_latency_seconds": 0.0
+    },
+    "seed": 0
+  },
+  "infrastructure_errors": [],
+  "artifact_paths": {
+    "markdown": "validation/results/cli/report.md",
+    "json": "validation/results/cli/result.json",
+    "html": "validation/results/cli/report.html",
+    "junit": "validation/results/cli/junit.xml",
+    "sarif": "validation/results/cli/witness.sarif.json"
+  }
+}

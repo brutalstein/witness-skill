@@ -1,0 +1,419 @@
+{
+  "schema_version": "2.0",
+  "manifest": {
+    "witness_version": "1.0.0",
+    "project_revision": "",
+    "provider": "scripted",
+    "model": "host-agent-decisions",
+    "seed": 0
+  },
+  "result": {
+    "overall_status": "goal_reached",
+    "personas_run": [
+      "Ad-hoc user"
+    ],
+    "findings": [],
+    "report_path": "validation/results/api/report.md",
+    "trace_path": "validation/results/api/logs/session_trace.json",
+    "profile": {
+      "target": "examples/sample_api",
+      "project_root": "examples/sample_api",
+      "project_type": "api",
+      "entry_point": "python app.py --port 47029",
+      "reachable_address": "http://127.0.0.1:47029",
+      "confidence": "high",
+      "raw_signals": [
+        {
+          "source": "filesystem",
+          "project_type": "api",
+          "weight": 14.0,
+          "detail": "OpenAPI/Swagger specification detected"
+        },
+        {
+          "source": "app.py",
+          "project_type": "cli",
+          "weight": 4.0,
+          "detail": "CLI framework and executable main guard detected"
+        },
+        {
+          "source": "app.py",
+          "project_type": "web",
+          "weight": 4.0,
+          "detail": "Python web server/framework code detected"
+        },
+        {
+          "source": "README.md",
+          "project_type": "web",
+          "weight": 6.0,
+          "detail": "README run instruction: python app.py --port 8000"
+        }
+      ],
+      "candidates": [
+        {
+          "project_type": "api",
+          "score": 14.0
+        },
+        {
+          "project_type": "web",
+          "score": 10.0
+        },
+        {
+          "project_type": "cli",
+          "score": 4.0
+        }
+      ],
+      "metadata": {
+        "readme": "README.md",
+        "readme_excerpt": "# Sample API\n\n```bash\npython app.py --port 8000\n```\n\nOpenAPI is available at `http://127.0.0.1:8000/openapi.json`.\n",
+        "readme_commands": [
+          "python app.py --port 8000"
+        ],
+        "package_scripts": {},
+        "detected_port": 8000,
+        "scan_file_count": 3,
+        "frames": [],
+        "capture_command": null,
+        "input_command": null,
+        "reference_images": []
+      }
+    },
+    "metadata": {
+      "adapter": "api",
+      "provider": "scripted",
+      "model": "host-agent-decisions",
+      "project_type": "api",
+      "project_confidence": "high",
+      "started_at": "2026-07-11T21:55:54.337353Z",
+      "finished_at": "2026-07-11T21:55:56.228274Z",
+      "duration_seconds": 1.890921,
+      "turns": 4,
+      "witness_version": "1.0.0",
+      "project_revision": "",
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "requests": 4,
+        "estimated_cost_usd": 0.0,
+        "provider_latency_seconds": 0.0
+      },
+      "seed": 0
+    },
+    "infrastructure_errors": [],
+    "artifact_paths": {
+      "markdown": "validation/results/api/report.md",
+      "json": "validation/results/api/result.json",
+      "html": "validation/results/api/report.html",
+      "junit": "validation/results/api/junit.xml",
+      "sarif": "validation/results/api/witness.sarif.json"
+    }
+  },
+  "persona": {
+    "name": "Ad-hoc user",
+    "role": "A realistic user whose behavior is guided by the supplied goal.",
+    "goal": "Create, retrieve, and validate a project through the public API",
+    "patience": "medium",
+    "success_criteria": "The goal is completed with clear, understandable feedback and no errors.",
+    "known_constraints": "Do not bypass authentication, verification, or safety controls.",
+    "viewport": "desktop",
+    "locale": "en-US",
+    "network_profile": "normal",
+    "color_scheme": "light",
+    "reduced_motion": false,
+    "input_mode": "pointer",
+    "visual_focus": []
+  },
+  "steps": [
+    {
+      "turn": 1,
+      "action": null,
+      "action_result": null,
+      "observation": {
+        "adapter": "api",
+        "summary": "API at http://127.0.0.1:47029; no request made yet",
+        "text": "{\n  \"base_url\": \"http://127.0.0.1:47029\",\n  \"openapi_detected\": true,\n  \"available_endpoints\": [\n    {\n      \"method\": \"GET\",\n      \"path\": \"/projects\",\n      \"summary\": \"List projects\"\n    },\n    {\n      \"method\": \"POST\",\n      \"path\": \"/projects\",\n      \"summary\": \"Create project\"\n    },\n    {\n      \"method\": \"GET\",\n      \"path\": \"/projects/{id}\",\n      \"summary\": \"Get project\"\n    }\n  ],\n  \"last_exchange\": null,\n  \"exchange_count\": 0\n}",
+        "screenshot_path": "screenshots/001_api_state.png",
+        "structured_path": "logs/001_api.json",
+        "exit_code": null,
+        "errors": [],
+        "visual_metrics": null,
+        "delta": null,
+        "metadata": {
+          "endpoint_count": 3,
+          "exchange_count": 0
+        },
+        "captured_at": "2026-07-11T21:55:56.088363Z"
+      },
+      "decision": {
+        "expectation": "The API should expose a discoverable contract and allow creation of a project.",
+        "action_taken": "initial_observation",
+        "observation_summary": "OpenAPI is detected and lists project collection endpoints.",
+        "judgment": "match",
+        "confidence": "high",
+        "reasoning": "The public contract is discoverable, so a representative create request can be attempted.",
+        "hypothesis_if_mismatch": "",
+        "severity": "none",
+        "suggested_investigation": "",
+        "visual_assessment": "The rendered HTTP observation is readable.",
+        "next_action": {
+          "kind": "http_request",
+          "target": "",
+          "source": "",
+          "text": "",
+          "key": "",
+          "url": "",
+          "direction": "",
+          "command": "",
+          "method": "POST",
+          "path": "/projects",
+          "headers": {},
+          "body": {
+            "name": "Witness project"
+          },
+          "files": [],
+          "option": "",
+          "tab_index": 0,
+          "seconds": 0.0,
+          "reason": "Create a resource using documented input."
+        }
+      }
+    },
+    {
+      "turn": 2,
+      "action": {
+        "kind": "http_request",
+        "target": "",
+        "source": "",
+        "text": "",
+        "key": "",
+        "url": "",
+        "direction": "",
+        "command": "",
+        "method": "POST",
+        "path": "/projects",
+        "headers": {},
+        "body": {
+          "name": "Witness project"
+        },
+        "files": [],
+        "option": "",
+        "tab_index": 0,
+        "seconds": 0.0,
+        "reason": "Create a resource using documented input."
+      },
+      "action_result": {
+        "success": true,
+        "summary": "POST /projects returned 201",
+        "infrastructure_error": "",
+        "metadata": {
+          "status": 201,
+          "duration_ms": 2.18
+        }
+      },
+      "observation": {
+        "adapter": "api",
+        "summary": "POST http://127.0.0.1:47029/projects returned 201",
+        "text": "{\n  \"base_url\": \"http://127.0.0.1:47029\",\n  \"openapi_detected\": true,\n  \"available_endpoints\": [\n    {\n      \"method\": \"GET\",\n      \"path\": \"/projects\",\n      \"summary\": \"List projects\"\n    },\n    {\n      \"method\": \"POST\",\n      \"path\": \"/projects\",\n      \"summary\": \"Create project\"\n    },\n    {\n      \"method\": \"GET\",\n      \"path\": \"/projects/{id}\",\n      \"summary\": \"Get project\"\n    }\n  ],\n  \"last_exchange\": {\n    \"method\": \"POST\",\n    \"url\": \"http://127.0.0.1:47029/projects\",\n    \"request_headers\": {\n      \"host\": \"127.0.0.1:47029\",\n      \"accept\": \"*/*\",\n      \"accept-encoding\": \"gzip, deflate, br\",\n      \"connection\": \"keep-alive\",\n      \"user-agent\": \"Witness-QA/1.0\",\n      \"content-length\": \"26\",\n      \"content-type\": \"application/json\"\n    },\n    \"request_body\": {\n      \"name\": \"Witness project\"\n    },\n    \"status\": 201,\n    \"response_headers\": {\n      \"server\": \"BaseHTTP/0.6 Python/3.13.5\",\n      \"date\": \"Sat, 11 Jul 2026 21:55:56 GMT\",\n      \"content-type\": \"application/json\",\n      \"content-length\": \"36\"\n    },\n    \"response_body\": {\n      \"id\": 1,\n      \"name\": \"Witness project\"\n    },\n    \"duration_ms\": 2.18\n  },\n  \"exchange_count\": 1\n}",
+        "screenshot_path": "screenshots/002_api_state.png",
+        "structured_path": "logs/002_api.json",
+        "exit_code": null,
+        "errors": [],
+        "visual_metrics": null,
+        "delta": null,
+        "metadata": {
+          "endpoint_count": 3,
+          "exchange_count": 1
+        },
+        "captured_at": "2026-07-11T21:55:56.137964Z"
+      },
+      "decision": {
+        "expectation": "A valid create request should return a created resource and stable identifier.",
+        "action_taken": "http_request: POST /projects",
+        "observation_summary": "POST /projects returns 201 with id 1 and name 'Witness project'.",
+        "judgment": "match",
+        "confidence": "high",
+        "reasoning": "Creation succeeded with an appropriate status code and usable identifier.",
+        "hypothesis_if_mismatch": "",
+        "severity": "none",
+        "suggested_investigation": "",
+        "visual_assessment": "The request/response evidence is clear.",
+        "next_action": {
+          "kind": "http_request",
+          "target": "",
+          "source": "",
+          "text": "",
+          "key": "",
+          "url": "",
+          "direction": "",
+          "command": "",
+          "method": "GET",
+          "path": "/projects/1",
+          "headers": {},
+          "body": null,
+          "files": [],
+          "option": "",
+          "tab_index": 0,
+          "seconds": 0.0,
+          "reason": "Verify that the created state can be retrieved."
+        }
+      }
+    },
+    {
+      "turn": 3,
+      "action": {
+        "kind": "http_request",
+        "target": "",
+        "source": "",
+        "text": "",
+        "key": "",
+        "url": "",
+        "direction": "",
+        "command": "",
+        "method": "GET",
+        "path": "/projects/1",
+        "headers": {},
+        "body": null,
+        "files": [],
+        "option": "",
+        "tab_index": 0,
+        "seconds": 0.0,
+        "reason": "Verify that the created state can be retrieved."
+      },
+      "action_result": {
+        "success": true,
+        "summary": "GET /projects/1 returned 200",
+        "infrastructure_error": "",
+        "metadata": {
+          "status": 200,
+          "duration_ms": 2.41
+        }
+      },
+      "observation": {
+        "adapter": "api",
+        "summary": "GET http://127.0.0.1:47029/projects/1 returned 200",
+        "text": "{\n  \"base_url\": \"http://127.0.0.1:47029\",\n  \"openapi_detected\": true,\n  \"available_endpoints\": [\n    {\n      \"method\": \"GET\",\n      \"path\": \"/projects\",\n      \"summary\": \"List projects\"\n    },\n    {\n      \"method\": \"POST\",\n      \"path\": \"/projects\",\n      \"summary\": \"Create project\"\n    },\n    {\n      \"method\": \"GET\",\n      \"path\": \"/projects/{id}\",\n      \"summary\": \"Get project\"\n    }\n  ],\n  \"last_exchange\": {\n    \"method\": \"GET\",\n    \"url\": \"http://127.0.0.1:47029/projects/1\",\n    \"request_headers\": {\n      \"host\": \"127.0.0.1:47029\",\n      \"accept\": \"*/*\",\n      \"accept-encoding\": \"gzip, deflate, br\",\n      \"connection\": \"keep-alive\",\n      \"user-agent\": \"Witness-QA/1.0\"\n    },\n    \"request_body\": null,\n    \"status\": 200,\n    \"response_headers\": {\n      \"server\": \"BaseHTTP/0.6 Python/3.13.5\",\n      \"date\": \"Sat, 11 Jul 2026 21:55:56 GMT\",\n      \"content-type\": \"application/json\",\n      \"content-length\": \"36\"\n    },\n    \"response_body\": {\n      \"id\": 1,\n      \"name\": \"Witness project\"\n    },\n    \"duration_ms\": 2.41\n  },\n  \"exchange_count\": 2\n}",
+        "screenshot_path": "screenshots/003_api_state.png",
+        "structured_path": "logs/003_api.json",
+        "exit_code": null,
+        "errors": [],
+        "visual_metrics": null,
+        "delta": null,
+        "metadata": {
+          "endpoint_count": 3,
+          "exchange_count": 2
+        },
+        "captured_at": "2026-07-11T21:55:56.183505Z"
+      },
+      "decision": {
+        "expectation": "Retrieving id 1 should return the same project state.",
+        "action_taken": "http_request: GET /projects/1",
+        "observation_summary": "GET /projects/1 returns 200 with the same id and name.",
+        "judgment": "match",
+        "confidence": "high",
+        "reasoning": "The create-read state transition is consistent.",
+        "hypothesis_if_mismatch": "",
+        "severity": "none",
+        "suggested_investigation": "",
+        "visual_assessment": "The API exchange is readable.",
+        "next_action": {
+          "kind": "http_request",
+          "target": "",
+          "source": "",
+          "text": "",
+          "key": "",
+          "url": "",
+          "direction": "",
+          "command": "",
+          "method": "POST",
+          "path": "/projects",
+          "headers": {},
+          "body": {},
+          "files": [],
+          "option": "",
+          "tab_index": 0,
+          "seconds": 0.0,
+          "reason": "Check documented validation and recovery behavior."
+        }
+      }
+    },
+    {
+      "turn": 4,
+      "action": {
+        "kind": "http_request",
+        "target": "",
+        "source": "",
+        "text": "",
+        "key": "",
+        "url": "",
+        "direction": "",
+        "command": "",
+        "method": "POST",
+        "path": "/projects",
+        "headers": {},
+        "body": {},
+        "files": [],
+        "option": "",
+        "tab_index": 0,
+        "seconds": 0.0,
+        "reason": "Check documented validation and recovery behavior."
+      },
+      "action_result": {
+        "success": true,
+        "summary": "POST /projects returned 422",
+        "infrastructure_error": "",
+        "metadata": {
+          "status": 422,
+          "duration_ms": 2.43
+        }
+      },
+      "observation": {
+        "adapter": "api",
+        "summary": "POST http://127.0.0.1:47029/projects returned 422",
+        "text": "{\n  \"base_url\": \"http://127.0.0.1:47029\",\n  \"openapi_detected\": true,\n  \"available_endpoints\": [\n    {\n      \"method\": \"GET\",\n      \"path\": \"/projects\",\n      \"summary\": \"List projects\"\n    },\n    {\n      \"method\": \"POST\",\n      \"path\": \"/projects\",\n      \"summary\": \"Create project\"\n    },\n    {\n      \"method\": \"GET\",\n      \"path\": \"/projects/{id}\",\n      \"summary\": \"Get project\"\n    }\n  ],\n  \"last_exchange\": {\n    \"method\": \"POST\",\n    \"url\": \"http://127.0.0.1:47029/projects\",\n    \"request_headers\": {\n      \"host\": \"127.0.0.1:47029\",\n      \"accept\": \"*/*\",\n      \"accept-encoding\": \"gzip, deflate, br\",\n      \"connection\": \"keep-alive\",\n      \"user-agent\": \"Witness-QA/1.0\",\n      \"content-length\": \"2\",\n      \"content-type\": \"application/json\"\n    },\n    \"request_body\": {},\n    \"status\": 422,\n    \"response_headers\": {\n      \"server\": \"BaseHTTP/0.6 Python/3.13.5\",\n      \"date\": \"Sat, 11 Jul 2026 21:55:56 GMT\",\n      \"content-type\": \"application/json\",\n      \"content-length\": \"29\"\n    },\n    \"response_body\": {\n      \"error\": \"name is required\"\n    },\n    \"duration_ms\": 2.43\n  },\n  \"exchange_count\": 3\n}",
+        "screenshot_path": "screenshots/004_api_state.png",
+        "structured_path": "logs/004_api.json",
+        "exit_code": null,
+        "errors": [
+          "HTTP 422: POST http://127.0.0.1:47029/projects"
+        ],
+        "visual_metrics": null,
+        "delta": null,
+        "metadata": {
+          "endpoint_count": 3,
+          "exchange_count": 3
+        },
+        "captured_at": "2026-07-11T21:55:56.225783Z"
+      },
+      "decision": {
+        "expectation": "Missing required name input should produce an actionable 4xx validation response.",
+        "action_taken": "http_request: POST /projects",
+        "observation_summary": "POST /projects with an empty object returns 422 and 'name is required'.",
+        "judgment": "match",
+        "confidence": "high",
+        "reasoning": "The API rejects invalid input using a clear client-error contract without leaking sensitive data.",
+        "hypothesis_if_mismatch": "",
+        "severity": "none",
+        "suggested_investigation": "",
+        "visual_assessment": "The validation response is concise and legible.",
+        "next_action": {
+          "kind": "goal_reached",
+          "target": "",
+          "source": "",
+          "text": "",
+          "key": "",
+          "url": "",
+          "direction": "",
+          "command": "",
+          "method": "",
+          "path": "",
+          "headers": {},
+          "body": null,
+          "files": [],
+          "option": "",
+          "tab_index": 0,
+          "seconds": 0.0,
+          "reason": "Discovery, create-read consistency, and validation have been verified."
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+{
+  "contract_version": 1,
+  "mode": "remediation",
+  "workspace": "validation/results/game-remediation/workspace",
+  "project_type": "game",
+  "findings": [
+    {
+      "fingerprint": "05d780799f239587",
+      "persona": "Game visual QA director",
+      "severity": "high",
+      "summary": "The right SHIELDS panel continues beyond the right frame edge and its label is rendered in very low-contrast gray, while the left SCORE panel is fully visible and bright.",
+      "expectation": "The gameplay HUD should remain inside the 1280×720 safe area, use consistent panel geometry, and keep critical shield text readable.",
+      "observation": "The right SHIELDS panel continues beyond the right frame edge and its label is rendered in very low-contrast gray, while the left SCORE panel is fully visible and bright.",
+      "evidence_path": "validation/results/game/screenshots/001_game_frame.png",
+      "reasoning": "A critical status display is both partially clipped and substantially less readable than its symmetric counterpart, creating resolution-dependent information loss and inconsistent hierarchy.",
+      "hypothesis": "The right HUD anchor or width may be calculated from an incorrect canvas boundary, and the shield text may be using a disabled/placeholder color token.",
+      "suggested_investigation": "Anchor both top HUD panels to a shared safe-area container, clamp the right edge, and use the approved high-contrast text token; verify at 16:9, ultrawide, and reduced-width resolutions.",
+      "visual_assessment": "Confirmed clipping at the right edge, asymmetric border color, and poor text contrast in the SHIELDS panel.",
+      "turn": 1,
+      "occurrences": 1
+    },
+    {
+      "fingerprint": "ac73e917b72fb101",
+      "persona": "Game visual QA director",
+      "severity": "high",
+      "summary": "A bright magenta rectangle and the text 'STALE DEBUG BOUNDS' remain over the central gameplay object in the final frame.",
+      "expectation": "A player-facing gameplay frame should not expose editor/debug overlays, and debug labels should never occlude the focal object.",
+      "observation": "A bright magenta rectangle and the text 'STALE DEBUG BOUNDS' remain over the central gameplay object in the final frame.",
+      "evidence_path": "validation/results/game/screenshots/003_game_frame.png",
+      "reasoning": "The debug overlay is unmistakably player-visible, conflicts with the art direction, and partially occludes the central object.",
+      "hypothesis": "A development-only bounds renderer or stale diagnostic layer may be enabled in the player build or not cleared during a state transition.",
+      "suggested_investigation": "Gate diagnostic rendering behind development-build flags, clear overlay state on scene transitions, and add a release-capture check that rejects debug-layer colors/labels.",
+      "visual_assessment": "Confirmed high-saturation debug bounds and text with incorrect z-order over the gameplay focal point.",
+      "turn": 3,
+      "occurrences": 1
+    },
+    {
+      "fingerprint": "06fa60ee29920954",
+      "persona": "Game visual QA director",
+      "severity": "medium",
+      "summary": "The SCORE panel shifts downward relative to the previous frame, and the MISSION READY panel shifts left and downward while the center object and SHIELDS panel remain stable.",
+      "expectation": "Persistent HUD panels should keep stable anchors and baselines across adjacent frames unless an intentional animation is visible.",
+      "observation": "The SCORE panel shifts downward relative to the previous frame, and the MISSION READY panel shifts left and downward while the center object and SHIELDS panel remain stable.",
+      "evidence_path": "validation/results/game/screenshots/002_game_frame.png",
+      "reasoning": "Independent movement of otherwise static HUD containers produces visible jitter and breaks alignment consistency across frames.",
+      "hypothesis": "The panels may be positioned from content-dependent bounds or separate animation/layout systems instead of stable anchors.",
+      "suggested_investigation": "Use fixed safe-area anchors and shared layout constraints for persistent HUD elements; add screenshot assertions for panel bounds across stable gameplay frames.",
+      "visual_assessment": "The top-left and bottom-center containers visibly drift while the rest of the composition is unchanged.",
+      "turn": 2,
+      "occurrences": 1
+    }
+  ],
+  "rules": [
+    "Modify only files inside the provided workspace.",
+    "Preserve public behavior except for the reported defects.",
+    "Do not weaken tests or remove assertions to obtain a passing result.",
+    "Return JSON with summary and optional verification_commands."
+  ]
+}

@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="Witness QA" tests="1" failures="1" errors="0"><testcase name="A visible error says 'Unable to create account. Please try again later.' and the user remains on the signup form." classname="witness.web.First-time user"><failure message="A visible error says 'Unable to create account. Please try again later.' and the user remains on the signup form." type="high">Expected: A valid signup submission should end in an unambiguous success state or a specific recoverable validation message.
+Observed: A visible error says 'Unable to create account. Please try again later.' and the user remains on the signup form.
+Evidence: screenshots/004_web_state.png</failure></testcase></testsuite>

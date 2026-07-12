@@ -1,0 +1,10 @@
+openapi: 3.0.3
+info:
+  title: Witness sample API
+  version: 1.0.0
+paths:
+  /projects:
+    get:
+      summary: List projects
+    post:
+      summary: Create project

@@ -1,0 +1,23 @@
+{
+  "base_url": "http://127.0.0.1:47029",
+  "openapi_detected": true,
+  "available_endpoints": [
+    {
+      "method": "GET",
+      "path": "/projects",
+      "summary": "List projects"
+    },
+    {
+      "method": "POST",
+      "path": "/projects",
+      "summary": "Create project"
+    },
+    {
+      "method": "GET",
+      "path": "/projects/{id}",
+      "summary": "Get project"
+    }
+  ],
+  "last_exchange": null,
+  "exchange_count": 0
+}

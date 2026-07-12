@@ -1,0 +1,100 @@
+{
+  "overall_status": "goal_reached",
+  "personas_run": [
+    "Ad-hoc user"
+  ],
+  "findings": [],
+  "report_path": "validation/results/api/report.md",
+  "trace_path": "validation/results/api/logs/session_trace.json",
+  "profile": {
+    "target": "examples/sample_api",
+    "project_root": "examples/sample_api",
+    "project_type": "api",
+    "entry_point": "python app.py --port 47029",
+    "reachable_address": "http://127.0.0.1:47029",
+    "confidence": "high",
+    "raw_signals": [
+      {
+        "source": "filesystem",
+        "project_type": "api",
+        "weight": 14.0,
+        "detail": "OpenAPI/Swagger specification detected"
+      },
+      {
+        "source": "app.py",
+        "project_type": "cli",
+        "weight": 4.0,
+        "detail": "CLI framework and executable main guard detected"
+      },
+      {
+        "source": "app.py",
+        "project_type": "web",
+        "weight": 4.0,
+        "detail": "Python web server/framework code detected"
+      },
+      {
+        "source": "README.md",
+        "project_type": "web",
+        "weight": 6.0,
+        "detail": "README run instruction: python app.py --port 8000"
+      }
+    ],
+    "candidates": [
+      {
+        "project_type": "api",
+        "score": 14.0
+      },
+      {
+        "project_type": "web",
+        "score": 10.0
+      },
+      {
+        "project_type": "cli",
+        "score": 4.0
+      }
+    ],
+    "metadata": {
+      "readme": "README.md",
+      "readme_excerpt": "# Sample API\n\n```bash\npython app.py --port 8000\n```\n\nOpenAPI is available at `http://127.0.0.1:8000/openapi.json`.\n",
+      "readme_commands": [
+        "python app.py --port 8000"
+      ],
+      "package_scripts": {},
+      "detected_port": 8000,
+      "scan_file_count": 3,
+      "frames": [],
+      "capture_command": null,
+      "input_command": null,
+      "reference_images": []
+    }
+  },
+  "metadata": {
+    "adapter": "api",
+    "provider": "scripted",
+    "model": "host-agent-decisions",
+    "project_type": "api",
+    "project_confidence": "high",
+    "started_at": "2026-07-11T21:55:54.337353Z",
+    "finished_at": "2026-07-11T21:55:56.228274Z",
+    "duration_seconds": 1.890921,
+    "turns": 4,
+    "witness_version": "1.0.0",
+    "project_revision": "",
+    "usage": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "requests": 4,
+      "estimated_cost_usd": 0.0,
+      "provider_latency_seconds": 0.0
+    },
+    "seed": 0
+  },
+  "infrastructure_errors": [],
+  "artifact_paths": {
+    "markdown": "validation/results/api/report.md",
+    "json": "validation/results/api/result.json",
+    "html": "validation/results/api/report.html",
+    "junit": "validation/results/api/junit.xml",
+    "sarif": "validation/results/api/witness.sarif.json"
+  }
+}

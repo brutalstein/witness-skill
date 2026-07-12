@@ -1,0 +1,8 @@
+{
+  "name": "com.witness.qa",
+  "version": "1.0.0",
+  "displayName": "Witness QA Bridge",
+  "description": "Loopback-free file bridge for Witness screenshots and named test actions.",
+  "unity": "2021.3",
+  "author": {"name": "Witness contributors"}
+}

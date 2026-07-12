@@ -1,0 +1,285 @@
+{
+  "schema_version": "1.0",
+  "cases": [
+    {
+      "id": "signup-server-error",
+      "project_type": "web",
+      "description": "Valid signup returns a visible server error",
+      "expected_findings": [
+        {
+          "id": "signup-server-error",
+          "evidence_contains": [
+            "signup",
+            "server"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "button-noop",
+      "project_type": "web",
+      "description": "Primary button produces no state change",
+      "expected_findings": [
+        {
+          "id": "button-noop",
+          "evidence_contains": [
+            "button",
+            "noop"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "infinite-loading",
+      "project_type": "web",
+      "description": "Loading indicator never resolves",
+      "expected_findings": [
+        {
+          "id": "infinite-loading",
+          "evidence_contains": [
+            "infinite",
+            "loading"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "wrong-redirect",
+      "project_type": "web",
+      "description": "Successful action redirects to an unrelated route",
+      "expected_findings": [
+        {
+          "id": "wrong-redirect",
+          "evidence_contains": [
+            "wrong",
+            "redirect"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "console-crash",
+      "project_type": "web",
+      "description": "Unhandled JavaScript exception blocks interaction",
+      "expected_findings": [
+        {
+          "id": "console-crash",
+          "evidence_contains": [
+            "console",
+            "crash"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "responsive-clipping",
+      "project_type": "web",
+      "description": "Primary controls extend outside a mobile viewport",
+      "expected_findings": [
+        {
+          "id": "responsive-clipping",
+          "evidence_contains": [
+            "responsive",
+            "clipping"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "keyboard-trap",
+      "project_type": "web",
+      "description": "Focus cannot leave a modal",
+      "expected_findings": [
+        {
+          "id": "keyboard-trap",
+          "evidence_contains": [
+            "keyboard",
+            "trap"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "low-contrast-error",
+      "project_type": "web",
+      "description": "Error feedback is unreadable against its background",
+      "expected_findings": [
+        {
+          "id": "low-contrast-error",
+          "evidence_contains": [
+            "low",
+            "contrast"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "api-500",
+      "project_type": "api",
+      "description": "Documented endpoint returns an unexpected 500",
+      "expected_findings": [
+        {
+          "id": "api-500",
+          "evidence_contains": [
+            "api",
+            "500"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "api-schema-drift",
+      "project_type": "api",
+      "description": "Response body violates the documented schema",
+      "expected_findings": [
+        {
+          "id": "api-schema-drift",
+          "evidence_contains": [
+            "api",
+            "schema"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "api-secret-leak",
+      "project_type": "api",
+      "description": "Error response exposes a sensitive token",
+      "expected_findings": [
+        {
+          "id": "api-secret-leak",
+          "evidence_contains": [
+            "api",
+            "secret"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "api-status",
+      "project_type": "api",
+      "description": "Invalid input returns 200 instead of a client error",
+      "expected_findings": [
+        {
+          "id": "api-status",
+          "evidence_contains": [
+            "api",
+            "status"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cli-exit-code",
+      "project_type": "cli",
+      "description": "Failure message is printed with exit code zero",
+      "expected_findings": [
+        {
+          "id": "cli-exit-code",
+          "evidence_contains": [
+            "cli",
+            "exit"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cli-hang",
+      "project_type": "cli",
+      "description": "Interactive command never returns control",
+      "expected_findings": [
+        {
+          "id": "cli-hang",
+          "evidence_contains": [
+            "cli",
+            "hang"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cli-help",
+      "project_type": "cli",
+      "description": "Help omits the required positional argument",
+      "expected_findings": [
+        {
+          "id": "cli-help",
+          "evidence_contains": [
+            "cli",
+            "help"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cli-destructive",
+      "project_type": "cli",
+      "description": "Suggested workflow contains a destructive command",
+      "expected_findings": [
+        {
+          "id": "cli-destructive",
+          "evidence_contains": [
+            "cli",
+            "destructive"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "game-hud-clipping",
+      "project_type": "game",
+      "description": "HUD extends beyond the safe area",
+      "expected_findings": [
+        {
+          "id": "game-hud-clipping",
+          "evidence_contains": [
+            "game",
+            "hud"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "game-z-order",
+      "project_type": "game",
+      "description": "Gameplay sprite renders over a blocking menu",
+      "expected_findings": [
+        {
+          "id": "game-z-order",
+          "evidence_contains": [
+            "game",
+            "z"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "game-frame-residue",
+      "project_type": "game",
+      "description": "Debug or previous-state overlay persists across frames",
+      "expected_findings": [
+        {
+          "id": "game-frame-residue",
+          "evidence_contains": [
+            "game",
+            "frame"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "game-asset-stretch",
+      "project_type": "game",
+      "description": "Asset aspect ratio changes between resolutions",
+      "expected_findings": [
+        {
+          "id": "game-asset-stretch",
+          "evidence_contains": [
+            "game",
+            "asset"
+          ]
+        }
+      ]
+    }
+  ]
+}

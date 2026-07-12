@@ -1,0 +1,121 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+  security-events: write
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e ".[dev]"
+      - run: ruff check .
+      - run: ruff format --check .
+      - run: pytest -m "not e2e and not live" --cov=witness_qa --cov-report=term-missing --cov-fail-under=70
+      - run: witness doctor --json
+      - run: witness detect examples/friendly_cli
+      - run: witness plan examples/game_visual_review --output /tmp/game-plan.md
+
+  browser-e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e ".[dev]"
+      - run: python -m playwright install --with-deps chromium
+      - run: pytest -m e2e
+
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --upgrade pip build
+      - run: python -m build
+      - run: python -m venv /tmp/witness-install
+      - run: /tmp/witness-install/bin/pip install dist/*.whl
+      - run: /tmp/witness-install/bin/witness --help
+      - run: /tmp/witness-install/bin/witness install-engine-bridge unity /tmp/unity/Packages/com.witness.qa
+      - run: /tmp/witness-install/bin/witness install-engine-bridge unreal /tmp/unreal/Plugins/WitnessBridge
+      - run: test -f /tmp/unity/Packages/com.witness.qa/Runtime/WitnessBridge.cs
+      - run: test -f /tmp/unreal/Plugins/WitnessBridge/WitnessBridge.uplugin
+      - name: Smoke-test Codex skill installer and OAuth contract
+        run: |
+          mkdir -p /tmp/witness-fake-bin
+          cat > /tmp/witness-fake-bin/codex <<'SH'
+          #!/usr/bin/env sh
+          if [ "$1" = "login" ] && [ "$2" = "status" ]; then
+            echo "Logged in using ChatGPT"
+            exit 0
+          fi
+          exit 2
+          SH
+          chmod +x /tmp/witness-fake-bin/codex
+          PATH="/tmp/witness-fake-bin:$PATH" python scripts/install_codex.py \
+            --prefix /tmp/witness-codex \
+            --skill-root /tmp/witness-skills \
+            --bin-dir /tmp/witness-bin \
+            --skip-browser
+          PATH="/tmp/witness-bin:/tmp/witness-fake-bin:$PATH" witness --version
+          PATH="/tmp/witness-bin:/tmp/witness-fake-bin:$PATH" witness doctor \
+            --json --strict --skip-browser \
+            --skill-path /tmp/witness-skills/witness/SKILL.md
+          test -f /tmp/witness-skills/witness/SKILL.md
+
+  windows-smoke:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - run: python -m pip install --upgrade pip
+      - run: python -m pip install -e ".[dev]"
+      - run: pytest tests/test_detection.py tests/test_safety.py tests/test_distribution.py tests/test_engine_bridges.py tests/test_electron_adapter.py -q
+      - run: witness install-engine-bridge unity "$env:RUNNER_TEMP\unity\Packages\com.witness.qa"
+      - run: witness install-engine-bridge unreal "$env:RUNNER_TEMP\unreal\Plugins\WitnessBridge"
+      - name: Smoke-test PowerShell Codex installer
+        shell: pwsh
+        run: |
+          $FakeBin = Join-Path $env:RUNNER_TEMP "witness-fake-bin"
+          New-Item -ItemType Directory -Force -Path $FakeBin | Out-Null
+          @'
+          @echo off
+          if "%1"=="login" if "%2"=="status" (
+            echo Logged in using ChatGPT
+            exit /b 0
+          )
+          exit /b 2
+          '@ | Set-Content -Path (Join-Path $FakeBin "codex.cmd") -Encoding ascii
+          $env:PATH = "$FakeBin;$env:PATH"
+          .\scripts\install-codex.ps1 `
+            --prefix (Join-Path $env:RUNNER_TEMP "witness-prefix") `
+            --skill-root (Join-Path $env:RUNNER_TEMP "witness-skills") `
+            --bin-dir (Join-Path $env:RUNNER_TEMP "witness-bin") `
+            --skip-browser
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          & (Join-Path $env:RUNNER_TEMP "witness-prefix\venv\Scripts\witness.exe") --version
+          if (-not (Test-Path (Join-Path $env:RUNNER_TEMP "witness-skills\witness\SKILL.md"))) {
+            throw "Witness skill was not installed"
+          }

@@ -1,0 +1,75 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "witness-qa"
+version = "1.2.0"
+description = "Evidence-backed agentic QA for web, Electron desktop, CLI, API, Unity, Unreal, and visual software."
+readme = "README.md"
+requires-python = ">=3.11"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "Witness contributors" }]
+keywords = ["qa", "testing", "playwright", "agents", "claude", "codex", "vision", "game-testing", "api-testing"]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Topic :: Software Development :: Testing",
+]
+dependencies = [
+  "httpx>=0.27,<1",
+  "pexpect>=4.9,<5; os_name != 'nt'",
+  "pillow>=10.4,<13",
+  "playwright>=1.49,<2",
+  "pydantic>=2.9,<3",
+  "PyYAML>=6.0,<7",
+  "rich>=13.9,<15",
+  "typer>=0.15,<1",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.3,<10",
+  "pytest-cov>=6,<8",
+  "build>=1.2,<2",
+  "ruff>=0.9,<1",
+]
+
+[project.scripts]
+witness = "witness_qa.cli:app"
+
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+include-package-data = true
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+witness_qa = ["builtin_personas/*.yaml", "resources/engine_bridges/**/*"]
+
+[tool.pytest.ini_options]
+addopts = "-q --strict-markers"
+testpaths = ["tests"]
+pythonpath = ["src"]
+markers = [
+  "e2e: tests requiring a locally installed Playwright browser",
+  "live: tests requiring real provider credentials",
+]
+
+[tool.ruff]
+target-version = "py311"
+line-length = 100
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM", "RUF"]
+ignore = ["E501"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101"]

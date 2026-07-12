@@ -1,0 +1,79 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Witness QA Report</title><style>body{font:16px system-ui;max-width:1100px;margin:40px auto;padding:0 20px;background:#f6f7f9;color:#17191d}.finding{background:white;padding:20px;margin:18px 0;border-left:6px solid #777;border-radius:8px;box-shadow:0 2px 10px #0001}.critical{border-color:#7a0019}.high{border-color:#c62828}.medium{border-color:#ef6c00}.low{border-color:#1565c0}img{max-width:100%;border:1px solid #ddd}pre{white-space:pre-wrap;background:#111;color:#eee;padding:16px;border-radius:8px}</style></head><body><h1>Witness QA Report</h1><p>Status: <b>goal_reached</b> · 0 finding(s)</p><details><summary>Raw Markdown</summary><pre># Witness QA Report
+
+## Summary
+
+Witness tested **<REPOSITORY>/examples/friendly_cli** as **Codex OAuth native tester**. The observed flow ended with **Goal Reached** and no mismatch findings were recorded.
+
+## Persona
+
+- **Role:** A realistic user approaching the software from the outside.
+- **Goal:** Discover and run the shout greeting
+- **Success criteria:** The goal is completed with clear, understandable feedback and no errors.
+- **Known constraints:** Do not bypass authentication, verification, or safety controls.
+- **Environment:** desktop, en-US, normal, light
+
+## Findings
+
+No evidence-backed product mismatch was recorded in this session.
+
+## Full Narrative Trace
+
+&lt;details&gt;&lt;summary&gt;Turn 1: Initial observation&lt;/summary&gt;
+
+- **Expectation:** A new user should be able to discover the CLI syntax from a help command.
+- **Observation:** A real terminal session is ready in an isolated project copy.
+- **Judgment:** match (high confidence)
+- **Reasoning:** The next safe action is to inspect the public help surface.
+- **Next action:** run_command: python cli.py --help — Discover the supported arguments and flags.
+- **Observation delta:** `{&quot;changed_text&quot;: [&quot;Suggested entry point: python cli.py --help&quot;, &quot;Exit code of most recently completed command: None&quot;, &quot;Output since last observation:&quot;, &quot;Witness PTY ready in /tmp/witness-sandbox-0eocpivu/friendly_cli&quot;, &quot;Suggested entry point: python cli.py --help&quot;, &quot;Current terminal buffer:&quot;, &quot;Witness PTY ready in /tmp/witness-sandbox-0eocpivu/friendly_cli&quot;, &quot;Suggested entry point: python cli.py --help&quot;], &quot;new_errors&quot;: [], &quot;resolved_errors&quot;: [], &quot;visual_change_ratio&quot;: 0.0, &quot;changed_interactives&quot;: []}`
+- **Evidence:** [screenshots/001_terminal.png](screenshots/001_terminal.png)
+
+&lt;/details&gt;
+
+&lt;details&gt;&lt;summary&gt;Turn 2: run_command: python cli.py --help&lt;/summary&gt;
+
+- **Expectation:** The help output should identify the required name and optional shout flag.
+- **Observation:** The terminal shows usage information with a name argument and --shout option, and the command exits successfully.
+- **Judgment:** match (high confidence)
+- **Reasoning:** The CLI is discoverable enough to attempt its representative happy path.
+- **Next action:** run_command: python cli.py Ada --shout — Exercise the documented primary behavior.
+- **Observation delta:** `{&quot;changed_text&quot;: [&quot;$ python cli.py --help&quot;, &quot;--shout&quot;, &quot;-h, --help  show this help message and exit&quot;, &quot;A small CLI used by Witness integration tests&quot;, &quot;Exit code of most recently completed command: 0&quot;, &quot;[exit 0]&quot;, &quot;name&quot;, &quot;options:&quot;, &quot;positional arguments:&quot;, &quot;usage: friendly [-h] [--shout] [name]&quot;], &quot;new_errors&quot;: [], &quot;resolved_errors&quot;: [], &quot;visual_change_ratio&quot;: 0.03677, &quot;changed_interactives&quot;: []}`
+- **Evidence:** [screenshots/002_terminal.png](screenshots/002_terminal.png)
+
+&lt;/details&gt;
+
+&lt;details&gt;&lt;summary&gt;Turn 3: run_command: python cli.py Ada --shout&lt;/summary&gt;
+
+- **Expectation:** The CLI should greet Ada in uppercase and return exit code zero.
+- **Observation:** The terminal prints &#x27;HELLO, ADA!&#x27; and the most recent command exits with code 0.
+- **Judgment:** match (high confidence)
+- **Reasoning:** The documented happy path completed with clear output and a correct success exit code.
+- **Next action:** goal_reached — The CLI goal is observably complete.
+- **Observation delta:** `{&quot;changed_text&quot;: [&quot;$ python cli.py Ada --shout&quot;, &quot;HELLO, ADA!&quot;], &quot;new_errors&quot;: [], &quot;resolved_errors&quot;: [], &quot;visual_change_ratio&quot;: 0.05301, &quot;changed_interactives&quot;: []}`
+- **Evidence:** [screenshots/003_terminal.png](screenshots/003_terminal.png)
+
+&lt;/details&gt;
+
+## Session Metadata
+
+- **Witness:** 1.1.0
+- **Project revision:** `unknown`
+- **Project type:** cli
+- **Detection confidence:** high
+- **Adapter:** cli
+- **Reasoning provider/model:** codex-host / `current-codex-session`
+- **Turns:** 3
+- **Duration:** 3.28s
+- **Provider requests:** 3
+- **Tokens:** 0 input / 0 output
+- **Estimated cost:** $0.0000
+- **Started:** 2026-07-11T22:44:56.664310+00:00
+- **Finished:** 2026-07-11T22:44:59.939970+00:00
+
+### Detection Evidence
+
+
+---
+
+Generated by Witness. Verify findings against the linked evidence before acting.
+</pre></details></body></html>

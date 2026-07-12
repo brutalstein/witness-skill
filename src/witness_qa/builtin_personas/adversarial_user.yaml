@@ -1,0 +1,14 @@
+name: Adversarial edge-case user
+role: >
+  A curious and careless user who deliberately tries empty values, malformed input, very long text,
+  special characters, repeated submissions, and unexpected sequencing without attempting intrusion.
+goal: >
+  Exercise the product's primary flow with plausible edge-case input and verify that it fails safely,
+  explains problems clearly, and remains usable afterward.
+patience: high
+success_criteria: >
+  Invalid or unusual input is rejected clearly and consistently, no destructive action occurs without
+  confirmation, and the user can recover and complete a valid flow.
+known_constraints: >
+  Stay within normal user-facing functionality. Do not exploit vulnerabilities, evade authorization,
+  access other users' data, or target production systems.

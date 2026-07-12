@@ -1,0 +1,111 @@
+{
+  "version": "2.1.0",
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "Witness",
+          "version": "1.0.0",
+          "rules": [
+            {
+              "id": "WITNESS-05d780799f239587",
+              "name": "AgenticProductFinding",
+              "shortDescription": {
+                "text": "The right SHIELDS panel continues beyond the right frame edge and its label is rendered in very low-contrast gray, while the left SCORE panel is fully visible and bright."
+              },
+              "help": {
+                "text": "Anchor both top HUD panels to a shared safe-area container, clamp the right edge, and use the approved high-contrast text token; verify at 16:9, ultrawide, and reduced-width resolutions."
+              }
+            },
+            {
+              "id": "WITNESS-ac73e917b72fb101",
+              "name": "AgenticProductFinding",
+              "shortDescription": {
+                "text": "A bright magenta rectangle and the text 'STALE DEBUG BOUNDS' remain over the central gameplay object in the final frame."
+              },
+              "help": {
+                "text": "Gate diagnostic rendering behind development-build flags, clear overlay state on scene transitions, and add a release-capture check that rejects debug-layer colors/labels."
+              }
+            },
+            {
+              "id": "WITNESS-06fa60ee29920954",
+              "name": "AgenticProductFinding",
+              "shortDescription": {
+                "text": "The SCORE panel shifts downward relative to the previous frame, and the MISSION READY panel shifts left and downward while the center object and SHIELDS panel remain stable."
+              },
+              "help": {
+                "text": "Use fixed safe-area anchors and shared layout constraints for persistent HUD elements; add screenshot assertions for panel bounds across stable gameplay frames."
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "WITNESS-05d780799f239587",
+          "level": "error",
+          "message": {
+            "text": "The right SHIELDS panel continues beyond the right frame edge and its label is rendered in very low-contrast gray, while the left SCORE panel is fully visible and bright.\nExpected: The gameplay HUD should remain inside the 1280×720 safe area, use consistent panel geometry, and keep critical shield text readable."
+          },
+          "properties": {
+            "persona": "Game visual QA director",
+            "severity": "high",
+            "fingerprint": "05d780799f239587"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "screenshots/001_game_frame.png"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "WITNESS-ac73e917b72fb101",
+          "level": "error",
+          "message": {
+            "text": "A bright magenta rectangle and the text 'STALE DEBUG BOUNDS' remain over the central gameplay object in the final frame.\nExpected: A player-facing gameplay frame should not expose editor/debug overlays, and debug labels should never occlude the focal object."
+          },
+          "properties": {
+            "persona": "Game visual QA director",
+            "severity": "high",
+            "fingerprint": "ac73e917b72fb101"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "screenshots/003_game_frame.png"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "WITNESS-06fa60ee29920954",
+          "level": "warning",
+          "message": {
+            "text": "The SCORE panel shifts downward relative to the previous frame, and the MISSION READY panel shifts left and downward while the center object and SHIELDS panel remain stable.\nExpected: Persistent HUD panels should keep stable anchors and baselines across adjacent frames unless an intentional animation is visible."
+          },
+          "properties": {
+            "persona": "Game visual QA director",
+            "severity": "medium",
+            "fingerprint": "06fa60ee29920954"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "screenshots/002_game_frame.png"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

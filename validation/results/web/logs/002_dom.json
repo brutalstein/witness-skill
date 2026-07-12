@@ -1,0 +1,279 @@
+{
+  "title": "Acorn Notes — Sign up",
+  "url": "http://127.0.0.1:4173/",
+  "viewport": {
+    "width": 1440,
+    "height": 1000
+  },
+  "scroll": {
+    "x": 0,
+    "y": 0,
+    "max_y": 0
+  },
+  "visible_text": "Create your account\n\nStart organizing your notes in one calm, searchable place.\n\nEmail\nPassword\n Create account",
+  "interactive": [
+    {
+      "index": 5,
+      "tag": "input",
+      "role": "",
+      "name": "email",
+      "type": "email",
+      "placeholder": "",
+      "href": "",
+      "disabled": false,
+      "box": {
+        "x": 505,
+        "y": 469,
+        "width": 430,
+        "height": 46
+      },
+      "font_size": "16px",
+      "color": "rgb(0, 0, 0)",
+      "background": "rgb(255, 255, 255)",
+      "contrast_ratio": 21
+    },
+    {
+      "index": 7,
+      "tag": "input",
+      "role": "",
+      "name": "password",
+      "type": "password",
+      "placeholder": "",
+      "href": "",
+      "disabled": false,
+      "box": {
+        "x": 505,
+        "y": 563,
+        "width": 430,
+        "height": 46
+      },
+      "font_size": "16px",
+      "color": "rgb(0, 0, 0)",
+      "background": "rgb(255, 255, 255)",
+      "contrast_ratio": 21
+    },
+    {
+      "index": 8,
+      "tag": "button",
+      "role": "",
+      "name": "Create account",
+      "type": "submit",
+      "placeholder": "",
+      "href": "",
+      "disabled": false,
+      "box": {
+        "x": 505,
+        "y": 633,
+        "width": 430,
+        "height": 46
+      },
+      "font_size": "16px",
+      "color": "rgb(255, 255, 255)",
+      "background": "rgb(49, 87, 213)",
+      "contrast_ratio": 6.078691572956118
+    }
+  ],
+  "elements": [
+    {
+      "index": 0,
+      "tag": "main",
+      "role": "",
+      "name": "Create your account\n\nStart organizing your notes in one calm, searchable place.\n\nEmail\nPassword\n Create account",
+      "type": "",
+      "placeholder": "",
+      "href": "",
+      "disabled": false,
+      "box": {
+        "x": 471,
+        "y": 287,
+        "width": 498,
+        "height": 426
+      },
+      "font_size": "16px",
+      "color": "rgb(31, 41, 55)",
+      "background": "rgb(255, 255, 255)",
+      "contrast_ratio": 14.67911847763172
+    },
+    {
+      "index": 1,
+      "tag": "h1",
+      "role": "",
+      "name": "Create your account",
+      "type": "",
+      "placeholder": "",
+      "href": "",
+      "disabled": false,
+      "box": {
+        "x": 505,
+        "y": 321,
+        "width": 430,
+        "height": 36
+      },
+      "font_size": "30px",
+      "color": "rgb(31, 41, 55)",
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast_ratio": 1.4306036177853692
+    },
+    {
+      "index": 2,
+      "tag": "p",
+      "role": "",
+      "name": "Start organizing your notes in one calm, searchable place.",
+      "type": "",
+      "placeholder": "",
+      "href": "",
+      "disabled": false,
+      "box": {
+        "x": 505,
+        "y": 373,
+        "width": 430,
+        "height": 48
+      },
+      "font_size": "16px",
+      "color": "rgb(100, 116, 139)",
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast_ratio": 4.412837518720645
+    },
+    {
+      "index": 3,
+      "tag": "form",
+      "role": "",
+      "name": "Email\nPassword\n Create account",
+      "type": "",
+      "placeholder": "",
+      "href": "",
+      "disabled": false,
+      "box": {
+        "x": 505,
+        "y": 441,
+        "width": 430,
+        "height": 238
+      },
+      "font_size": "16px",
+      "color": "rgb(31, 41, 55)",
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast_ratio": 1.4306036177853692
+    },
+    {
+      "index": 4,
+      "tag": "label",
+      "role": "",
+      "name": "Email",
+      "type": "",
+      "placeholder": "",
+      "href": "",
+      "disabled": false,
+      "box": {
+        "x": 505,
+        "y": 441,
+        "width": 430,
+        "height": 20
+      },
+      "font_size": "16px",
+      "color": "rgb(31, 41, 55)",
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast_ratio": 1.4306036177853692
+    },
+    {
+      "index": 5,
+      "tag": "input",
+      "role": "",
+      "name": "email",
+      "type": "email",
+      "placeholder": "",
+      "href": "",
+      "disabled": false,
+      "box": {
+        "x": 505,
+        "y": 469,
+        "width": 430,
+        "height": 46
+      },
+      "font_size": "16px",
+      "color": "rgb(0, 0, 0)",
+      "background": "rgb(255, 255, 255)",
+      "contrast_ratio": 21
+    },
+    {
+      "index": 6,
+      "tag": "label",
+      "role": "",
+      "name": "Password",
+      "type": "",
+      "placeholder": "",
+      "href": "",
+      "disabled": false,
+      "box": {
+        "x": 505,
+        "y": 535,
+        "width": 430,
+        "height": 20
+      },
+      "font_size": "16px",
+      "color": "rgb(31, 41, 55)",
+      "background": "rgba(0, 0, 0, 0)",
+      "contrast_ratio": 1.4306036177853692
+    },
+    {
+      "index": 7,
+      "tag": "input",
+      "role": "",
+      "name": "password",
+      "type": "password",
+      "placeholder": "",
+      "href": "",
+      "disabled": false,
+      "box": {
+        "x": 505,
+        "y": 563,
+        "width": 430,
+        "height": 46
+      },
+      "font_size": "16px",
+      "color": "rgb(0, 0, 0)",
+      "background": "rgb(255, 255, 255)",
+      "contrast_ratio": 21
+    },
+    {
+      "index": 8,
+      "tag": "button",
+      "role": "",
+      "name": "Create account",
+      "type": "submit",
+      "placeholder": "",
+      "href": "",
+      "disabled": false,
+      "box": {
+        "x": 505,
+        "y": 633,
+        "width": 430,
+        "height": 46
+      },
+      "font_size": "16px",
+      "color": "rgb(255, 255, 255)",
+      "background": "rgb(49, 87, 213)",
+      "contrast_ratio": 6.078691572956118
+    }
+  ],
+  "alerts": [],
+  "visual_heuristics": {
+    "likely_clipping": [],
+    "alignment_warnings": [],
+    "contrast_warnings": [
+      "'Create your account' has estimated contrast ratio 1.43:1.",
+      "'Email\nPassword\n Create account' has estimated contrast ratio 1.43:1.",
+      "'Email' has estimated contrast ratio 1.43:1.",
+      "'Password' has estimated contrast ratio 1.43:1."
+    ]
+  },
+  "network_events": [
+    {
+      "method": "GET",
+      "url": "http://127.0.0.1:4173/",
+      "status": 200,
+      "resource_type": "document"
+    }
+  ],
+  "dialogs": [],
+  "downloads": []
+}

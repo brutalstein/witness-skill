@@ -1,0 +1,63 @@
+{
+  "mode": "native-codex-host",
+  "requires_api_key": false,
+  "real_adapter": "CLIAdapter/PTy",
+  "turns_submitted": [
+    1,
+    2,
+    3
+  ],
+  "terminal": true,
+  "status": "finished",
+  "report": null,
+  "result": {
+    "overall_status": "goal_reached",
+    "personas_run": [
+      "Codex OAuth native tester"
+    ],
+    "findings": [],
+    "report_path": "<REPOSITORY>/validation/codex-native-session/report.md",
+    "trace_path": "<REPOSITORY>/validation/codex-native-session/logs/session_trace.json",
+    "profile": {
+      "target": "<REPOSITORY>/examples/friendly_cli",
+      "project_root": "<REPOSITORY>/examples/friendly_cli",
+      "project_type": "cli",
+      "entry_point": "python cli.py --help",
+      "reachable_address": null,
+      "confidence": "high",
+      "raw_signals": [],
+      "candidates": [],
+      "metadata": {}
+    },
+    "metadata": {
+      "adapter": "cli",
+      "provider": "codex-host",
+      "model": "current-codex-session",
+      "project_type": "cli",
+      "project_confidence": "high",
+      "started_at": "2026-07-11T22:44:56.664310Z",
+      "finished_at": "2026-07-11T22:44:59.939970Z",
+      "duration_seconds": 3.27566,
+      "turns": 3,
+      "witness_version": "1.1.0",
+      "project_revision": "",
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "requests": 3,
+        "estimated_cost_usd": 0.0,
+        "provider_latency_seconds": 0.0
+      },
+      "seed": 0
+    },
+    "infrastructure_errors": [],
+    "artifact_paths": {
+      "markdown": "<REPOSITORY>/validation/codex-native-session/report.md",
+      "json": "<REPOSITORY>/validation/codex-native-session/result.json",
+      "html": "<REPOSITORY>/validation/codex-native-session/report.html",
+      "junit": "<REPOSITORY>/validation/codex-native-session/junit.xml",
+      "sarif": "<REPOSITORY>/validation/codex-native-session/witness.sarif.json"
+    }
+  },
+  "stale_turn_guard": "covered by tests/test_host_session.py"
+}

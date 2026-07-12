@@ -1,0 +1,422 @@
+{
+  "schema_version": "2.0",
+  "manifest": {
+    "witness_version": "1.0.0",
+    "project_revision": "",
+    "provider": "scripted",
+    "model": "host-agent-decisions",
+    "seed": 0
+  },
+  "result": {
+    "overall_status": "goal_reached",
+    "personas_run": [
+      "Ad-hoc user"
+    ],
+    "findings": [],
+    "report_path": "validation/results/cli/report.md",
+    "trace_path": "validation/results/cli/logs/session_trace.json",
+    "profile": {
+      "target": "examples/friendly_cli",
+      "project_root": "examples/friendly_cli",
+      "project_type": "cli",
+      "entry_point": "python cli.py --help",
+      "reachable_address": null,
+      "confidence": "medium",
+      "raw_signals": [
+        {
+          "source": "cli.py",
+          "project_type": "cli",
+          "weight": 4.0,
+          "detail": "CLI framework and executable main guard detected"
+        },
+        {
+          "source": "README.md",
+          "project_type": "cli",
+          "weight": 4.0,
+          "detail": "README invocation: python cli.py --help"
+        }
+      ],
+      "candidates": [
+        {
+          "project_type": "cli",
+          "score": 8.0
+        }
+      ],
+      "metadata": {
+        "readme": "README.md",
+        "readme_excerpt": "# Friendly CLI example\n\nRun the CLI with:\n\n```bash\npython cli.py --help\n```\n\nA normal invocation is `python cli.py Ada --shout`.\n",
+        "readme_commands": [
+          "python cli.py --help"
+        ],
+        "package_scripts": {},
+        "detected_port": null,
+        "scan_file_count": 2,
+        "frames": [],
+        "capture_command": null,
+        "input_command": null,
+        "reference_images": []
+      }
+    },
+    "metadata": {
+      "adapter": "cli",
+      "provider": "scripted",
+      "model": "host-agent-decisions",
+      "project_type": "cli",
+      "project_confidence": "medium",
+      "started_at": "2026-07-11T21:55:24.605348Z",
+      "finished_at": "2026-07-11T21:55:27.662271Z",
+      "duration_seconds": 3.056923,
+      "turns": 3,
+      "witness_version": "1.0.0",
+      "project_revision": "",
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "requests": 3,
+        "estimated_cost_usd": 0.0,
+        "provider_latency_seconds": 0.0
+      },
+      "seed": 0
+    },
+    "infrastructure_errors": [],
+    "artifact_paths": {
+      "markdown": "validation/results/cli/report.md",
+      "json": "validation/results/cli/result.json",
+      "html": "validation/results/cli/report.html",
+      "junit": "validation/results/cli/junit.xml",
+      "sarif": "validation/results/cli/witness.sarif.json"
+    }
+  },
+  "persona": {
+    "name": "Ad-hoc user",
+    "role": "A realistic user whose behavior is guided by the supplied goal.",
+    "goal": "Inspect help and run a shouted greeting for Ada",
+    "patience": "medium",
+    "success_criteria": "The goal is completed with clear, understandable feedback and no errors.",
+    "known_constraints": "Do not bypass authentication, verification, or safety controls.",
+    "viewport": "desktop",
+    "locale": "en-US",
+    "network_profile": "normal",
+    "color_scheme": "light",
+    "reduced_motion": false,
+    "input_mode": "pointer",
+    "visual_focus": []
+  },
+  "steps": [
+    {
+      "turn": 1,
+      "action": null,
+      "action_result": null,
+      "observation": {
+        "adapter": "cli",
+        "summary": "CLI terminal state captured",
+        "text": "Suggested entry point: python cli.py --help\nExit code of most recently completed command: None\nOutput since last observation:\nWitness PTY ready in /tmp/witness-sandbox-yx3cpnjv/friendly_cli\nSuggested entry point: python cli.py --help\n\n\nCurrent terminal buffer:\nWitness PTY ready in /tmp/witness-sandbox-yx3cpnjv/friendly_cli\nSuggested entry point: python cli.py --help\n",
+        "screenshot_path": "screenshots/001_terminal.png",
+        "structured_path": "logs/terminal-transcript.txt",
+        "exit_code": null,
+        "errors": [],
+        "visual_metrics": {
+          "width": 900,
+          "height": 300,
+          "entropy": 0.58756,
+          "edge_density": 0.00787,
+          "blank_ratio": 0.87891,
+          "dominant_colors": [
+            "#111418",
+            "#252a31",
+            "#0f1216",
+            "#3d4147",
+            "#1a1e23",
+            "#242a30"
+          ],
+          "perceptual_hash": "ffe0000000000000",
+          "change_ratio": 0.0,
+          "likely_clipping": [],
+          "alignment_warnings": [
+            "Visible composition is strongly vertically unbalanced."
+          ],
+          "contrast_warnings": [
+            "The frame has very low global luminance contrast."
+          ]
+        },
+        "delta": {
+          "changed_text": [
+            "Suggested entry point: python cli.py --help",
+            "Exit code of most recently completed command: None",
+            "Output since last observation:",
+            "Witness PTY ready in /tmp/witness-sandbox-yx3cpnjv/friendly_cli",
+            "Suggested entry point: python cli.py --help",
+            "Current terminal buffer:",
+            "Witness PTY ready in /tmp/witness-sandbox-yx3cpnjv/friendly_cli",
+            "Suggested entry point: python cli.py --help"
+          ],
+          "new_errors": [],
+          "resolved_errors": [],
+          "visual_change_ratio": 0.0,
+          "changed_interactives": []
+        },
+        "metadata": {
+          "suggested_entry_point": "python cli.py --help",
+          "sandbox_root": "/tmp/witness-sandbox-yx3cpnjv/friendly_cli",
+          "changed_files": []
+        },
+        "captured_at": "2026-07-11T21:55:24.736291Z"
+      },
+      "decision": {
+        "expectation": "A new user should be able to discover the CLI syntax from a help command.",
+        "action_taken": "initial_observation",
+        "observation_summary": "A real terminal session is ready in an isolated project copy.",
+        "judgment": "match",
+        "confidence": "high",
+        "reasoning": "The next safe action is to inspect the public help surface.",
+        "hypothesis_if_mismatch": "",
+        "severity": "none",
+        "suggested_investigation": "",
+        "visual_assessment": "The terminal evidence is legible.",
+        "next_action": {
+          "kind": "run_command",
+          "target": "",
+          "source": "",
+          "text": "",
+          "key": "",
+          "url": "",
+          "direction": "",
+          "command": "python cli.py --help",
+          "method": "",
+          "path": "",
+          "headers": {},
+          "body": null,
+          "files": [],
+          "option": "",
+          "tab_index": 0,
+          "seconds": 0.0,
+          "reason": "Discover the supported arguments and flags."
+        }
+      }
+    },
+    {
+      "turn": 2,
+      "action": {
+        "kind": "run_command",
+        "target": "",
+        "source": "",
+        "text": "",
+        "key": "",
+        "url": "",
+        "direction": "",
+        "command": "python cli.py --help",
+        "method": "",
+        "path": "",
+        "headers": {},
+        "body": null,
+        "files": [],
+        "option": "",
+        "tab_index": 0,
+        "seconds": 0.0,
+        "reason": "Discover the supported arguments and flags."
+      },
+      "action_result": {
+        "success": true,
+        "summary": "Ran command: python cli.py --help",
+        "infrastructure_error": "",
+        "metadata": {
+          "exit_code": 0
+        }
+      },
+      "observation": {
+        "adapter": "cli",
+        "summary": "CLI terminal state captured",
+        "text": "Suggested entry point: python cli.py --help\nExit code of most recently completed command: 0\nOutput since last observation:\n$ python cli.py --help\n\nusage: friendly [-h] [--shout] [name]\n\nA small CLI used by Witness integration tests\n\npositional arguments:\n  name\n\noptions:\n  -h, --help  show this help message and exit\n  --shout\n\n\n[exit 0]\n\n\nCurrent terminal buffer:\nWitness PTY ready in /tmp/witness-sandbox-yx3cpnjv/friendly_cli\nSuggested entry point: python cli.py --help\n$ python cli.py --help\n\nusage: friendly [-h] [--shout] [name]\n\nA small CLI used by Witness integration tests\n\npositional arguments:\n  name\n\noptions:\n  -h, --help  show this help message and exit\n  --shout\n\n\n[exit 0]\n",
+        "screenshot_path": "screenshots/002_terminal.png",
+        "structured_path": "logs/terminal-transcript.txt",
+        "exit_code": 0,
+        "errors": [],
+        "visual_metrics": {
+          "width": 900,
+          "height": 340,
+          "entropy": 0.67097,
+          "edge_density": 0.01434,
+          "blank_ratio": 0.85846,
+          "dominant_colors": [
+            "#111418",
+            "#252a31",
+            "#0f1216",
+            "#45484e",
+            "#191d21",
+            "#111419"
+          ],
+          "perceptual_hash": "ffe0c0c080c08000",
+          "change_ratio": 0.03678,
+          "likely_clipping": [],
+          "alignment_warnings": [],
+          "contrast_warnings": [
+            "The frame has very low global luminance contrast."
+          ]
+        },
+        "delta": {
+          "changed_text": [
+            "$ python cli.py --help",
+            "--shout",
+            "-h, --help  show this help message and exit",
+            "A small CLI used by Witness integration tests",
+            "Exit code of most recently completed command: 0",
+            "[exit 0]",
+            "name",
+            "options:",
+            "positional arguments:",
+            "usage: friendly [-h] [--shout] [name]"
+          ],
+          "new_errors": [],
+          "resolved_errors": [],
+          "visual_change_ratio": 0.03678,
+          "changed_interactives": []
+        },
+        "metadata": {
+          "suggested_entry_point": "python cli.py --help",
+          "sandbox_root": "/tmp/witness-sandbox-yx3cpnjv/friendly_cli",
+          "changed_files": []
+        },
+        "captured_at": "2026-07-11T21:55:26.068943Z"
+      },
+      "decision": {
+        "expectation": "The help output should identify the required name and optional shout flag.",
+        "action_taken": "run_command: python cli.py --help",
+        "observation_summary": "The terminal shows usage information with a name argument and --shout option, and the command exits successfully.",
+        "judgment": "match",
+        "confidence": "high",
+        "reasoning": "The CLI is discoverable enough to attempt its representative happy path.",
+        "hypothesis_if_mismatch": "",
+        "severity": "none",
+        "suggested_investigation": "",
+        "visual_assessment": "Help text is readable and not visibly corrupted.",
+        "next_action": {
+          "kind": "run_command",
+          "target": "",
+          "source": "",
+          "text": "",
+          "key": "",
+          "url": "",
+          "direction": "",
+          "command": "python cli.py Ada --shout",
+          "method": "",
+          "path": "",
+          "headers": {},
+          "body": null,
+          "files": [],
+          "option": "",
+          "tab_index": 0,
+          "seconds": 0.0,
+          "reason": "Exercise the documented primary behavior."
+        }
+      }
+    },
+    {
+      "turn": 3,
+      "action": {
+        "kind": "run_command",
+        "target": "",
+        "source": "",
+        "text": "",
+        "key": "",
+        "url": "",
+        "direction": "",
+        "command": "python cli.py Ada --shout",
+        "method": "",
+        "path": "",
+        "headers": {},
+        "body": null,
+        "files": [],
+        "option": "",
+        "tab_index": 0,
+        "seconds": 0.0,
+        "reason": "Exercise the documented primary behavior."
+      },
+      "action_result": {
+        "success": true,
+        "summary": "Ran command: python cli.py Ada --shout",
+        "infrastructure_error": "",
+        "metadata": {
+          "exit_code": 0
+        }
+      },
+      "observation": {
+        "adapter": "cli",
+        "summary": "CLI terminal state captured",
+        "text": "Suggested entry point: python cli.py --help\nExit code of most recently completed command: 0\nOutput since last observation:\n$ python cli.py Ada --shout\n\nHELLO, ADA!\n\n\n[exit 0]\n\n\nCurrent terminal buffer:\nWitness PTY ready in /tmp/witness-sandbox-yx3cpnjv/friendly_cli\nSuggested entry point: python cli.py --help\n$ python cli.py --help\n\nusage: friendly [-h] [--shout] [name]\n\nA small CLI used by Witness integration tests\n\npositional arguments:\n  name\n\noptions:\n  -h, --help  show this help message and exit\n  --shout\n\n\n[exit 0]\n$ python cli.py Ada --shout\n\nHELLO, ADA!\n\n\n[exit 0]\n",
+        "screenshot_path": "screenshots/003_terminal.png",
+        "structured_path": "logs/terminal-transcript.txt",
+        "exit_code": 0,
+        "errors": [],
+        "visual_metrics": {
+          "width": 900,
+          "height": 442,
+          "entropy": 0.57223,
+          "edge_density": 0.01244,
+          "blank_ratio": 0.87978,
+          "dominant_colors": [
+            "#111418",
+            "#252a31",
+            "#3e4247",
+            "#0f1216",
+            "#1a1e22",
+            "#111417"
+          ],
+          "perceptual_hash": "ffc0c080c0808000",
+          "change_ratio": 0.05302,
+          "likely_clipping": [],
+          "alignment_warnings": [],
+          "contrast_warnings": [
+            "The frame has very low global luminance contrast."
+          ]
+        },
+        "delta": {
+          "changed_text": [
+            "$ python cli.py Ada --shout",
+            "HELLO, ADA!"
+          ],
+          "new_errors": [],
+          "resolved_errors": [],
+          "visual_change_ratio": 0.05302,
+          "changed_interactives": []
+        },
+        "metadata": {
+          "suggested_entry_point": "python cli.py --help",
+          "sandbox_root": "/tmp/witness-sandbox-yx3cpnjv/friendly_cli",
+          "changed_files": []
+        },
+        "captured_at": "2026-07-11T21:55:27.510258Z"
+      },
+      "decision": {
+        "expectation": "The CLI should greet Ada in uppercase and return exit code zero.",
+        "action_taken": "run_command: python cli.py Ada --shout",
+        "observation_summary": "The terminal prints 'HELLO, ADA!' and the most recent command exits with code 0.",
+        "judgment": "match",
+        "confidence": "high",
+        "reasoning": "The documented happy path completed with clear output and a correct success exit code.",
+        "hypothesis_if_mismatch": "",
+        "severity": "none",
+        "suggested_investigation": "",
+        "visual_assessment": "Terminal output is concise and visually legible.",
+        "next_action": {
+          "kind": "goal_reached",
+          "target": "",
+          "source": "",
+          "text": "",
+          "key": "",
+          "url": "",
+          "direction": "",
+          "command": "",
+          "method": "",
+          "path": "",
+          "headers": {},
+          "body": null,
+          "files": [],
+          "option": "",
+          "tab_index": 0,
+          "seconds": 0.0,
+          "reason": "The CLI goal is observably complete."
+        }
+      }
+    }
+  ]
+}

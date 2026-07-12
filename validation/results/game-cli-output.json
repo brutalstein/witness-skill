@@ -1,0 +1,126 @@
+{
+  "overall_status": "goal_blocked",
+  "personas_run": [
+    "Game visual QA director"
+  ],
+  "findings": [
+    {
+      "fingerprint": "05d780799f239587",
+      "persona": "Game visual QA director",
+      "severity": "high",
+      "summary": "The right SHIELDS panel continues beyond the right frame edge and its label is rendered in very low-contrast gray, while the left SCORE panel is fully visible and bright.",
+      "expectation": "The gameplay HUD should remain inside the 1280×720 safe area, use consistent panel geometry, and keep critical shield text readable.",
+      "observation": "The right SHIELDS panel continues beyond the right frame edge and its label is rendered in very low-contrast gray, while the left SCORE panel is fully visible and bright.",
+      "evidence_path": "screenshots/001_game_frame.png",
+      "reasoning": "A critical status display is both partially clipped and substantially less readable than its symmetric counterpart, creating resolution-dependent information loss and inconsistent hierarchy.",
+      "hypothesis": "The right HUD anchor or width may be calculated from an incorrect canvas boundary, and the shield text may be using a disabled/placeholder color token.",
+      "suggested_investigation": "Anchor both top HUD panels to a shared safe-area container, clamp the right edge, and use the approved high-contrast text token; verify at 16:9, ultrawide, and reduced-width resolutions.",
+      "visual_assessment": "Confirmed clipping at the right edge, asymmetric border color, and poor text contrast in the SHIELDS panel.",
+      "turn": 1,
+      "occurrences": 1
+    },
+    {
+      "fingerprint": "ac73e917b72fb101",
+      "persona": "Game visual QA director",
+      "severity": "high",
+      "summary": "A bright magenta rectangle and the text 'STALE DEBUG BOUNDS' remain over the central gameplay object in the final frame.",
+      "expectation": "A player-facing gameplay frame should not expose editor/debug overlays, and debug labels should never occlude the focal object.",
+      "observation": "A bright magenta rectangle and the text 'STALE DEBUG BOUNDS' remain over the central gameplay object in the final frame.",
+      "evidence_path": "screenshots/003_game_frame.png",
+      "reasoning": "The debug overlay is unmistakably player-visible, conflicts with the art direction, and partially occludes the central object.",
+      "hypothesis": "A development-only bounds renderer or stale diagnostic layer may be enabled in the player build or not cleared during a state transition.",
+      "suggested_investigation": "Gate diagnostic rendering behind development-build flags, clear overlay state on scene transitions, and add a release-capture check that rejects debug-layer colors/labels.",
+      "visual_assessment": "Confirmed high-saturation debug bounds and text with incorrect z-order over the gameplay focal point.",
+      "turn": 3,
+      "occurrences": 1
+    },
+    {
+      "fingerprint": "06fa60ee29920954",
+      "persona": "Game visual QA director",
+      "severity": "medium",
+      "summary": "The SCORE panel shifts downward relative to the previous frame, and the MISSION READY panel shifts left and downward while the center object and SHIELDS panel remain stable.",
+      "expectation": "Persistent HUD panels should keep stable anchors and baselines across adjacent frames unless an intentional animation is visible.",
+      "observation": "The SCORE panel shifts downward relative to the previous frame, and the MISSION READY panel shifts left and downward while the center object and SHIELDS panel remain stable.",
+      "evidence_path": "screenshots/002_game_frame.png",
+      "reasoning": "Independent movement of otherwise static HUD containers produces visible jitter and breaks alignment consistency across frames.",
+      "hypothesis": "The panels may be positioned from content-dependent bounds or separate animation/layout systems instead of stable anchors.",
+      "suggested_investigation": "Use fixed safe-area anchors and shared layout constraints for persistent HUD elements; add screenshot assertions for panel bounds across stable gameplay frames.",
+      "visual_assessment": "The top-left and bottom-center containers visibly drift while the rest of the composition is unchanged.",
+      "turn": 2,
+      "occurrences": 1
+    }
+  ],
+  "report_path": "validation/results/game/report.md",
+  "trace_path": "validation/results/game/logs/session_trace.json",
+  "profile": {
+    "target": "examples/game_visual_review",
+    "project_root": "examples/game_visual_review",
+    "project_type": "game",
+    "entry_point": null,
+    "reachable_address": null,
+    "confidence": "medium",
+    "raw_signals": [
+      {
+        "source": "filesystem",
+        "project_type": "game",
+        "weight": 6.0,
+        "detail": "Game/UI screenshot sequence detected"
+      }
+    ],
+    "candidates": [
+      {
+        "project_type": "game",
+        "score": 6.0
+      }
+    ],
+    "metadata": {
+      "readme": "README.md",
+      "readme_excerpt": "# Game visual review example\n\nThis fixture contains three intentionally defective gameplay frames and three approved reference frames.\n\n```bash\nwitness run --project examples/game_visual_review/frames \\\n  --adapter game \\\n  --persona game-visual-director \\\n  --provider command \\\n  --agent-command './your-model-wrapper'\n```\n\nUse `witness.yaml` to connect a running Godot/Unity/Unreal build through engine-specific `capture_command` and `input_command` bridges. Browser games can be tested directly with `WebAdapter`.\n",
+      "readme_commands": [],
+      "package_scripts": {},
+      "detected_port": null,
+      "scan_file_count": 10,
+      "frames": [
+        "frames/frame_01.png",
+        "frames/frame_02.png",
+        "frames/frame_03.png"
+      ],
+      "capture_command": null,
+      "input_command": null,
+      "reference_images": [
+        "references/frame_01.png",
+        "references/frame_02.png",
+        "references/frame_03.png"
+      ]
+    }
+  },
+  "metadata": {
+    "adapter": "game",
+    "provider": "scripted",
+    "model": "host-agent-decisions",
+    "project_type": "game",
+    "project_confidence": "medium",
+    "started_at": "2026-07-11T21:56:39.480466Z",
+    "finished_at": "2026-07-11T21:56:39.871909Z",
+    "duration_seconds": 0.391443,
+    "turns": 3,
+    "witness_version": "1.0.0",
+    "project_revision": "",
+    "usage": {
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "requests": 3,
+      "estimated_cost_usd": 0.0,
+      "provider_latency_seconds": 0.0
+    },
+    "seed": 0
+  },
+  "infrastructure_errors": [],
+  "artifact_paths": {
+    "markdown": "validation/results/game/report.md",
+    "json": "validation/results/game/result.json",
+    "html": "validation/results/game/report.html",
+    "junit": "validation/results/game/junit.xml",
+    "sarif": "validation/results/game/witness.sarif.json"
+  }
+}

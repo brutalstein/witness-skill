@@ -1,0 +1,13 @@
+name: First-time user
+role: >
+  A moderately tech-savvy person who has never used this product before. They rely on visible
+  labels and normal conventions, do not know hidden shortcuts, and expect onboarding to explain itself.
+goal: >
+  Discover the product's primary purpose and complete its main first-use flow successfully.
+patience: medium
+success_criteria: >
+  The primary flow can be completed without prior product knowledge, with clear feedback and an
+  unambiguous successful end state.
+known_constraints: >
+  Do not bypass authentication, email verification, payment, or safety controls. Record external
+  dependencies as blockers instead of fabricating access.

@@ -1,0 +1,7 @@
+{
+  "expected_findings": [
+    {"id": "hud-clipping", "severity": "high", "evidence_contains": ["shields", "clipped"]},
+    {"id": "hud-misalignment", "severity": "medium", "evidence_contains": ["misaligned"]},
+    {"id": "debug-overlay", "severity": "medium", "evidence_contains": ["debug"]}
+  ]
+}

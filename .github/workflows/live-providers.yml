@@ -1,0 +1,45 @@
+name: Live provider verification
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 4 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  live-provider-contracts:
+    runs-on: ubuntu-latest
+    env:
+      OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+      ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+      OPENAI_WITNESS_MODEL: ${{ vars.OPENAI_WITNESS_MODEL }}
+      ANTHROPIC_WITNESS_MODEL: ${{ vars.ANTHROPIC_WITNESS_MODEL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e .
+      - name: Verify OpenAI vision and structured output
+        if: env.OPENAI_API_KEY != ''
+        run: witness verify-provider --provider openai --model "${OPENAI_WITNESS_MODEL:-gpt-5.6}" --output live-openai
+      - name: Upload OpenAI provider check
+        if: env.OPENAI_API_KEY != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: openai-provider-check
+          path: live-openai
+      - name: Verify Anthropic vision and strict output
+        if: env.ANTHROPIC_API_KEY != ''
+        run: witness verify-provider --provider anthropic --model "${ANTHROPIC_WITNESS_MODEL:-claude-sonnet-5}" --output live-anthropic
+      - name: Upload Anthropic provider check
+        if: env.ANTHROPIC_API_KEY != ''
+        uses: actions/upload-artifact@v4
+        with:
+          name: anthropic-provider-check
+          path: live-anthropic
+      - name: No live credentials configured
+        if: env.OPENAI_API_KEY == '' && env.ANTHROPIC_API_KEY == ''
+        run: echo "No provider secret configured; live verification skipped."

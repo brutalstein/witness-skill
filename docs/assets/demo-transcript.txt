@@ -1,0 +1,17 @@
+$ witness run \
+    --project examples/buggy_signup \
+    --provider scripted \
+    --decision-file validation/decisions/web_signup.json \
+    --output validation/results/web \
+    --json
+
+turn 1  observe signup form
+turn 1  type Email
+turn 2  type Password             # typed value is redacted from traces
+turn 3  click Create account
+turn 4  observe visible error: "Unable to create account. Please try again later."
+turn 4  goal_blocked
+
+Witness: goal_blocked; 1 unique finding(s).
+Report: validation/results/web/report.md
+Evidence: validation/results/web/screenshots/004_web_state.png

@@ -1,0 +1,11 @@
+{
+  "FileVersion": 3,
+  "Version": 1,
+  "VersionName": "1.0.0",
+  "FriendlyName": "Witness QA Bridge",
+  "Description": "File-based screenshot and named-action bridge for Witness QA.",
+  "Category": "Testing",
+  "EnabledByDefault": false,
+  "CanContainContent": false,
+  "Modules": [{"Name": "WitnessBridge", "Type": "Runtime", "LoadingPhase": "Default"}]
+}

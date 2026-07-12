@@ -1,0 +1,54 @@
+[
+  {
+    "expectation": "The API should expose a discoverable contract and allow creation of a project.",
+    "action_taken": "initial_observation",
+    "observation_summary": "OpenAPI is detected and lists project collection endpoints.",
+    "judgment": "match",
+    "confidence": "high",
+    "reasoning": "The public contract is discoverable, so a representative create request can be attempted.",
+    "hypothesis_if_mismatch": "",
+    "severity": "none",
+    "suggested_investigation": "",
+    "visual_assessment": "The rendered HTTP observation is readable.",
+    "next_action": {"kind": "http_request", "method": "POST", "path": "/projects", "body": {"name": "Witness project"}, "reason": "Create a resource using documented input."}
+  },
+  {
+    "expectation": "A valid create request should return a created resource and stable identifier.",
+    "action_taken": "http_request: POST /projects",
+    "observation_summary": "POST /projects returns 201 with id 1 and name 'Witness project'.",
+    "judgment": "match",
+    "confidence": "high",
+    "reasoning": "Creation succeeded with an appropriate status code and usable identifier.",
+    "hypothesis_if_mismatch": "",
+    "severity": "none",
+    "suggested_investigation": "",
+    "visual_assessment": "The request/response evidence is clear.",
+    "next_action": {"kind": "http_request", "method": "GET", "path": "/projects/1", "reason": "Verify that the created state can be retrieved."}
+  },
+  {
+    "expectation": "Retrieving id 1 should return the same project state.",
+    "action_taken": "http_request: GET /projects/1",
+    "observation_summary": "GET /projects/1 returns 200 with the same id and name.",
+    "judgment": "match",
+    "confidence": "high",
+    "reasoning": "The create-read state transition is consistent.",
+    "hypothesis_if_mismatch": "",
+    "severity": "none",
+    "suggested_investigation": "",
+    "visual_assessment": "The API exchange is readable.",
+    "next_action": {"kind": "http_request", "method": "POST", "path": "/projects", "body": {}, "reason": "Check documented validation and recovery behavior."}
+  },
+  {
+    "expectation": "Missing required name input should produce an actionable 4xx validation response.",
+    "action_taken": "http_request: POST /projects",
+    "observation_summary": "POST /projects with an empty object returns 422 and 'name is required'.",
+    "judgment": "match",
+    "confidence": "high",
+    "reasoning": "The API rejects invalid input using a clear client-error contract without leaking sensitive data.",
+    "hypothesis_if_mismatch": "",
+    "severity": "none",
+    "suggested_investigation": "",
+    "visual_assessment": "The validation response is concise and legible.",
+    "next_action": {"kind": "goal_reached", "reason": "Discovery, create-read consistency, and validation have been verified."}
+  }
+]

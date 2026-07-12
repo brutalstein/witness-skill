@@ -1,0 +1,110 @@
+<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"><title>Witness QA Report</title><style>body{font:16px system-ui;max-width:1100px;margin:40px auto;padding:0 20px;background:#f6f7f9;color:#17191d}.finding{background:white;padding:20px;margin:18px 0;border-left:6px solid #777;border-radius:8px;box-shadow:0 2px 10px #0001}.critical{border-color:#7a0019}.high{border-color:#c62828}.medium{border-color:#ef6c00}.low{border-color:#1565c0}img{max-width:100%;border:1px solid #ddd}pre{white-space:pre-wrap;background:#111;color:#eee;padding:16px;border-radius:8px}</style></head><body><h1>Witness QA Report</h1><p>Status: <b>goal_blocked</b> · 1 finding(s)</p><section class="finding high"><h2>[HIGH] A visible error says &#x27;Unable to create account. Please try again later.&#x27; and the user remains on the signup form.</h2><p><b>Observed:</b> A visible error says &#x27;Unable to create account. Please try again later.&#x27; and the user remains on the signup form.</p><p><b>Expected:</b> A valid signup submission should end in an unambiguous success state or a specific recoverable validation message.</p><p><b>Investigation:</b> Reproduce the POST triggered by Create account, correlate its status and server logs, and add a specific recoverable error while fixing the failed account-creation path.</p><img src="screenshots/004_web_state.png" alt="Evidence"></section><details><summary>Raw Markdown</summary><pre># Witness QA Report
+
+## Summary
+
+Witness tested **examples/buggy_signup** as **First-time user** and recorded **1 evidence-backed finding**. Overall status: **Goal Blocked**.
+
+## Persona
+
+- **Role:** A moderately tech-savvy person who has never used this product before. They rely on visible labels and normal conventions, do not know hidden shortcuts, and expect onboarding to explain itself.
+
+- **Goal:** Discover the product&#x27;s primary purpose and complete its main first-use flow successfully.
+
+- **Success criteria:** The primary flow can be completed without prior product knowledge, with clear feedback and an unambiguous successful end state.
+
+- **Known constraints:** Do not bypass authentication, email verification, payment, or safety controls. Record external dependencies as blockers instead of fabricating access.
+
+- **Environment:** desktop, en-US, normal, light
+
+## Findings
+
+### 1. [HIGH] A visible error says &#x27;Unable to create account. Please try again later.&#x27; and the user remains on the signup form.
+
+- **Fingerprint:** `1fd02dfc68ed806b`
+- **Expected:** A valid signup submission should end in an unambiguous success state or a specific recoverable validation message.
+- **Observed fact:** A visible error says &#x27;Unable to create account. Please try again later.&#x27; and the user remains on the signup form.
+- **Judgment:** The core first-use journey is blocked after representative valid input, and the generic message gives no recovery path beyond retrying.
+- **Visual assessment:** The error is visible, but it is generic and does not identify a field or corrective action.
+- **Black-box hypothesis:** The public signup submission boundary may be returning a server-side failure or failing to persist the new account.
+- **Suggested investigation:** Reproduce the POST triggered by Create account, correlate its status and server logs, and add a specific recoverable error while fixing the failed account-creation path.
+- **Evidence:** [screenshots/004_web_state.png](screenshots/004_web_state.png)
+
+![Finding 1 evidence](screenshots/004_web_state.png)
+
+## Full Narrative Trace
+
+&lt;details&gt;&lt;summary&gt;Turn 1: Initial observation&lt;/summary&gt;
+
+- **Expectation:** A first-time user should see a clear signup form with usable email and password fields.
+- **Observation:** The page shows a Create your account form with Email, Password, and Create account controls.
+- **Judgment:** match (high confidence)
+- **Reasoning:** The primary signup affordances are visible and understandable, so the next reversible step is to enter a valid email.
+- **Next action:** type: Email — Enter representative valid signup data.
+- **Observation delta:** `{&quot;changed_text&quot;: [&quot;{&quot;, &quot;  \&quot;title\&quot;: \&quot;Acorn Notes — Sign up\&quot;,&quot;, &quot;  \&quot;url\&quot;: \&quot;http://127.0.0.1:4173/\&quot;,&quot;, &quot;  \&quot;viewport\&quot;: {&quot;, &quot;    \&quot;width\&quot;: 1440,&quot;, &quot;    \&quot;height\&quot;: 1000&quot;, &quot;  },&quot;, &quot;  \&quot;scroll\&quot;: {&quot;, &quot;    \&quot;x\&quot;: 0,&quot;, &quot;    \&quot;y\&quot;: 0,&quot;, &quot;    \&quot;max_y\&quot;: 0&quot;, &quot;  },&quot;, &quot;  \&quot;visible_text\&quot;: \&quot;Create your account\\n\\nStart organizing your notes in one calm, searchable place.\\n\\nEmail\\nPassword\\n Create account\&quot;,&quot;, &quot;  \&quot;interactive\&quot;: [&quot;, &quot;    {&quot;, &quot;      \&quot;index\&quot;: 5,&quot;, &quot;      \&quot;tag\&quot;: \&quot;input\&quot;,&quot;, &quot;      \&quot;role\&quot;: \&quot;\&quot;,&quot;, &quot;      \&quot;name\&quot;: \&quot;email\&quot;,&quot;, &quot;      \&quot;type\&quot;: \&quot;email\&quot;,&quot;], &quot;new_errors&quot;: [], &quot;resolved_errors&quot;: [], &quot;visual_change_ratio&quot;: 0.0, &quot;changed_interactives&quot;: []}`
+- **Evidence:** [screenshots/001_web_state.png](screenshots/001_web_state.png)
+
+&lt;/details&gt;
+
+&lt;details&gt;&lt;summary&gt;Turn 2: type: Email&lt;/summary&gt;
+
+- **Expectation:** The email field should accept the entered address without an error.
+- **Observation:** The signup form remains visible and no validation error is shown after entering the email.
+- **Judgment:** match (high confidence)
+- **Reasoning:** There is no visible rejection, so the password can be entered next.
+- **Next action:** type: Password — Complete the required signup fields.
+- **Observation delta:** `{&quot;changed_text&quot;: [], &quot;new_errors&quot;: [], &quot;resolved_errors&quot;: [], &quot;visual_change_ratio&quot;: 0.002, &quot;changed_interactives&quot;: []}`
+- **Evidence:** [screenshots/002_web_state.png](screenshots/002_web_state.png)
+
+&lt;/details&gt;
+
+&lt;details&gt;&lt;summary&gt;Turn 3: type: Password&lt;/summary&gt;
+
+- **Expectation:** With valid required fields present, submitting should create the account or present actionable validation.
+- **Observation:** The form remains ready for submission and no field-level error is visible.
+- **Judgment:** match (high confidence)
+- **Reasoning:** The next user action is to submit the completed form.
+- **Next action:** click: Create account — Attempt the primary user journey.
+- **Observation delta:** `{&quot;changed_text&quot;: [], &quot;new_errors&quot;: [], &quot;resolved_errors&quot;: [], &quot;visual_change_ratio&quot;: 0.00299, &quot;changed_interactives&quot;: []}`
+- **Evidence:** [screenshots/003_web_state.png](screenshots/003_web_state.png)
+
+&lt;/details&gt;
+
+&lt;details&gt;&lt;summary&gt;Turn 4: click: Create account&lt;/summary&gt;
+
+- **Expectation:** A valid signup submission should end in an unambiguous success state or a specific recoverable validation message.
+- **Observation:** A visible error says &#x27;Unable to create account. Please try again later.&#x27; and the user remains on the signup form.
+- **Judgment:** mismatch (high confidence)
+- **Reasoning:** The core first-use journey is blocked after representative valid input, and the generic message gives no recovery path beyond retrying.
+- **Next action:** goal_blocked — The signup goal is observably blocked by product behavior.
+- **Observation delta:** `{&quot;changed_text&quot;: [&quot;\&quot;&#x27;Email\\nPassword\\n Create account\\nUnable to create account. Please try again later.&#x27; has estimated contrast ratio 1.43:1.\&quot;,&quot;, &quot;\&quot;Unable to create account. Please try again later.\&quot;&quot;, &quot;\&quot;alerts\&quot;: [&quot;, &quot;\&quot;background\&quot;: \&quot;rgb(254, 226, 226)\&quot;,&quot;, &quot;\&quot;color\&quot;: \&quot;rgb(153, 27, 27)\&quot;,&quot;, &quot;\&quot;contrast_ratio\&quot;: 6.802728419777387&quot;, &quot;\&quot;height\&quot;: 302&quot;, &quot;\&quot;height\&quot;: 490&quot;, &quot;\&quot;index\&quot;: 9,&quot;, &quot;\&quot;name\&quot;: \&quot;Create your account\\n\\nStart organizing your notes in one calm, searchable place.\\n\\nEmail\\nPassword\\n Create account\\nUnable to create account. Please try again later\&quot;,&quot;, &quot;\&quot;name\&quot;: \&quot;Email\\nPassword\\n Create account\\nUnable to create account. Please try again later.\&quot;,&quot;, &quot;\&quot;name\&quot;: \&quot;Unable to create account. Please try again later.\&quot;,&quot;, &quot;\&quot;role\&quot;: \&quot;alert\&quot;,&quot;, &quot;\&quot;tag\&quot;: \&quot;div\&quot;,&quot;, &quot;\&quot;visible_text\&quot;: \&quot;Create your account\\n\\nStart organizing your notes in one calm, searchable place.\\n\\nEmail\\nPassword\\n Create account\\nUnable to create account. Please try again later.\&quot;,&quot;, &quot;\&quot;y\&quot;: 255,&quot;, &quot;\&quot;y\&quot;: 289,&quot;, &quot;\&quot;y\&quot;: 341,&quot;, &quot;\&quot;y\&quot;: 409,&quot;, &quot;\&quot;y\&quot;: 437,&quot;, &quot;\&quot;y\&quot;: 503,&quot;, &quot;\&quot;y\&quot;: 531,&quot;, &quot;\&quot;y\&quot;: 601,&quot;, &quot;\&quot;y\&quot;: 665,&quot;], &quot;new_errors&quot;: [], &quot;resolved_errors&quot;: [], &quot;visual_change_ratio&quot;: 0.05569, &quot;changed_interactives&quot;: []}`
+- **Evidence:** [screenshots/004_web_state.png](screenshots/004_web_state.png)
+
+&lt;/details&gt;
+
+## Session Metadata
+
+- **Witness:** 1.0.0
+- **Project revision:** `unknown`
+- **Project type:** web
+- **Detection confidence:** high
+- **Adapter:** web
+- **Reasoning provider/model:** scripted / `host-agent-decisions`
+- **Turns:** 4
+- **Duration:** 5.47s
+- **Provider requests:** 4
+- **Tokens:** 0 input / 0 output
+- **Estimated cost:** $0.0000
+- **Started:** 2026-07-11T21:54:57.756351+00:00
+- **Finished:** 2026-07-11T21:55:03.223040+00:00
+
+### Detection Evidence
+
+- `filesystem` → **web** (+5): index.html detected
+- `app.py` → **cli** (+4): CLI framework and executable main guard detected
+- `app.py` → **web** (+4): Python web server/framework code detected
+- `README.md` → **web** (+6): README run instruction: python app.py --port 4173
+
+---
+
+Generated by Witness. Verify findings against the linked evidence before acting.
+</pre></details></body></html>

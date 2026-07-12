@@ -1,0 +1,21 @@
+{
+  "expected_findings": [
+    {
+      "id": "hud-clipping-and-contrast",
+      "severity": "high",
+      "evidence_contains": ["shields", "clipped"],
+      "evidence_any": [["shields", "frame edge"], ["shields", "low-contrast"]]
+    },
+    {
+      "id": "hud-misalignment",
+      "severity": "medium",
+      "evidence_contains": ["hud", "drift"],
+      "evidence_any": [["score", "shifts downward"], ["mission ready", "shifts left"]]
+    },
+    {
+      "id": "debug-overlay",
+      "severity": "high",
+      "evidence_contains": ["debug", "overlay"]
+    }
+  ]
+}

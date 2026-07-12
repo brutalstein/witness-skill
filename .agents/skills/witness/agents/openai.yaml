@@ -1,0 +1,6 @@
+interface:
+  display_name: "Witness QA"
+  short_description: "Evidence-backed QA for web, Electron, CLI, API, Unity/Unreal games, and visual software"
+  default_prompt: "Use Witness to test this project as a real user, inspect every screenshot, report evidence-backed defects, and verify any fix."
+policy:
+  allow_implicit_invocation: true

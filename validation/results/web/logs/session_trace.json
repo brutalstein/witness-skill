@@ -1,0 +1,598 @@
+{
+  "schema_version": "2.0",
+  "manifest": {
+    "witness_version": "1.0.0",
+    "project_revision": "",
+    "provider": "scripted",
+    "model": "host-agent-decisions",
+    "seed": 0
+  },
+  "result": {
+    "overall_status": "goal_blocked",
+    "personas_run": [
+      "First-time user"
+    ],
+    "findings": [
+      {
+        "fingerprint": "1fd02dfc68ed806b",
+        "persona": "First-time user",
+        "severity": "high",
+        "summary": "A visible error says 'Unable to create account. Please try again later.' and the user remains on the signup form.",
+        "expectation": "A valid signup submission should end in an unambiguous success state or a specific recoverable validation message.",
+        "observation": "A visible error says 'Unable to create account. Please try again later.' and the user remains on the signup form.",
+        "evidence_path": "screenshots/004_web_state.png",
+        "reasoning": "The core first-use journey is blocked after representative valid input, and the generic message gives no recovery path beyond retrying.",
+        "hypothesis": "The public signup submission boundary may be returning a server-side failure or failing to persist the new account.",
+        "suggested_investigation": "Reproduce the POST triggered by Create account, correlate its status and server logs, and add a specific recoverable error while fixing the failed account-creation path.",
+        "visual_assessment": "The error is visible, but it is generic and does not identify a field or corrective action.",
+        "turn": 4,
+        "occurrences": 1
+      }
+    ],
+    "report_path": "validation/results/web/report.md",
+    "trace_path": "validation/results/web/logs/session_trace.json",
+    "profile": {
+      "target": "examples/buggy_signup",
+      "project_root": "examples/buggy_signup",
+      "project_type": "web",
+      "entry_point": "python app.py --port 4173",
+      "reachable_address": "http://127.0.0.1:4173",
+      "confidence": "high",
+      "raw_signals": [
+        {
+          "source": "filesystem",
+          "project_type": "web",
+          "weight": 5.0,
+          "detail": "index.html detected"
+        },
+        {
+          "source": "app.py",
+          "project_type": "cli",
+          "weight": 4.0,
+          "detail": "CLI framework and executable main guard detected"
+        },
+        {
+          "source": "app.py",
+          "project_type": "web",
+          "weight": 4.0,
+          "detail": "Python web server/framework code detected"
+        },
+        {
+          "source": "README.md",
+          "project_type": "web",
+          "weight": 6.0,
+          "detail": "README run instruction: python app.py --port 4173"
+        }
+      ],
+      "candidates": [
+        {
+          "project_type": "web",
+          "score": 15.0
+        },
+        {
+          "project_type": "cli",
+          "score": 4.0
+        }
+      ],
+      "metadata": {
+        "readme": "README.md",
+        "readme_excerpt": "# Buggy signup demo\n\nThis tiny local app intentionally rejects an otherwise valid signup so Witness has a real visible bug to discover.\n\n```bash\npython app.py --port 4173\n```\n\nThen open `http://127.0.0.1:4173`.\n",
+        "readme_commands": [
+          "python app.py --port 4173"
+        ],
+        "package_scripts": {},
+        "detected_port": 4173,
+        "scan_file_count": 3,
+        "frames": [],
+        "capture_command": null,
+        "input_command": null,
+        "reference_images": []
+      }
+    },
+    "metadata": {
+      "adapter": "web",
+      "provider": "scripted",
+      "model": "host-agent-decisions",
+      "project_type": "web",
+      "project_confidence": "high",
+      "started_at": "2026-07-11T21:54:57.756351Z",
+      "finished_at": "2026-07-11T21:55:03.223040Z",
+      "duration_seconds": 5.466689,
+      "turns": 4,
+      "witness_version": "1.0.0",
+      "project_revision": "",
+      "usage": {
+        "input_tokens": 0,
+        "output_tokens": 0,
+        "requests": 4,
+        "estimated_cost_usd": 0.0,
+        "provider_latency_seconds": 0.0
+      },
+      "seed": 0
+    },
+    "infrastructure_errors": [],
+    "artifact_paths": {
+      "markdown": "validation/results/web/report.md",
+      "json": "validation/results/web/result.json",
+      "html": "validation/results/web/report.html",
+      "junit": "validation/results/web/junit.xml",
+      "sarif": "validation/results/web/witness.sarif.json"
+    }
+  },
+  "persona": {
+    "name": "First-time user",
+    "role": "A moderately tech-savvy person who has never used this product before. They rely on visible labels and normal conventions, do not know hidden shortcuts, and expect onboarding to explain itself.\n",
+    "goal": "Discover the product's primary purpose and complete its main first-use flow successfully.\n",
+    "patience": "medium",
+    "success_criteria": "The primary flow can be completed without prior product knowledge, with clear feedback and an unambiguous successful end state.\n",
+    "known_constraints": "Do not bypass authentication, email verification, payment, or safety controls. Record external dependencies as blockers instead of fabricating access.\n",
+    "viewport": "desktop",
+    "locale": "en-US",
+    "network_profile": "normal",
+    "color_scheme": "light",
+    "reduced_motion": false,
+    "input_mode": "pointer",
+    "visual_focus": []
+  },
+  "steps": [
+    {
+      "turn": 1,
+      "action": null,
+      "action_result": null,
+      "observation": {
+        "adapter": "web",
+        "summary": "Page 'Acorn Notes — Sign up' at http://127.0.0.1:4173/",
+        "text": "{\n  \"title\": \"Acorn Notes — Sign up\",\n  \"url\": \"http://127.0.0.1:4173/\",\n  \"viewport\": {\n    \"width\": 1440,\n    \"height\": 1000\n  },\n  \"scroll\": {\n    \"x\": 0,\n    \"y\": 0,\n    \"max_y\": 0\n  },\n  \"visible_text\": \"Create your account\\n\\nStart organizing your notes in one calm, searchable place.\\n\\nEmail\\nPassword\\n Create account\",\n  \"interactive\": [\n    {\n      \"index\": 5,\n      \"tag\": \"input\",\n      \"role\": \"\",\n      \"name\": \"email\",\n      \"type\": \"email\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 505,\n        \"y\": 469,\n        \"width\": 430,\n        \"height\": 46\n      },\n      \"font_size\": \"16px\",\n      \"color\": \"rgb(0, 0, 0)\",\n      \"background\": \"rgb(255, 255, 255)\",\n      \"contrast_ratio\": 21\n    },\n    {\n      \"index\": 7,\n      \"tag\": \"input\",\n      \"role\": \"\",\n      \"name\": \"password\",\n      \"type\": \"password\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 505,\n        \"y\": 563,\n        \"width\": 430,\n        \"height\": 46\n      },\n      \"font_size\": \"16px\",\n      \"color\": \"rgb(0, 0, 0)\",\n      \"background\": \"rgb(255, 255, 255)\",\n      \"contrast_ratio\": 21\n    },\n    {\n      \"index\": 8,\n      \"tag\": \"button\",\n      \"role\": \"\",\n      \"name\": \"Create account\",\n      \"type\": \"submit\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 505,\n        \"y\": 633,\n        \"width\": 430,\n        \"height\": 46\n      },\n      \"font_size\": \"16px\",\n      \"color\": \"rgb(255, 255, 255)\",\n      \"background\": \"rgb(49, 87, 213)\",\n      \"contrast_ratio\": 6.078691572956118\n    }\n  ],\n  \"elements\": [\n    {\n      \"index\": 0,\n      \"tag\": \"main\",\n      \"role\": \"\",\n      \"name\": \"Create your account\\n\\nStart organizing your notes in one calm, searchable place.\\n\\nEmail\\nPassword\\n Create account\",\n      \"type\": \"\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 471,\n        \"y\": 287,\n        \"width\": 498,\n        \"height\": 426\n      },\n      \"font_size\": \"16px\",\n      \"color\": \"rgb(31, 41, 55)\",\n      \"background\": \"rgb(255, 255, 255)\",\n      \"contrast_ratio\": 14.67911847763172\n    },\n    {\n      \"index\": 1,\n      \"tag\": \"h1\",\n      \"role\": \"\",\n      \"name\": \"Create your account\",\n      \"type\": \"\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 505,\n        \"y\": 321,\n        \"width\": 430,\n        \"height\": 36\n      },\n      \"font_size\": \"30px\",\n      \"color\": \"rgb(31, 41, 55)\",\n      \"background\": \"rgba(0, 0, 0, 0)\",\n      \"contrast_ratio\": 1.4306036177853692\n    },\n    {\n      \"index\": 2,\n      \"tag\": \"p\",\n      \"role\": \"\",\n      \"name\": \"Start organizing your notes in one calm, searchable place.\",\n      \"type\": \"\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 505,\n        \"y\": 373,\n        \"width\": 430,\n        \"height\": 48\n      },\n      \"font_size\": \"16px\",\n      \"color\": \"rgb(100, 116, 139)\",\n      \"background\": \"rgba(0, 0, 0, 0)\",\n      \"contrast_ratio\": 4.412837518720645\n    },\n    {\n      \"index\": 3,\n      \"tag\": \"form\",\n      \"role\": \"\",\n      \"name\": \"Email\\nPassword\\n Create account\",\n      \"type\": \"\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 505,\n        \"y\": 441,\n        \"width\": 430,\n        \"height\": 238\n      },\n      \"font_size\": \"16px\",\n      \"color\": \"rgb(31, 41, 55)\",\n      \"background\": \"rgba(0, 0, 0, 0)\",\n      \"contrast_ratio\": 1.4306036177853692\n    },\n    {\n      \"index\": 4,\n      \"tag\": \"label\",\n      \"role\": \"\",\n      \"name\": \"Email\",\n      \"type\": \"\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 505,\n        \"y\": 441,\n        \"width\": 430,\n        \"height\": 20\n      },\n      \"font_size\": \"16px\",\n      \"color\": \"rgb(31, 41, 55)\",\n      \"background\": \"rgba(0, 0, 0, 0)\",\n      \"contrast_ratio\": 1.4306036177853692\n    },\n    {\n      \"index\": 5,\n      \"tag\": \"input\",\n      \"role\": \"\",\n      \"name\": \"email\",\n      \"type\": \"email\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 505,\n        \"y\": 469,\n        \"width\": 430,\n        \"height\": 46\n      },\n      \"font_size\": \"16px\",\n      \"color\": \"rgb(0, 0, 0)\",\n      \"background\": \"rgb(255, 255, 255)\",\n      \"contrast_ratio\": 21\n    },\n    {\n      \"index\": 6,\n      \"tag\": \"label\",\n      \"role\": \"\",\n      \"name\": \"Password\",\n      \"type\": \"\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 505,\n        \"y\": 535,\n        \"width\": 430,\n        \"height\": 20\n      },\n      \"font_size\": \"16px\",\n      \"color\": \"rgb(31, 41, 55)\",\n      \"background\": \"rgba(0, 0, 0, 0)\",\n      \"contrast_ratio\": 1.4306036177853692\n    },\n    {\n      \"index\": 7,\n      \"tag\": \"input\",\n      \"role\": \"\",\n      \"name\": \"password\",\n      \"type\": \"password\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 505,\n        \"y\": 563,\n        \"width\": 430,\n        \"height\": 46\n      },\n      \"font_size\": \"16px\",\n      \"color\": \"rgb(0, 0, 0)\",\n      \"background\": \"rgb(255, 255, 255)\",\n      \"contrast_ratio\": 21\n    },\n    {\n      \"index\": 8,\n      \"tag\": \"button\",\n      \"role\": \"\",\n      \"name\": \"Create account\",\n      \"type\": \"submit\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 505,\n        \"y\": 633,\n        \"width\": 430,\n        \"height\": 46\n      },\n      \"font_size\": \"16px\",\n      \"color\": \"rgb(255, 255, 255)\",\n      \"background\": \"rgb(49, 87, 213)\",\n      \"contrast_ratio\": 6.078691572956118\n    }\n  ],\n  \"alerts\": [],\n  \"visual_heuristics\": {\n    \"likely_clipping\": [],\n    \"alignment_warnings\": [],\n    \"contrast_warnings\": [\n      \"'Create your account' has estimated contrast ratio 1.43:1.\",\n      \"'Email\\nPassword\\n Create account' has estimated contrast ratio 1.43:1.\",\n      \"'Email' has estimated contrast ratio 1.43:1.\",\n      \"'Password' has estimated contrast ratio 1.43:1.\"\n    ]\n  },\n  \"network_events\": [\n    {\n      \"method\": \"GET\",\n      \"url\": \"http://127.0.0.1:4173/\",\n      \"status\": 200,\n      \"resource_type\": \"document\"\n    }\n  ],\n  \"dialogs\": [],\n  \"downloads\": []\n}",
+        "screenshot_path": "screenshots/001_web_state.png",
+        "structured_path": "logs/001_dom.json",
+        "exit_code": null,
+        "errors": [],
+        "visual_metrics": {
+          "width": 1440,
+          "height": 1000,
+          "entropy": 1.34752,
+          "edge_density": 0.00919,
+          "blank_ratio": 0.78183,
+          "dominant_colors": [
+            "#f5f7fb",
+            "#ffffff",
+            "#f2f4f8",
+            "#b2bee3",
+            "#fbfcfd",
+            "#f6f7f9"
+          ],
+          "perceptual_hash": "ffffe7ffc7c3ffff",
+          "change_ratio": 0.0,
+          "likely_clipping": [],
+          "alignment_warnings": [],
+          "contrast_warnings": [
+            "The frame is close to uniformly black or white.",
+            "'Create your account' has estimated contrast ratio 1.43:1.",
+            "'Email\nPassword\n Create account' has estimated contrast ratio 1.43:1.",
+            "'Email' has estimated contrast ratio 1.43:1.",
+            "'Password' has estimated contrast ratio 1.43:1."
+          ]
+        },
+        "delta": {
+          "changed_text": [
+            "{",
+            "  \"title\": \"Acorn Notes — Sign up\",",
+            "  \"url\": \"http://127.0.0.1:4173/\",",
+            "  \"viewport\": {",
+            "    \"width\": 1440,",
+            "    \"height\": 1000",
+            "  },",
+            "  \"scroll\": {",
+            "    \"x\": 0,",
+            "    \"y\": 0,",
+            "    \"max_y\": 0",
+            "  },",
+            "  \"visible_text\": \"Create your account\\n\\nStart organizing your notes in one calm, searchable place.\\n\\nEmail\\nPassword\\n Create account\",",
+            "  \"interactive\": [",
+            "    {",
+            "      \"index\": 5,",
+            "      \"tag\": \"input\",",
+            "      \"role\": \"\",",
+            "      \"name\": \"email\",",
+            "      \"type\": \"email\","
+          ],
+          "new_errors": [],
+          "resolved_errors": [],
+          "visual_change_ratio": 0.0,
+          "changed_interactives": []
+        },
+        "metadata": {
+          "url": "http://127.0.0.1:4173/",
+          "title": "Acorn Notes — Sign up",
+          "network_failures": 0,
+          "console_errors": 0,
+          "downloads": []
+        },
+        "captured_at": "2026-07-11T21:55:01.375112Z"
+      },
+      "decision": {
+        "expectation": "A first-time user should see a clear signup form with usable email and password fields.",
+        "action_taken": "initial_observation",
+        "observation_summary": "The page shows a Create your account form with Email, Password, and Create account controls.",
+        "judgment": "match",
+        "confidence": "high",
+        "reasoning": "The primary signup affordances are visible and understandable, so the next reversible step is to enter a valid email.",
+        "hypothesis_if_mismatch": "",
+        "severity": "none",
+        "suggested_investigation": "",
+        "visual_assessment": "The form hierarchy is clear and centered with no obvious clipping in the initial desktop frame.",
+        "next_action": {
+          "kind": "type",
+          "target": "Email",
+          "source": "",
+          "text": "[REDACTED]",
+          "key": "",
+          "url": "",
+          "direction": "",
+          "command": "",
+          "method": "",
+          "path": "",
+          "headers": {},
+          "body": null,
+          "files": [],
+          "option": "",
+          "tab_index": 0,
+          "seconds": 0.0,
+          "reason": "Enter representative valid signup data."
+        }
+      }
+    },
+    {
+      "turn": 2,
+      "action": {
+        "kind": "type",
+        "target": "Email",
+        "source": "",
+        "text": "[REDACTED]",
+        "key": "",
+        "url": "",
+        "direction": "",
+        "command": "",
+        "method": "",
+        "path": "",
+        "headers": {},
+        "body": null,
+        "files": [],
+        "option": "",
+        "tab_index": 0,
+        "seconds": 0.0,
+        "reason": "Enter representative valid signup data."
+      },
+      "action_result": {
+        "success": true,
+        "summary": "type: Email",
+        "infrastructure_error": "",
+        "metadata": {}
+      },
+      "observation": {
+        "adapter": "web",
+        "summary": "Page 'Acorn Notes — Sign up' at http://127.0.0.1:4173/",
+        "text": "{\n  \"title\": \"Acorn Notes — Sign up\",\n  \"url\": \"http://127.0.0.1:4173/\",\n  \"viewport\": {\n    \"width\": 1440,\n    \"height\": 1000\n  },\n  \"scroll\": {\n    \"x\": 0,\n    \"y\": 0,\n    \"max_y\": 0\n  },\n  \"visible_text\": \"Create your account\\n\\nStart organizing your notes in one calm, searchable place.\\n\\nEmail\\nPassword\\n Create account\",\n  \"interactive\": [\n    {\n      \"index\": 5,\n      \"tag\": \"input\",\n      \"role\": \"\",\n      \"name\": \"email\",\n      \"type\": \"email\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 505,\n        \"y\": 469,\n        \"width\": 430,\n        \"height\": 46\n      },\n      \"font_size\": \"16px\",\n      \"color\": \"rgb(0, 0, 0)\",\n      \"background\": \"rgb(255, 255, 255)\",\n      \"contrast_ratio\": 21\n    },\n    {\n      \"index\": 7,\n      \"tag\": \"input\",\n      \"role\": \"\",\n      \"name\": \"password\",\n      \"type\": \"password\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 505,\n        \"y\": 563,\n        \"width\": 430,\n        \"height\": 46\n      },\n      \"font_size\": \"16px\",\n      \"color\": \"rgb(0, 0, 0)\",\n      \"background\": \"rgb(255, 255, 255)\",\n      \"contrast_ratio\": 21\n    },\n    {\n      \"index\": 8,\n      \"tag\": \"button\",\n      \"role\": \"\",\n      \"name\": \"Create account\",\n      \"type\": \"submit\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 505,\n        \"y\": 633,\n        \"width\": 430,\n        \"height\": 46\n      },\n      \"font_size\": \"16px\",\n      \"color\": \"rgb(255, 255, 255)\",\n      \"background\": \"rgb(49, 87, 213)\",\n      \"contrast_ratio\": 6.078691572956118\n    }\n  ],\n  \"elements\": [\n    {\n      \"index\": 0,\n      \"tag\": \"main\",\n      \"role\": \"\",\n      \"name\": \"Create your account\\n\\nStart organizing your notes in one calm, searchable place.\\n\\nEmail\\nPassword\\n Create account\",\n      \"type\": \"\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 471,\n        \"y\": 287,\n        \"width\": 498,\n        \"height\": 426\n      },\n      \"font_size\": \"16px\",\n      \"color\": \"rgb(31, 41, 55)\",\n      \"background\": \"rgb(255, 255, 255)\",\n      \"contrast_ratio\": 14.67911847763172\n    },\n    {\n      \"index\": 1,\n      \"tag\": \"h1\",\n      \"role\": \"\",\n      \"name\": \"Create your account\",\n      \"type\": \"\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 505,\n        \"y\": 321,\n        \"width\": 430,\n        \"height\": 36\n      },\n      \"font_size\": \"30px\",\n      \"color\": \"rgb(31, 41, 55)\",\n      \"background\": \"rgba(0, 0, 0, 0)\",\n      \"contrast_ratio\": 1.4306036177853692\n    },\n    {\n      \"index\": 2,\n      \"tag\": \"p\",\n      \"role\": \"\",\n      \"name\": \"Start organizing your notes in one calm, searchable place.\",\n      \"type\": \"\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 505,\n        \"y\": 373,\n        \"width\": 430,\n        \"height\": 48\n      },\n      \"font_size\": \"16px\",\n      \"color\": \"rgb(100, 116, 139)\",\n      \"background\": \"rgba(0, 0, 0, 0)\",\n      \"contrast_ratio\": 4.412837518720645\n    },\n    {\n      \"index\": 3,\n      \"tag\": \"form\",\n      \"role\": \"\",\n      \"name\": \"Email\\nPassword\\n Create account\",\n      \"type\": \"\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 505,\n        \"y\": 441,\n        \"width\": 430,\n        \"height\": 238\n      },\n      \"font_size\": \"16px\",\n      \"color\": \"rgb(31, 41, 55)\",\n      \"background\": \"rgba(0, 0, 0, 0)\",\n      \"contrast_ratio\": 1.4306036177853692\n    },\n    {\n      \"index\": 4,\n      \"tag\": \"label\",\n      \"role\": \"\",\n      \"name\": \"Email\",\n      \"type\": \"\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 505,\n        \"y\": 441,\n        \"width\": 430,\n        \"height\": 20\n      },\n      \"font_size\": \"16px\",\n      \"color\": \"rgb(31, 41, 55)\",\n      \"background\": \"rgba(0, 0, 0, 0)\",\n      \"contrast_ratio\": 1.4306036177853692\n    },\n    {\n      \"index\": 5,\n      \"tag\": \"input\",\n      \"role\": \"\",\n      \"name\": \"email\",\n      \"type\": \"email\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 505,\n        \"y\": 469,\n        \"width\": 430,\n        \"height\": 46\n      },\n      \"font_size\": \"16px\",\n      \"color\": \"rgb(0, 0, 0)\",\n      \"background\": \"rgb(255, 255, 255)\",\n      \"contrast_ratio\": 21\n    },\n    {\n      \"index\": 6,\n      \"tag\": \"label\",\n      \"role\": \"\",\n      \"name\": \"Password\",\n      \"type\": \"\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 505,\n        \"y\": 535,\n        \"width\": 430,\n        \"height\": 20\n      },\n      \"font_size\": \"16px\",\n      \"color\": \"rgb(31, 41, 55)\",\n      \"background\": \"rgba(0, 0, 0, 0)\",\n      \"contrast_ratio\": 1.4306036177853692\n    },\n    {\n      \"index\": 7,\n      \"tag\": \"input\",\n      \"role\": \"\",\n      \"name\": \"password\",\n      \"type\": \"password\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 505,\n        \"y\": 563,\n        \"width\": 430,\n        \"height\": 46\n      },\n      \"font_size\": \"16px\",\n      \"color\": \"rgb(0, 0, 0)\",\n      \"background\": \"rgb(255, 255, 255)\",\n      \"contrast_ratio\": 21\n    },\n    {\n      \"index\": 8,\n      \"tag\": \"button\",\n      \"role\": \"\",\n      \"name\": \"Create account\",\n      \"type\": \"submit\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 505,\n        \"y\": 633,\n        \"width\": 430,\n        \"height\": 46\n      },\n      \"font_size\": \"16px\",\n      \"color\": \"rgb(255, 255, 255)\",\n      \"background\": \"rgb(49, 87, 213)\",\n      \"contrast_ratio\": 6.078691572956118\n    }\n  ],\n  \"alerts\": [],\n  \"visual_heuristics\": {\n    \"likely_clipping\": [],\n    \"alignment_warnings\": [],\n    \"contrast_warnings\": [\n      \"'Create your account' has estimated contrast ratio 1.43:1.\",\n      \"'Email\\nPassword\\n Create account' has estimated contrast ratio 1.43:1.\",\n      \"'Email' has estimated contrast ratio 1.43:1.\",\n      \"'Password' has estimated contrast ratio 1.43:1.\"\n    ]\n  },\n  \"network_events\": [\n    {\n      \"method\": \"GET\",\n      \"url\": \"http://127.0.0.1:4173/\",\n      \"status\": 200,\n      \"resource_type\": \"document\"\n    }\n  ],\n  \"dialogs\": [],\n  \"downloads\": []\n}",
+        "screenshot_path": "screenshots/002_web_state.png",
+        "structured_path": "logs/002_dom.json",
+        "exit_code": null,
+        "errors": [],
+        "visual_metrics": {
+          "width": 1440,
+          "height": 1000,
+          "entropy": 1.36306,
+          "edge_density": 0.01058,
+          "blank_ratio": 0.78183,
+          "dominant_colors": [
+            "#f5f7fb",
+            "#ffffff",
+            "#f1f3f7",
+            "#b6c0e1",
+            "#f6f7f9",
+            "#fbfbfc"
+          ],
+          "perceptual_hash": "ffffefcfc3c3ffff",
+          "change_ratio": 0.002,
+          "likely_clipping": [],
+          "alignment_warnings": [],
+          "contrast_warnings": [
+            "The frame is close to uniformly black or white.",
+            "'Create your account' has estimated contrast ratio 1.43:1.",
+            "'Email\nPassword\n Create account' has estimated contrast ratio 1.43:1.",
+            "'Email' has estimated contrast ratio 1.43:1.",
+            "'Password' has estimated contrast ratio 1.43:1."
+          ]
+        },
+        "delta": {
+          "changed_text": [],
+          "new_errors": [],
+          "resolved_errors": [],
+          "visual_change_ratio": 0.002,
+          "changed_interactives": []
+        },
+        "metadata": {
+          "url": "http://127.0.0.1:4173/",
+          "title": "Acorn Notes — Sign up",
+          "network_failures": 0,
+          "console_errors": 0,
+          "downloads": []
+        },
+        "captured_at": "2026-07-11T21:55:01.937093Z"
+      },
+      "decision": {
+        "expectation": "The email field should accept the entered address without an error.",
+        "action_taken": "type: Email",
+        "observation_summary": "The signup form remains visible and no validation error is shown after entering the email.",
+        "judgment": "match",
+        "confidence": "high",
+        "reasoning": "There is no visible rejection, so the password can be entered next.",
+        "hypothesis_if_mismatch": "",
+        "severity": "none",
+        "suggested_investigation": "",
+        "visual_assessment": "No new visual inconsistency is apparent.",
+        "next_action": {
+          "kind": "type",
+          "target": "Password",
+          "source": "",
+          "text": "[REDACTED]",
+          "key": "",
+          "url": "",
+          "direction": "",
+          "command": "",
+          "method": "",
+          "path": "",
+          "headers": {},
+          "body": null,
+          "files": [],
+          "option": "",
+          "tab_index": 0,
+          "seconds": 0.0,
+          "reason": "Complete the required signup fields."
+        }
+      }
+    },
+    {
+      "turn": 3,
+      "action": {
+        "kind": "type",
+        "target": "Password",
+        "source": "",
+        "text": "[REDACTED]",
+        "key": "",
+        "url": "",
+        "direction": "",
+        "command": "",
+        "method": "",
+        "path": "",
+        "headers": {},
+        "body": null,
+        "files": [],
+        "option": "",
+        "tab_index": 0,
+        "seconds": 0.0,
+        "reason": "Complete the required signup fields."
+      },
+      "action_result": {
+        "success": true,
+        "summary": "type: Password",
+        "infrastructure_error": "",
+        "metadata": {}
+      },
+      "observation": {
+        "adapter": "web",
+        "summary": "Page 'Acorn Notes — Sign up' at http://127.0.0.1:4173/",
+        "text": "{\n  \"title\": \"Acorn Notes — Sign up\",\n  \"url\": \"http://127.0.0.1:4173/\",\n  \"viewport\": {\n    \"width\": 1440,\n    \"height\": 1000\n  },\n  \"scroll\": {\n    \"x\": 0,\n    \"y\": 0,\n    \"max_y\": 0\n  },\n  \"visible_text\": \"Create your account\\n\\nStart organizing your notes in one calm, searchable place.\\n\\nEmail\\nPassword\\n Create account\",\n  \"interactive\": [\n    {\n      \"index\": 5,\n      \"tag\": \"input\",\n      \"role\": \"\",\n      \"name\": \"email\",\n      \"type\": \"email\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 505,\n        \"y\": 469,\n        \"width\": 430,\n        \"height\": 46\n      },\n      \"font_size\": \"16px\",\n      \"color\": \"rgb(0, 0, 0)\",\n      \"background\": \"rgb(255, 255, 255)\",\n      \"contrast_ratio\": 21\n    },\n    {\n      \"index\": 7,\n      \"tag\": \"input\",\n      \"role\": \"\",\n      \"name\": \"password\",\n      \"type\": \"password\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 505,\n        \"y\": 563,\n        \"width\": 430,\n        \"height\": 46\n      },\n      \"font_size\": \"16px\",\n      \"color\": \"rgb(0, 0, 0)\",\n      \"background\": \"rgb(255, 255, 255)\",\n      \"contrast_ratio\": 21\n    },\n    {\n      \"index\": 8,\n      \"tag\": \"button\",\n      \"role\": \"\",\n      \"name\": \"Create account\",\n      \"type\": \"submit\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 505,\n        \"y\": 633,\n        \"width\": 430,\n        \"height\": 46\n      },\n      \"font_size\": \"16px\",\n      \"color\": \"rgb(255, 255, 255)\",\n      \"background\": \"rgb(49, 87, 213)\",\n      \"contrast_ratio\": 6.078691572956118\n    }\n  ],\n  \"elements\": [\n    {\n      \"index\": 0,\n      \"tag\": \"main\",\n      \"role\": \"\",\n      \"name\": \"Create your account\\n\\nStart organizing your notes in one calm, searchable place.\\n\\nEmail\\nPassword\\n Create account\",\n      \"type\": \"\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 471,\n        \"y\": 287,\n        \"width\": 498,\n        \"height\": 426\n      },\n      \"font_size\": \"16px\",\n      \"color\": \"rgb(31, 41, 55)\",\n      \"background\": \"rgb(255, 255, 255)\",\n      \"contrast_ratio\": 14.67911847763172\n    },\n    {\n      \"index\": 1,\n      \"tag\": \"h1\",\n      \"role\": \"\",\n      \"name\": \"Create your account\",\n      \"type\": \"\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 505,\n        \"y\": 321,\n        \"width\": 430,\n        \"height\": 36\n      },\n      \"font_size\": \"30px\",\n      \"color\": \"rgb(31, 41, 55)\",\n      \"background\": \"rgba(0, 0, 0, 0)\",\n      \"contrast_ratio\": 1.4306036177853692\n    },\n    {\n      \"index\": 2,\n      \"tag\": \"p\",\n      \"role\": \"\",\n      \"name\": \"Start organizing your notes in one calm, searchable place.\",\n      \"type\": \"\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 505,\n        \"y\": 373,\n        \"width\": 430,\n        \"height\": 48\n      },\n      \"font_size\": \"16px\",\n      \"color\": \"rgb(100, 116, 139)\",\n      \"background\": \"rgba(0, 0, 0, 0)\",\n      \"contrast_ratio\": 4.412837518720645\n    },\n    {\n      \"index\": 3,\n      \"tag\": \"form\",\n      \"role\": \"\",\n      \"name\": \"Email\\nPassword\\n Create account\",\n      \"type\": \"\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 505,\n        \"y\": 441,\n        \"width\": 430,\n        \"height\": 238\n      },\n      \"font_size\": \"16px\",\n      \"color\": \"rgb(31, 41, 55)\",\n      \"background\": \"rgba(0, 0, 0, 0)\",\n      \"contrast_ratio\": 1.4306036177853692\n    },\n    {\n      \"index\": 4,\n      \"tag\": \"label\",\n      \"role\": \"\",\n      \"name\": \"Email\",\n      \"type\": \"\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 505,\n        \"y\": 441,\n        \"width\": 430,\n        \"height\": 20\n      },\n      \"font_size\": \"16px\",\n      \"color\": \"rgb(31, 41, 55)\",\n      \"background\": \"rgba(0, 0, 0, 0)\",\n      \"contrast_ratio\": 1.4306036177853692\n    },\n    {\n      \"index\": 5,\n      \"tag\": \"input\",\n      \"role\": \"\",\n      \"name\": \"email\",\n      \"type\": \"email\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 505,\n        \"y\": 469,\n        \"width\": 430,\n        \"height\": 46\n      },\n      \"font_size\": \"16px\",\n      \"color\": \"rgb(0, 0, 0)\",\n      \"background\": \"rgb(255, 255, 255)\",\n      \"contrast_ratio\": 21\n    },\n    {\n      \"index\": 6,\n      \"tag\": \"label\",\n      \"role\": \"\",\n      \"name\": \"Password\",\n      \"type\": \"\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 505,\n        \"y\": 535,\n        \"width\": 430,\n        \"height\": 20\n      },\n      \"font_size\": \"16px\",\n      \"color\": \"rgb(31, 41, 55)\",\n      \"background\": \"rgba(0, 0, 0, 0)\",\n      \"contrast_ratio\": 1.4306036177853692\n    },\n    {\n      \"index\": 7,\n      \"tag\": \"input\",\n      \"role\": \"\",\n      \"name\": \"password\",\n      \"type\": \"password\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 505,\n        \"y\": 563,\n        \"width\": 430,\n        \"height\": 46\n      },\n      \"font_size\": \"16px\",\n      \"color\": \"rgb(0, 0, 0)\",\n      \"background\": \"rgb(255, 255, 255)\",\n      \"contrast_ratio\": 21\n    },\n    {\n      \"index\": 8,\n      \"tag\": \"button\",\n      \"role\": \"\",\n      \"name\": \"Create account\",\n      \"type\": \"submit\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 505,\n        \"y\": 633,\n        \"width\": 430,\n        \"height\": 46\n      },\n      \"font_size\": \"16px\",\n      \"color\": \"rgb(255, 255, 255)\",\n      \"background\": \"rgb(49, 87, 213)\",\n      \"contrast_ratio\": 6.078691572956118\n    }\n  ],\n  \"alerts\": [],\n  \"visual_heuristics\": {\n    \"likely_clipping\": [],\n    \"alignment_warnings\": [],\n    \"contrast_warnings\": [\n      \"'Create your account' has estimated contrast ratio 1.43:1.\",\n      \"'Email\\nPassword\\n Create account' has estimated contrast ratio 1.43:1.\",\n      \"'Email' has estimated contrast ratio 1.43:1.\",\n      \"'Password' has estimated contrast ratio 1.43:1.\"\n    ]\n  },\n  \"network_events\": [\n    {\n      \"method\": \"GET\",\n      \"url\": \"http://127.0.0.1:4173/\",\n      \"status\": 200,\n      \"resource_type\": \"document\"\n    }\n  ],\n  \"dialogs\": [],\n  \"downloads\": []\n}",
+        "screenshot_path": "screenshots/003_web_state.png",
+        "structured_path": "logs/003_dom.json",
+        "exit_code": null,
+        "errors": [],
+        "visual_metrics": {
+          "width": 1440,
+          "height": 1000,
+          "entropy": 1.3666,
+          "edge_density": 0.01088,
+          "blank_ratio": 0.78183,
+          "dominant_colors": [
+            "#f5f7fb",
+            "#ffffff",
+            "#f0f3f6",
+            "#aab6dc",
+            "#f6f7f9",
+            "#fcfcfd"
+          ],
+          "perceptual_hash": "ffffe7dfc3c3ffff",
+          "change_ratio": 0.00299,
+          "likely_clipping": [],
+          "alignment_warnings": [],
+          "contrast_warnings": [
+            "The frame is close to uniformly black or white.",
+            "'Create your account' has estimated contrast ratio 1.43:1.",
+            "'Email\nPassword\n Create account' has estimated contrast ratio 1.43:1.",
+            "'Email' has estimated contrast ratio 1.43:1.",
+            "'Password' has estimated contrast ratio 1.43:1."
+          ]
+        },
+        "delta": {
+          "changed_text": [],
+          "new_errors": [],
+          "resolved_errors": [],
+          "visual_change_ratio": 0.00299,
+          "changed_interactives": []
+        },
+        "metadata": {
+          "url": "http://127.0.0.1:4173/",
+          "title": "Acorn Notes — Sign up",
+          "network_failures": 0,
+          "console_errors": 0,
+          "downloads": []
+        },
+        "captured_at": "2026-07-11T21:55:02.503087Z"
+      },
+      "decision": {
+        "expectation": "With valid required fields present, submitting should create the account or present actionable validation.",
+        "action_taken": "type: Password",
+        "observation_summary": "The form remains ready for submission and no field-level error is visible.",
+        "judgment": "match",
+        "confidence": "high",
+        "reasoning": "The next user action is to submit the completed form.",
+        "hypothesis_if_mismatch": "",
+        "severity": "none",
+        "suggested_investigation": "",
+        "visual_assessment": "The primary button remains visibly available.",
+        "next_action": {
+          "kind": "click",
+          "target": "Create account",
+          "source": "",
+          "text": "",
+          "key": "",
+          "url": "",
+          "direction": "",
+          "command": "",
+          "method": "",
+          "path": "",
+          "headers": {},
+          "body": null,
+          "files": [],
+          "option": "",
+          "tab_index": 0,
+          "seconds": 0.0,
+          "reason": "Attempt the primary user journey."
+        }
+      }
+    },
+    {
+      "turn": 4,
+      "action": {
+        "kind": "click",
+        "target": "Create account",
+        "source": "",
+        "text": "",
+        "key": "",
+        "url": "",
+        "direction": "",
+        "command": "",
+        "method": "",
+        "path": "",
+        "headers": {},
+        "body": null,
+        "files": [],
+        "option": "",
+        "tab_index": 0,
+        "seconds": 0.0,
+        "reason": "Attempt the primary user journey."
+      },
+      "action_result": {
+        "success": true,
+        "summary": "click: Create account",
+        "infrastructure_error": "",
+        "metadata": {}
+      },
+      "observation": {
+        "adapter": "web",
+        "summary": "Page 'Acorn Notes — Sign up' at http://127.0.0.1:4173/",
+        "text": "{\n  \"title\": \"Acorn Notes — Sign up\",\n  \"url\": \"http://127.0.0.1:4173/\",\n  \"viewport\": {\n    \"width\": 1440,\n    \"height\": 1000\n  },\n  \"scroll\": {\n    \"x\": 0,\n    \"y\": 0,\n    \"max_y\": 0\n  },\n  \"visible_text\": \"Create your account\\n\\nStart organizing your notes in one calm, searchable place.\\n\\nEmail\\nPassword\\n Create account\\nUnable to create account. Please try again later.\",\n  \"interactive\": [\n    {\n      \"index\": 5,\n      \"tag\": \"input\",\n      \"role\": \"\",\n      \"name\": \"email\",\n      \"type\": \"email\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 505,\n        \"y\": 437,\n        \"width\": 430,\n        \"height\": 46\n      },\n      \"font_size\": \"16px\",\n      \"color\": \"rgb(0, 0, 0)\",\n      \"background\": \"rgb(255, 255, 255)\",\n      \"contrast_ratio\": 21\n    },\n    {\n      \"index\": 7,\n      \"tag\": \"input\",\n      \"role\": \"\",\n      \"name\": \"password\",\n      \"type\": \"password\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 505,\n        \"y\": 531,\n        \"width\": 430,\n        \"height\": 46\n      },\n      \"font_size\": \"16px\",\n      \"color\": \"rgb(0, 0, 0)\",\n      \"background\": \"rgb(255, 255, 255)\",\n      \"contrast_ratio\": 21\n    },\n    {\n      \"index\": 8,\n      \"tag\": \"button\",\n      \"role\": \"\",\n      \"name\": \"Create account\",\n      \"type\": \"submit\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 505,\n        \"y\": 601,\n        \"width\": 430,\n        \"height\": 46\n      },\n      \"font_size\": \"16px\",\n      \"color\": \"rgb(255, 255, 255)\",\n      \"background\": \"rgb(49, 87, 213)\",\n      \"contrast_ratio\": 6.078691572956118\n    }\n  ],\n  \"elements\": [\n    {\n      \"index\": 0,\n      \"tag\": \"main\",\n      \"role\": \"\",\n      \"name\": \"Create your account\\n\\nStart organizing your notes in one calm, searchable place.\\n\\nEmail\\nPassword\\n Create account\\nUnable to create account. Please try again later\",\n      \"type\": \"\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 471,\n        \"y\": 255,\n        \"width\": 498,\n        \"height\": 490\n      },\n      \"font_size\": \"16px\",\n      \"color\": \"rgb(31, 41, 55)\",\n      \"background\": \"rgb(255, 255, 255)\",\n      \"contrast_ratio\": 14.67911847763172\n    },\n    {\n      \"index\": 1,\n      \"tag\": \"h1\",\n      \"role\": \"\",\n      \"name\": \"Create your account\",\n      \"type\": \"\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 505,\n        \"y\": 289,\n        \"width\": 430,\n        \"height\": 36\n      },\n      \"font_size\": \"30px\",\n      \"color\": \"rgb(31, 41, 55)\",\n      \"background\": \"rgba(0, 0, 0, 0)\",\n      \"contrast_ratio\": 1.4306036177853692\n    },\n    {\n      \"index\": 2,\n      \"tag\": \"p\",\n      \"role\": \"\",\n      \"name\": \"Start organizing your notes in one calm, searchable place.\",\n      \"type\": \"\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 505,\n        \"y\": 341,\n        \"width\": 430,\n        \"height\": 48\n      },\n      \"font_size\": \"16px\",\n      \"color\": \"rgb(100, 116, 139)\",\n      \"background\": \"rgba(0, 0, 0, 0)\",\n      \"contrast_ratio\": 4.412837518720645\n    },\n    {\n      \"index\": 3,\n      \"tag\": \"form\",\n      \"role\": \"\",\n      \"name\": \"Email\\nPassword\\n Create account\\nUnable to create account. Please try again later.\",\n      \"type\": \"\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 505,\n        \"y\": 409,\n        \"width\": 430,\n        \"height\": 302\n      },\n      \"font_size\": \"16px\",\n      \"color\": \"rgb(31, 41, 55)\",\n      \"background\": \"rgba(0, 0, 0, 0)\",\n      \"contrast_ratio\": 1.4306036177853692\n    },\n    {\n      \"index\": 4,\n      \"tag\": \"label\",\n      \"role\": \"\",\n      \"name\": \"Email\",\n      \"type\": \"\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 505,\n        \"y\": 409,\n        \"width\": 430,\n        \"height\": 20\n      },\n      \"font_size\": \"16px\",\n      \"color\": \"rgb(31, 41, 55)\",\n      \"background\": \"rgba(0, 0, 0, 0)\",\n      \"contrast_ratio\": 1.4306036177853692\n    },\n    {\n      \"index\": 5,\n      \"tag\": \"input\",\n      \"role\": \"\",\n      \"name\": \"email\",\n      \"type\": \"email\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 505,\n        \"y\": 437,\n        \"width\": 430,\n        \"height\": 46\n      },\n      \"font_size\": \"16px\",\n      \"color\": \"rgb(0, 0, 0)\",\n      \"background\": \"rgb(255, 255, 255)\",\n      \"contrast_ratio\": 21\n    },\n    {\n      \"index\": 6,\n      \"tag\": \"label\",\n      \"role\": \"\",\n      \"name\": \"Password\",\n      \"type\": \"\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 505,\n        \"y\": 503,\n        \"width\": 430,\n        \"height\": 20\n      },\n      \"font_size\": \"16px\",\n      \"color\": \"rgb(31, 41, 55)\",\n      \"background\": \"rgba(0, 0, 0, 0)\",\n      \"contrast_ratio\": 1.4306036177853692\n    },\n    {\n      \"index\": 7,\n      \"tag\": \"input\",\n      \"role\": \"\",\n      \"name\": \"password\",\n      \"type\": \"password\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 505,\n        \"y\": 531,\n        \"width\": 430,\n        \"height\": 46\n      },\n      \"font_size\": \"16px\",\n      \"color\": \"rgb(0, 0, 0)\",\n      \"background\": \"rgb(255, 255, 255)\",\n      \"contrast_ratio\": 21\n    },\n    {\n      \"index\": 8,\n      \"tag\": \"button\",\n      \"role\": \"\",\n      \"name\": \"Create account\",\n      \"type\": \"submit\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 505,\n        \"y\": 601,\n        \"width\": 430,\n        \"height\": 46\n      },\n      \"font_size\": \"16px\",\n      \"color\": \"rgb(255, 255, 255)\",\n      \"background\": \"rgb(49, 87, 213)\",\n      \"contrast_ratio\": 6.078691572956118\n    },\n    {\n      \"index\": 9,\n      \"tag\": \"div\",\n      \"role\": \"alert\",\n      \"name\": \"Unable to create account. Please try again later.\",\n      \"type\": \"\",\n      \"placeholder\": \"\",\n      \"href\": \"\",\n      \"disabled\": false,\n      \"box\": {\n        \"x\": 505,\n        \"y\": 665,\n        \"width\": 430,\n        \"height\": 46\n      },\n      \"font_size\": \"16px\",\n      \"color\": \"rgb(153, 27, 27)\",\n      \"background\": \"rgb(254, 226, 226)\",\n      \"contrast_ratio\": 6.802728419777387\n    }\n  ],\n  \"alerts\": [\n    \"Unable to create account. Please try again later.\"\n  ],\n  \"visual_heuristics\": {\n    \"likely_clipping\": [],\n    \"alignment_warnings\": [],\n    \"contrast_warnings\": [\n      \"'Create your account' has estimated contrast ratio 1.43:1.\",\n      \"'Email\\nPassword\\n Create account\\nUnable to create account. Please try again later.' has estimated contrast ratio 1.43:1.\",\n      \"'Email' has estimated contrast ratio 1.43:1.\",\n      \"'Password' has estimated contrast ratio 1.43:1.\"\n    ]\n  },\n  \"network_events\": [\n    {\n      \"method\": \"GET\",\n      \"url\": \"http://127.0.0.1:4173/\",\n      \"status\": 200,\n      \"resource_type\": \"document\"\n    }\n  ],\n  \"dialogs\": [],\n  \"downloads\": []\n}",
+        "screenshot_path": "screenshots/004_web_state.png",
+        "structured_path": "logs/004_dom.json",
+        "exit_code": null,
+        "errors": [],
+        "visual_metrics": {
+          "width": 1440,
+          "height": 1000,
+          "entropy": 1.5239,
+          "edge_density": 0.01192,
+          "blank_ratio": 0.75403,
+          "dominant_colors": [
+            "#f5f7fb",
+            "#ffffff",
+            "#f1f3f6",
+            "#b8bbdc",
+            "#fbfcfc",
+            "#f6f7f9"
+          ],
+          "perceptual_hash": "ffffc7ffc3c3ffff",
+          "change_ratio": 0.05569,
+          "likely_clipping": [],
+          "alignment_warnings": [],
+          "contrast_warnings": [
+            "The frame is close to uniformly black or white.",
+            "'Create your account' has estimated contrast ratio 1.43:1.",
+            "'Email\nPassword\n Create account\nUnable to create account. Please try again later.' has estimated contrast ratio 1.43:1.",
+            "'Email' has estimated contrast ratio 1.43:1.",
+            "'Password' has estimated contrast ratio 1.43:1."
+          ]
+        },
+        "delta": {
+          "changed_text": [
+            "\"'Email\\nPassword\\n Create account\\nUnable to create account. Please try again later.' has estimated contrast ratio 1.43:1.\",",
+            "\"Unable to create account. Please try again later.\"",
+            "\"alerts\": [",
+            "\"background\": \"rgb(254, 226, 226)\",",
+            "\"color\": \"rgb(153, 27, 27)\",",
+            "\"contrast_ratio\": 6.802728419777387",
+            "\"height\": 302",
+            "\"height\": 490",
+            "\"index\": 9,",
+            "\"name\": \"Create your account\\n\\nStart organizing your notes in one calm, searchable place.\\n\\nEmail\\nPassword\\n Create account\\nUnable to create account. Please try again later\",",
+            "\"name\": \"Email\\nPassword\\n Create account\\nUnable to create account. Please try again later.\",",
+            "\"name\": \"Unable to create account. Please try again later.\",",
+            "\"role\": \"alert\",",
+            "\"tag\": \"div\",",
+            "\"visible_text\": \"Create your account\\n\\nStart organizing your notes in one calm, searchable place.\\n\\nEmail\\nPassword\\n Create account\\nUnable to create account. Please try again later.\",",
+            "\"y\": 255,",
+            "\"y\": 289,",
+            "\"y\": 341,",
+            "\"y\": 409,",
+            "\"y\": 437,",
+            "\"y\": 503,",
+            "\"y\": 531,",
+            "\"y\": 601,",
+            "\"y\": 665,"
+          ],
+          "new_errors": [],
+          "resolved_errors": [],
+          "visual_change_ratio": 0.05569,
+          "changed_interactives": []
+        },
+        "metadata": {
+          "url": "http://127.0.0.1:4173/",
+          "title": "Acorn Notes — Sign up",
+          "network_failures": 0,
+          "console_errors": 0,
+          "downloads": []
+        },
+        "captured_at": "2026-07-11T21:55:03.092793Z"
+      },
+      "decision": {
+        "expectation": "A valid signup submission should end in an unambiguous success state or a specific recoverable validation message.",
+        "action_taken": "click: Create account",
+        "observation_summary": "A visible error says 'Unable to create account. Please try again later.' and the user remains on the signup form.",
+        "judgment": "mismatch",
+        "confidence": "high",
+        "reasoning": "The core first-use journey is blocked after representative valid input, and the generic message gives no recovery path beyond retrying.",
+        "hypothesis_if_mismatch": "The public signup submission boundary may be returning a server-side failure or failing to persist the new account.",
+        "severity": "high",
+        "suggested_investigation": "Reproduce the POST triggered by Create account, correlate its status and server logs, and add a specific recoverable error while fixing the failed account-creation path.",
+        "visual_assessment": "The error is visible, but it is generic and does not identify a field or corrective action.",
+        "next_action": {
+          "kind": "goal_blocked",
+          "target": "",
+          "source": "",
+          "text": "",
+          "key": "",
+          "url": "",
+          "direction": "",
+          "command": "",
+          "method": "",
+          "path": "",
+          "headers": {},
+          "body": null,
+          "files": [],
+          "option": "",
+          "tab_index": 0,
+          "seconds": 0.0,
+          "reason": "The signup goal is observably blocked by product behavior."
+        }
+      }
+    }
+  ]
+}

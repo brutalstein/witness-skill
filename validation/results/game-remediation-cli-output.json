@@ -1,0 +1,36 @@
+{
+  "workspace": "validation/results/game-remediation/workspace",
+  "changed_files": [
+    "frames/frame_01.png",
+    "frames/frame_02.png",
+    "frames/frame_03.png",
+    "generate_frames.py"
+  ],
+  "removed_files": [],
+  "verification": [
+    {
+      "command": "python generate_frames.py",
+      "exit_code": 0,
+      "passed": true,
+      "stdout": "",
+      "stderr": "",
+      "duration_seconds": 1.338179
+    },
+    {
+      "command": "python verify_frames.py",
+      "exit_code": 0,
+      "passed": true,
+      "stdout": "frame_01.png: changed_ratio=0.000000\nframe_02.png: changed_ratio=0.000000\nframe_03.png: changed_ratio=0.000000\nAll gameplay frames match the approved references.\n",
+      "stderr": "",
+      "duration_seconds": 1.476604
+    }
+  ],
+  "verified": true,
+  "applied_to_source": false,
+  "patch_path": "validation/results/game-remediation/remediation.patch",
+  "report_path": "validation/results/game-remediation/remediation.md",
+  "metadata": {
+    "source": "patch",
+    "patch_file": "validation/fixes/game_visual_fix.patch"
+  }
+}

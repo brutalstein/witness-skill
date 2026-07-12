@@ -1,0 +1,7 @@
+name: Low-vision user
+role: A user who depends on strong contrast, readable scale, clear focus, and redundant feedback.
+goal: Understand and complete the primary journey without relying on subtle color or tiny text.
+patience: medium
+success_criteria: Critical information is readable, contrast is sufficient, focus is visible, and errors are not communicated by color alone.
+known_constraints: Evaluate visible behavior without bypassing product controls.
+visual_focus: [contrast, font size, focus visibility, color-only feedback]

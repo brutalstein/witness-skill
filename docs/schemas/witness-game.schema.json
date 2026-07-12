@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://witness.qa/schemas/witness-game.schema.json",
+  "title": "Witness game bridge manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "engine"],
+  "properties": {
+    "version": {"const": 1},
+    "engine": {"enum": ["unity", "unreal", "godot", "custom"]},
+    "start": {"type": "string", "minLength": 1},
+    "capture": {"type": "string"},
+    "input": {"type": "string"},
+    "frames": {"type": "array", "items": {"type": "string"}},
+    "references": {"type": "array", "items": {"type": "string"}},
+    "startup_wait": {"type": "number", "minimum": 0},
+    "capture_timeout": {"type": "number", "minimum": 0.1},
+    "bridge_dir": {"type": "string"},
+    "bridge_timeout": {"type": "number", "minimum": 0.1},
+    "bridge": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "type": {"const": "file"},
+        "directory": {"type": "string"},
+        "timeout": {"type": "number", "minimum": 0.1}
+      }
+    },
+    "environment": {"type": "object", "additionalProperties": {"type": ["string", "number", "boolean"]}}
+  }
+}

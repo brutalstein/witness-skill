@@ -1,0 +1,23 @@
+Witness PTY ready in /tmp/witness-sandbox-yx3cpnjv/friendly_cli
+Suggested entry point: python cli.py --help
+$ python cli.py --help
+
+usage: friendly [-h] [--shout] [name]
+
+A small CLI used by Witness integration tests
+
+positional arguments:
+  name
+
+options:
+  -h, --help  show this help message and exit
+  --shout
+
+
+[exit 0]
+$ python cli.py Ada --shout
+
+HELLO, ADA!
+
+
+[exit 0]
