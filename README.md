@@ -33,7 +33,7 @@ Every finding includes a stable fingerprint, persona, expectation, observed fact
 - OpenAPI discovery and stateful HTTP action sequences with sensitive-value redaction
 - Game/visual adapter for frame sequences, reference images, command templates, and file-based Unity/Unreal engine bridges
 - Visual metrics for blankness, edges, dominant colors, perceptual hashes, frame/reference differences, clipping, alignment, and contrast warnings
-- Built-in first-time, adversarial, keyboard-only, slow-mobile, low-vision, and game visual-director personas
+- Built-in first-time, adversarial, keyboard-only, slow-mobile, low-vision, visual bug-hunter, simulator visual-director, and game visual-director personas
 - Test-plan generation and multi-persona × multi-journey campaigns
 - OpenAI, Anthropic, command, scripted, **native Codex host**, and **Codex CLI OAuth** reasoning modes
 - Replayable traces, baseline comparison, benchmark scoring, stable finding fingerprints, enforceable USD budgets, and token-bounded delta-first prompts
@@ -312,6 +312,8 @@ visual:
 ```
 
 The visual-director workflow evaluates safe areas, clipping, alignment, hierarchy, typography, contrast, iconography, stretched or blurred assets, seams, z-order, stale overlays, debug residue, state continuity, flicker, transition residue, aspect ratios, and reference-image differences.
+
+For Unreal-based simulators such as CARLA, use `--persona simulator-visual-director` (or `carla-visual-director`) and annotate `witness-game.json` with `profile: "carla"` plus simulation tags when possible. Witness will then bias its visual audit toward actor collisions, overlay conflicts, lane/sign readability, weather visibility, debug residue, and temporal stability.
 
 ```bash
 witness run --project examples/game_visual_review/frames \

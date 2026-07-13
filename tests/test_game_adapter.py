@@ -30,6 +30,32 @@ def test_game_adapter_reviews_frame_sequence(repo_root: Path, tmp_path: Path) ->
     assert (tmp_path / second.screenshot_path).is_file()
 
 
+def test_game_adapter_exposes_simulator_visual_checklist(repo_root: Path, tmp_path: Path) -> None:
+    root = repo_root / "examples" / "game_visual_review"
+    frames = [str(root / "frames" / "frame_01.png")]
+    profile = ProjectProfile(
+        target=str(root / "frames"),
+        project_root=str(root),
+        project_type=ProjectType.GAME,
+        confidence=Confidence.HIGH,
+        metadata={
+            "frames": frames,
+            "game_engine": "unreal",
+            "simulator_profile": "carla",
+            "simulation_tags": ["simulator", "driving", "telemetry"],
+        },
+    )
+    adapter = GameAdapter(tmp_path)
+    session = adapter.start(profile)
+    try:
+        observation = adapter.observe(session)
+    finally:
+        adapter.stop(session)
+    assert "vehicle/world clipping" in observation.text
+    assert "simulation_world" in observation.text
+    assert observation.metadata["simulator_profile"] == "carla"
+
+
 def test_game_adapter_file_bridge_captures_and_sends_named_action(tmp_path: Path) -> None:
     import json
     import threading

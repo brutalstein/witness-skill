@@ -185,3 +185,17 @@ def test_detects_flutter_mobile_project(tmp_path: Path) -> None:
     assert profile.metadata["mobile_app_package"] == "com.example.demo"
     assert profile.metadata["mobile_app_activity"] == "com.example.demo.MainActivity"
     assert profile.metadata["mobile_bundle_id"] == "com.example.demo"
+
+
+def test_detects_unreal_carla_simulator_context(tmp_path: Path) -> None:
+    (tmp_path / "Docs").mkdir(parents=True)
+    (tmp_path / "Town01.uproject").write_text("{}", encoding="utf-8")
+    (tmp_path / "README.md").write_text(
+        "CARLA simulator for autonomous driving research.\n",
+        encoding="utf-8",
+    )
+    profile = ProjectDetector().detect(str(tmp_path))
+    assert profile.project_type is ProjectType.GAME
+    assert profile.metadata["game_engine"] == "unreal"
+    assert profile.metadata["simulator_profile"] == "carla"
+    assert "carla" in profile.metadata["simulation_tags"]

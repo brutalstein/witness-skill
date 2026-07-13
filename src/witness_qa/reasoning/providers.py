@@ -52,6 +52,98 @@ class PromptBuilder:
         return {"truncated": True, "preview": encoded[:max_chars]}
 
     @staticmethod
+    def _visual_checklist(profile: ProjectProfile, persona: Persona) -> list[str]:
+        project_type = profile.project_type.value
+        base = {
+            "web": [
+                "button drift, overlap, or broken alignment",
+                "clipped text, hidden CTA, or content outside the viewport",
+                "low contrast, color-only feedback, or unreadable labels",
+                "spacing, hierarchy, and empty/error state coherence",
+            ],
+            "desktop": [
+                "window-resize breakage, clipped controls, or focus loss",
+                "button drift, overlap, or inconsistent spacing",
+                "hidden dialogs, cropped panels, or off-screen content",
+                "low contrast, color collisions, or unreadable labels",
+            ],
+            "mobile": [
+                "safe-area clipping, notch/home-indicator collisions, or off-screen CTA",
+                "keyboard overlap, scroll traps, or blocked form submission",
+                "button drift, touch-target crowding, or stacked overlaps",
+                "contrast, hierarchy, and readability on a narrow viewport",
+            ],
+            "game": [
+                "HUD drift, clipping, or z-order conflicts",
+                "safe-area fit, aspect-ratio breakage, or stretched assets",
+                "contrast, readability, and hierarchy failures",
+                "flicker, stale overlays, or state-continuity defects",
+            ],
+        }.get(project_type, [])
+        engine = str(profile.metadata.get("game_engine") or "").lower()
+        simulator_profile = str(profile.metadata.get("simulator_profile") or "").lower()
+        simulator_tags = {
+            str(item).strip().lower()
+            for item in (profile.metadata.get("simulation_tags") or [])
+            if str(item).strip()
+        }
+        if engine == "unreal":
+            base.extend(
+                [
+                    "Unreal temporal ghosting, shadow shimmer, or LOD pop-in",
+                    "unexpected debug overlays, editor residue, or placeholder widgets",
+                ]
+            )
+        if simulator_profile or simulator_tags:
+            base.extend(
+                [
+                    "vehicle/world clipping, actor intersections, or impossible spatial overlap",
+                    "lane markings, route cues, and traffic-sign readability",
+                    "sensor, mirror, or telemetry overlays obscuring critical scene content",
+                    "camera horizon, feed alignment, and aspect-ratio consistency",
+                    "weather, glare, fog, and lighting effects harming scene readability",
+                ]
+            )
+        if simulator_profile == "carla" or "carla" in simulator_tags:
+            base.extend(
+                [
+                    "CARLA route/perception overlay conflicts with the driving scene",
+                    "road-surface seams, floating actors, waypoint residue, or spawn anomalies",
+                ]
+            )
+        persona_focus = [item.replace("_", " ") for item in persona.visual_focus]
+        return list(dict.fromkeys([*base, *persona_focus]))[:12]
+
+    @staticmethod
+    def _visual_priority_hints(profile: ProjectProfile, observation: Observation) -> list[str]:
+        hints: list[str] = []
+        if observation.visual_metrics:
+            hints.extend(observation.visual_metrics.likely_clipping[:5])
+            hints.extend(observation.visual_metrics.alignment_warnings[:5])
+            hints.extend(observation.visual_metrics.contrast_warnings[:5])
+        hints.extend(observation.errors[:8])
+        lowered_text = observation.text.lower()
+        for needle, message in (
+            ("safe_area", "Structured evidence mentions safe-area related state; inspect edge collisions."),
+            ("keyboard", "Structured evidence mentions keyboard state; inspect occlusion and blocked controls."),
+            ("scroll", "Structured evidence mentions scroll state; inspect hidden or unreachable content."),
+            ("contrast_ratio", "Structured evidence includes contrast data; verify weak or conflicting color usage."),
+        ):
+            if needle in lowered_text:
+                hints.append(message)
+        simulator_profile = str(profile.metadata.get("simulator_profile") or "").lower()
+        if simulator_profile:
+            for needle, message in (
+                ("sensor", "Structured evidence mentions sensor-related state; inspect feed clarity and occlusion."),
+                ("telemetry", "Structured evidence mentions telemetry; inspect whether overlays hide critical scene content."),
+                ("lane", "Structured evidence mentions lane-related state; inspect road guidance readability."),
+                ("weather", "Structured evidence mentions weather state; inspect glare, fog, and visibility degradation."),
+            ):
+                if needle in lowered_text:
+                    hints.append(message)
+        return list(dict.fromkeys(item.strip() for item in hints if item.strip()))[:12]
+
+    @staticmethod
     def build(
         *,
         profile: ProjectProfile,
@@ -103,6 +195,23 @@ class PromptBuilder:
                 ],
             },
             "adapter": adapter_name,
+            "visual_audit": {
+                "enabled": profile.project_type.value in {"web", "desktop", "mobile", "game"}
+                or bool(persona.visual_focus),
+                "audit_depth": (
+                    "exhaustive"
+                    if profile.project_type.value == "game"
+                    or str(profile.metadata.get("simulator_profile") or "").strip()
+                    else "standard"
+                ),
+                "focus_areas": PromptBuilder._visual_checklist(profile, persona),
+                "priority_hints": PromptBuilder._visual_priority_hints(profile, observation),
+                "reporting_expectation": (
+                    "If you find a visual defect, name the concrete defect in observation_summary "
+                    "and explain it crisply in visual_assessment. Do not use vague summaries such as "
+                    "'looks fine' or 'readable' without naming the checked areas."
+                ),
+            },
             "allowed_nonterminal_actions": list(allowed_actions),
             "always_allowed_terminal_actions": [
                 "goal_reached",
@@ -137,7 +246,11 @@ class PromptBuilder:
         return (
             "Evaluate this exact QA turn and return only a schema-valid Witness decision. "
             + visual_instruction
-            + "Treat artifact paths as evidence references and do not invent unseen details.\n\n"
+            + "Treat artifact paths as evidence references and do not invent unseen details. "
+            + "When visual_audit.enabled is true, actively search for layout breakage, hidden UI, "
+            + "contrast/readability issues, overlaps, clipping, and state-visibility defects before you conclude the turn. "
+            + "For game/simulator visuals, perform an explicit sweep over HUD, world geometry, temporal stability, "
+            + "and scene readability before returning goal_reached.\n\n"
             + json.dumps(request, ensure_ascii=False, separators=(",", ":"))
         )
 

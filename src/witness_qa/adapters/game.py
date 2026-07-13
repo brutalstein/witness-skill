@@ -85,6 +85,8 @@ class GameAdapter(Adapter):
                 ("input", "input_command"),
                 ("frames", "frames"),
                 ("references", "reference_images"),
+                ("profile", "simulator_profile"),
+                ("tags", "simulation_tags"),
             ):
                 if manifest.get(manifest_key):
                     project_profile.metadata[metadata_key] = manifest[manifest_key]
@@ -226,24 +228,21 @@ class GameAdapter(Adapter):
         reference = self._reference_for(session_handle)
         if reference:
             reference_metrics = self._reference_comparison(screenshot_abs, reference)
+        visual_checklist = self._visual_review_checklist(session_handle.profile)
+        defect_taxonomy = self._visual_defect_taxonomy(session_handle.profile)
         state = {
             "frame_source": str(source),
             "frame_index": session_handle.frame_index,
             "frame_count": len(session_handle.frames),
             "game_engine": session_handle.profile.metadata.get("game_engine", ""),
+            "simulator_profile": self._simulator_profile(session_handle.profile),
+            "simulation_tags": self._simulation_tags(session_handle.profile),
             "engine_bridge": str(session_handle.bridge_dir or ""),
             "visual_metrics": metrics.model_dump(mode="json"),
             "reference_comparison": reference_metrics,
             "recent_actions": session_handle.action_log[-20:],
-            "visual_review_checklist": [
-                "misaligned HUD and menu elements",
-                "text or sprites clipped at screen/safe-area edges",
-                "inconsistent spacing, scale, color, shadows, and icon style",
-                "low contrast or unreadable text over moving backgrounds",
-                "stretched assets, wrong aspect ratio, blur, aliasing, or pixel shimmer",
-                "z-order errors, occlusion, seams, flicker, and state-transition residue",
-                "inconsistent animation pose, feedback, or affordance across frames",
-            ],
+            "visual_review_checklist": visual_checklist,
+            "visual_defect_taxonomy": defect_taxonomy,
         }
         structured_rel = Path("logs") / f"{index:03d}_game.json"
         atomic_write_json(self.output_dir / structured_rel, state)
@@ -270,6 +269,8 @@ class GameAdapter(Adapter):
                 "frame_source": str(source),
                 "reference": str(reference) if reference else "",
                 "game_engine": session_handle.profile.metadata.get("game_engine", ""),
+                "simulator_profile": self._simulator_profile(session_handle.profile),
+                "simulation_tags": self._simulation_tags(session_handle.profile),
                 "engine_bridge": str(session_handle.bridge_dir or ""),
             },
         )
@@ -470,6 +471,8 @@ class GameAdapter(Adapter):
             "bridge_dir",
             "bridge_timeout",
             "environment",
+            "profile",
+            "tags",
         }
         unknown = sorted(set(parsed) - allowed)
         if unknown:
@@ -485,6 +488,12 @@ class GameAdapter(Adapter):
                 isinstance(parsed[key], list) and all(isinstance(item, str) for item in parsed[key])
             ):
                 raise AdapterError(f"witness-game.json {key} must be a list of strings")
+        if "tags" in parsed and not (
+            isinstance(parsed["tags"], list) and all(isinstance(item, str) for item in parsed["tags"])
+        ):
+            raise AdapterError("witness-game.json tags must be a list of strings")
+        if "profile" in parsed and not isinstance(parsed["profile"], str):
+            raise AdapterError("witness-game.json profile must be a string")
         bridge = parsed.get("bridge")
         if bridge is not None:
             if not isinstance(bridge, dict) or bridge.get("type", "file") != "file":
@@ -554,3 +563,132 @@ class GameAdapter(Adapter):
             changed = sum(count for value, count in enumerate(histogram) if value > 12)
             ratio = changed / max(1, actual.width * actual.height)
             return {"difference_ratio": round(ratio, 6), "reference": str(reference_path)}
+
+    @staticmethod
+    def _simulator_profile(profile: ProjectProfile) -> str:
+        value = str(profile.metadata.get("simulator_profile") or "").strip().lower()
+        if value:
+            return value
+        tags = {
+            str(item).strip().lower()
+            for item in (profile.metadata.get("simulation_tags") or [])
+            if str(item).strip()
+        }
+        if "carla" in tags:
+            return "carla"
+        if "simulator" in tags or "simulation" in tags:
+            return "simulator"
+        return ""
+
+    @staticmethod
+    def _simulation_tags(profile: ProjectProfile) -> list[str]:
+        values = [
+            str(item).strip()
+            for item in (profile.metadata.get("simulation_tags") or [])
+            if str(item).strip()
+        ]
+        return list(dict.fromkeys(values))[:20]
+
+    @classmethod
+    def _visual_review_checklist(cls, profile: ProjectProfile) -> list[str]:
+        base = [
+            "misaligned HUD and menu elements",
+            "text or sprites clipped at screen/safe-area edges",
+            "inconsistent spacing, scale, color, shadows, and icon style",
+            "low contrast or unreadable text over moving backgrounds",
+            "stretched assets, wrong aspect ratio, blur, aliasing, or pixel shimmer",
+            "z-order errors, occlusion, seams, flicker, and state-transition residue",
+            "inconsistent animation pose, feedback, or affordance across frames",
+        ]
+        engine = str(profile.metadata.get("game_engine") or "").lower()
+        if engine == "unreal":
+            base.extend(
+                [
+                    "Unreal-specific temporal ghosting, shadow shimmer, or LOD pop-in",
+                    "unexpected debug overlays, editor residue, collision gizmos, or placeholder widgets",
+                ]
+            )
+        simulator_profile = cls._simulator_profile(profile)
+        if simulator_profile:
+            base.extend(
+                [
+                    "vehicle/world clipping, actor intersections, curb penetration, or impossible spatial overlap",
+                    "lane markings, route cues, and traffic-sign readability under current camera framing",
+                    "sensor, mirror, or telemetry overlays obscuring critical world-space information",
+                    "camera horizon, aspect ratio, and feed alignment inconsistencies across simulator views",
+                    "weather, lighting, fog, or glare reducing scene readability beyond expected conditions",
+                ]
+            )
+        if simulator_profile == "carla":
+            base.extend(
+                [
+                    "CARLA scene plausibility issues such as floating actors, road-surface seams, or waypoint/debug residue",
+                    "ego-vehicle HUD, route visualization, and perception overlays conflicting with driving-critical scene content",
+                ]
+            )
+        return list(dict.fromkeys(base))
+
+    @classmethod
+    def _visual_defect_taxonomy(cls, profile: ProjectProfile) -> dict[str, list[str]]:
+        taxonomy = {
+            "layout": [
+                "anchor drift",
+                "baseline misalignment",
+                "unsafe edge placement",
+                "unexpected overlap",
+            ],
+            "readability": [
+                "clipped or wrapped text",
+                "tiny typography",
+                "weak contrast",
+                "color-only status",
+            ],
+            "assets": [
+                "stretching",
+                "blur",
+                "aliasing",
+                "inconsistent icon or material style",
+            ],
+            "temporal": [
+                "flicker",
+                "state residue",
+                "popping",
+                "frame-to-frame jitter",
+            ],
+        }
+        engine = str(profile.metadata.get("game_engine") or "").lower()
+        if engine == "unreal":
+            taxonomy["unreal_rendering"] = [
+                "TAA ghosting",
+                "shadow shimmer",
+                "LOD pop-in",
+                "debug overlay residue",
+            ]
+        simulator_profile = cls._simulator_profile(profile)
+        if simulator_profile:
+            taxonomy["simulation_world"] = [
+                "vehicle or prop clipping",
+                "actor intersection",
+                "road-edge or curb penetration",
+                "impossible world overlap",
+            ]
+            taxonomy["simulation_readability"] = [
+                "lane marking ambiguity",
+                "signage illegibility",
+                "sensor overlay occlusion",
+                "camera or horizon misalignment",
+            ]
+            taxonomy["simulation_visibility"] = [
+                "glare",
+                "fog readability loss",
+                "weather-driven scene ambiguity",
+                "occluded critical feedback",
+            ]
+        if simulator_profile == "carla":
+            taxonomy["carla_specific"] = [
+                "ego-route overlay conflict",
+                "perception or waypoint debug residue",
+                "traffic-scene plausibility break",
+                "spawned actor placement anomaly",
+            ]
+        return taxonomy

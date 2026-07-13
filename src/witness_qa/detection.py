@@ -102,6 +102,8 @@ class ProjectDetector:
         framework = ""
         game_engine = ""
         game_manifest = self._read_json(root / "witness-game.json")
+        simulator_profile = ""
+        simulation_tags: list[str] = []
 
         def signal(kind: ProjectType, weight: float, source: str, detail: str) -> None:
             scores[kind] += weight
@@ -244,6 +246,12 @@ class ProjectDetector:
             signal(ProjectType.GAME, 12, "filesystem", "Unreal Engine project detected")
         if game_manifest:
             game_engine = str(game_manifest.get("engine") or game_engine).lower()
+            simulator_profile = str(game_manifest.get("profile") or simulator_profile).lower()
+            simulation_tags.extend(
+                str(item).strip().lower()
+                for item in game_manifest.get("tags", [])
+                if str(item).strip()
+            )
             signal(
                 ProjectType.GAME,
                 16,
@@ -263,6 +271,16 @@ class ProjectDetector:
             )
         ):
             signal(ProjectType.GAME, 6, "filesystem", "Game/UI screenshot sequence detected")
+
+        readme_lower = readme_text.lower()
+        if "carla" in readme_lower or any("carla" in name.lower() for name in relative_names):
+            simulator_profile = simulator_profile or "carla"
+            simulation_tags.extend(["carla", "simulator", "driving"])
+            signal(ProjectType.GAME, 7, "README/filesystem", "CARLA simulator markers detected")
+        elif any(token in readme_lower for token in ("simulator", "simulation", "autonomous driving")):
+            simulator_profile = simulator_profile or "simulator"
+            simulation_tags.extend(["simulator"])
+            signal(ProjectType.GAME, 4, "README", "Simulation-oriented product markers detected")
 
         python_files = [p for p in files if p.suffix == ".py"][:80]
         for path in python_files:
@@ -365,6 +383,8 @@ class ProjectDetector:
                 "flutter_project": framework == "flutter",
                 "game_engine": game_engine,
                 "game_manifest": game_manifest,
+                "simulator_profile": simulator_profile,
+                "simulation_tags": list(dict.fromkeys(simulation_tags)),
                 "capture_command": game_manifest.get("capture") if game_manifest else None,
                 "input_command": game_manifest.get("input") if game_manifest else None,
                 "reference_images": game_manifest.get("references", []) if game_manifest else [],

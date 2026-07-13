@@ -180,9 +180,9 @@
     "semantic_hash": ""
   },
   "src/witness_qa/adapters/game.py": {
-    "mtime": 1783841951.0684164,
-    "ast_hash": "620b91eb543d0e02fdb0c38da44e19b1",
-    "semantic_hash": "620b91eb543d0e02fdb0c38da44e19b1"
+    "mtime": 1783968659.5495994,
+    "ast_hash": "d4d412b3db5670a2e4f0214493210129",
+    "semantic_hash": ""
   },
   "src/witness_qa/adapters/registry.py": {
     "mtime": 1783967415.2465444,
@@ -215,8 +215,8 @@
     "semantic_hash": ""
   },
   "src/witness_qa/detection.py": {
-    "mtime": 1783967563.0530996,
-    "ast_hash": "a9a72678d0529416d303b8e5d5d952f1",
+    "mtime": 1783968671.2021928,
+    "ast_hash": "93a06329d5dc41b9b63f793104b7b9a7",
     "semantic_hash": ""
   },
   "src/witness_qa/engine_bridges.py": {
@@ -265,13 +265,13 @@
     "semantic_hash": "8e54713562b02a20c4af98668ee07df0"
   },
   "src/witness_qa/personas.py": {
-    "mtime": 1783841950.721759,
-    "ast_hash": "dde158d33ee2321c7a486b8885ff8d4d",
-    "semantic_hash": "dde158d33ee2321c7a486b8885ff8d4d"
+    "mtime": 1783968723.1682427,
+    "ast_hash": "7ea6485d187f8c47f04fd11fe02254fb",
+    "semantic_hash": ""
   },
   "src/witness_qa/planning.py": {
-    "mtime": 1783967454.8397057,
-    "ast_hash": "b1cc392865b4e615193644e79898e79f",
+    "mtime": 1783968711.9378896,
+    "ast_hash": "50666c080987f4ad6480470b9a74fa3b",
     "semantic_hash": ""
   },
   "src/witness_qa/reasoning/__init__.py": {
@@ -285,14 +285,14 @@
     "semantic_hash": "fb3e3fcab36cd9ebd37d579cae2b90b0"
   },
   "src/witness_qa/reasoning/prompts.py": {
-    "mtime": 1783841951.4763114,
-    "ast_hash": "f5c2e4a6daa27e9b7a1ea05cfe280d5e",
-    "semantic_hash": "f5c2e4a6daa27e9b7a1ea05cfe280d5e"
+    "mtime": 1783968678.723498,
+    "ast_hash": "c18b69e75752e8448b218686f8e67461",
+    "semantic_hash": ""
   },
   "src/witness_qa/reasoning/providers.py": {
-    "mtime": 1783841951.5068681,
-    "ast_hash": "18f3b8b1fbe64438e6f75b5b5b337f03",
-    "semantic_hash": "18f3b8b1fbe64438e6f75b5b5b337f03"
+    "mtime": 1783968698.1074398,
+    "ast_hash": "1f6f5c22d3821366380bd5994f8df4b6",
+    "semantic_hash": ""
   },
   "src/witness_qa/reasoning/schema.py": {
     "mtime": 1783841951.5270832,
@@ -410,8 +410,8 @@
     "semantic_hash": "71614c3fee5008a89ec106a3e8c36a69"
   },
   "tests/test_detection.py": {
-    "mtime": 1783967729.8511262,
-    "ast_hash": "db0dfe998b66ec92f3916a4cd5c1481a",
+    "mtime": 1783968837.1684217,
+    "ast_hash": "2649758052fa13ecd1a3f1f5dc1db8e4",
     "semantic_hash": ""
   },
   "tests/test_distribution.py": {
@@ -435,9 +435,9 @@
     "semantic_hash": "e1fa7482fb5b54b2bbaeb59a3dcabcd5"
   },
   "tests/test_game_adapter.py": {
-    "mtime": 1783841952.429324,
-    "ast_hash": "b6fcec89e70bcce1ebb45fb460b559b6",
-    "semantic_hash": "b6fcec89e70bcce1ebb45fb460b559b6"
+    "mtime": 1783968869.8894656,
+    "ast_hash": "0c7b6c4e1046914814b9d8500caf86eb",
+    "semantic_hash": ""
   },
   "tests/test_github_integration.py": {
     "mtime": 1783841952.451427,
@@ -470,13 +470,13 @@
     "semantic_hash": "d1760a9bb5e438af237dc87d404f265d"
   },
   "tests/test_personas.py": {
-    "mtime": 1783841952.602347,
-    "ast_hash": "bd71cf888e8b81e9d64546d6d0a0ab8c",
-    "semantic_hash": "bd71cf888e8b81e9d64546d6d0a0ab8c"
+    "mtime": 1783968813.550982,
+    "ast_hash": "dd094f4fdb0e729c401d47be68231b20",
+    "semantic_hash": ""
   },
   "tests/test_planning.py": {
-    "mtime": 1783967736.5956094,
-    "ast_hash": "82508437ff58266b5172ab6e9f8ac442",
+    "mtime": 1783968820.8811471,
+    "ast_hash": "4e338f2ff6261bd540eb668cc0da6127",
     "semantic_hash": ""
   },
   "tests/test_providers.py": {
@@ -790,8 +790,8 @@
     "semantic_hash": ""
   },
   ".agents/skills/witness/SKILL.md": {
-    "mtime": 1783967695.8857,
-    "ast_hash": "919dd95b909ba97e34373717cf3bd139",
+    "mtime": 1783968806.9551141,
+    "ast_hash": "751c65b378886abfa15aebc7f348d978",
     "semantic_hash": ""
   },
   ".agents/skills/witness/agents/openai.yaml": {
@@ -810,8 +810,8 @@
     "semantic_hash": ""
   },
   ".claude/skills/witness/SKILL.md": {
-    "mtime": 1783967900.7232711,
-    "ast_hash": "919dd95b909ba97e34373717cf3bd139",
+    "mtime": 1783968806.9551141,
+    "ast_hash": "751c65b378886abfa15aebc7f348d978",
     "semantic_hash": ""
   },
   ".github/workflows/ci.yml": {
@@ -840,8 +840,8 @@
     "semantic_hash": ""
   },
   "README.md": {
-    "mtime": 1783967719.1663377,
-    "ast_hash": "1debf72eb4cf0d62ee1f8164d0979581",
+    "mtime": 1783968788.3020532,
+    "ast_hash": "9f89d02f30e064e8c4c19415fb59b285",
     "semantic_hash": ""
   },
   "ROADMAP.md": {
@@ -970,13 +970,13 @@
     "semantic_hash": ""
   },
   "skills/claude/witness/SKILL.md": {
-    "mtime": 1783967940.0409758,
-    "ast_hash": "919dd95b909ba97e34373717cf3bd139",
+    "mtime": 1783968806.9655764,
+    "ast_hash": "751c65b378886abfa15aebc7f348d978",
     "semantic_hash": ""
   },
   "skills/codex/witness/SKILL.md": {
-    "mtime": 1783967703.385241,
-    "ast_hash": "919dd95b909ba97e34373717cf3bd139",
+    "mtime": 1783968806.9551141,
+    "ast_hash": "751c65b378886abfa15aebc7f348d978",
     "semantic_hash": ""
   },
   "skills/codex/witness/agents/openai.yaml": {
@@ -1297,6 +1297,21 @@
   "validation/results/web/screenshots/004_web_state.png": {
     "mtime": 1783841956.7252312,
     "ast_hash": "0e181660262b90a66d532a08d0679ac3",
+    "semantic_hash": ""
+  },
+  "tests/test_prompt_builder.py": {
+    "mtime": 1783968830.0732503,
+    "ast_hash": "3e74cb3db9552c90e34fb4b0b529a6d7",
+    "semantic_hash": ""
+  },
+  "src/witness_qa/builtin_personas/visual_bug_hunter.yaml": {
+    "mtime": 1783968317.9024167,
+    "ast_hash": "72a2a4aa354cb01aa3f24dcc28afb59d",
+    "semantic_hash": ""
+  },
+  "src/witness_qa/builtin_personas/simulator_visual_director.yaml": {
+    "mtime": 1783968735.3776066,
+    "ast_hash": "d981a7bad3d849ec3f2bf4b9a67d8e5a",
     "semantic_hash": ""
   }
 }

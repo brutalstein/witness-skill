@@ -32,6 +32,11 @@ DEFAULT_JOURNEYS: dict[ProjectType, list[tuple[str, str, str]]] = {
             "Responsive visual integrity",
             "Verify the main flow remains readable and usable in a narrow viewport.",
         ),
+        (
+            "visual-audit",
+            "Deep visual defect audit",
+            "Inspect the main journey specifically for misalignment, overlap, clipping, hidden actions, contrast failures, and broken visual hierarchy.",
+        ),
     ],
     ProjectType.DESKTOP: [
         (
@@ -53,6 +58,11 @@ DEFAULT_JOURNEYS: dict[ProjectType, list[tuple[str, str, str]]] = {
             "keyboard",
             "Desktop keyboard navigation",
             "Complete the primary action using keyboard focus and shortcuts without losing visible focus state.",
+        ),
+        (
+            "visual-audit",
+            "Deep desktop visual audit",
+            "Inspect window states for misalignment, clipped controls, overlap, unreadable contrast, and inconsistent hierarchy.",
         ),
     ],
     ProjectType.MOBILE: [
@@ -80,6 +90,11 @@ DEFAULT_JOURNEYS: dict[ProjectType, list[tuple[str, str, str]]] = {
             "interruptions",
             "Interruption and resume safety",
             "Background or reopen the app and verify the visible state, progress, and messaging remain coherent.",
+        ),
+        (
+            "visual-audit",
+            "Deep mobile visual audit",
+            "Inspect the mobile journey for button drift, safe-area clipping, keyboard obstruction, touch-target crowding, overlap, contrast failures, and hidden controls.",
         ),
     ],
     ProjectType.CLI: [
@@ -151,6 +166,29 @@ DEFAULT_JOURNEYS: dict[ProjectType, list[tuple[str, str, str]]] = {
     ],
 }
 
+SIMULATOR_JOURNEYS: list[tuple[str, str, str]] = [
+    (
+        "scene-plausibility",
+        "Scene plausibility and actor collisions",
+        "Inspect the scene for vehicle/world clipping, actor intersections, impossible overlaps, and spatial anomalies.",
+    ),
+    (
+        "sensor-hud",
+        "Sensor and HUD occlusion audit",
+        "Inspect mirrors, cameras, telemetry, route cues, and overlays for occlusion, crowding, and alignment defects.",
+    ),
+    (
+        "road-readability",
+        "Road and signage readability",
+        "Inspect lane markings, signs, route guidance, and world-space affordances for readability under current framing and lighting.",
+    ),
+    (
+        "temporal-stability",
+        "Temporal stability audit",
+        "Compare frames or state transitions for ghosting, flicker, pop-in, debug residue, and continuity defects.",
+    ),
+]
+
 
 class TestPlanner:
     def build(self, profile: ProjectProfile, explicit_goals: list[str] | None = None) -> TestPlan:
@@ -178,6 +216,20 @@ class TestPlanner:
                     DEFAULT_JOURNEYS.get(profile.project_type, [])
                 )
             ]
+        if profile.project_type is ProjectType.GAME and profile.metadata.get("simulator_profile"):
+            existing_ids = {item.id for item in journeys}
+            simulator_journeys = [
+                TestJourney(
+                    id=identifier,
+                    name=name,
+                    goal=goal,
+                    priority="high",
+                    source="built-in",
+                )
+                for identifier, name, goal in SIMULATOR_JOURNEYS
+                if identifier not in existing_ids
+            ]
+            journeys = simulator_journeys + journeys
         journeys.extend(
             self._readme_journeys(profile, existing={item.goal.lower() for item in journeys})
         )
@@ -235,6 +287,14 @@ class TestPlanner:
                 "asset scaling and z-order defects",
             ],
         }.get(profile.project_type, [])
+        if profile.project_type is ProjectType.GAME and profile.metadata.get("simulator_profile"):
+            risks = [
+                "vehicle or prop clipping against world geometry",
+                "sensor or HUD overlays obscuring driving-critical scene content",
+                "lane, sign, or route readability failures under lighting/weather changes",
+                "temporal ghosting, pop-in, debug residue, or scene instability",
+                *risks,
+            ]
         return TestPlan(
             project_type=profile.project_type,
             journeys=journeys[:20],

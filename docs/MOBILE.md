@@ -29,7 +29,7 @@ project:
 ```bash
 witness run --project . \
   --adapter mobile \
-  --persona first-time-user \
+  --persona visual-bug-hunter \
   --journey "Sign in and reach the home screen"
 ```
 

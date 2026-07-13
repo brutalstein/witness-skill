@@ -20,6 +20,14 @@ ALIASES = {
     "slow-mobile-user": "slow_mobile_user",
     "low-vision-user": "low_vision_user",
     "game-visual-director": "game_visual_director",
+    "visual-bug-hunter": "visual_bug_hunter",
+    "visual_bug_hunter": "visual_bug_hunter",
+    "ui-auditor": "visual_bug_hunter",
+    "flutter-visual-tester": "visual_bug_hunter",
+    "simulator-visual-director": "simulator_visual_director",
+    "simulator_visual_director": "simulator_visual_director",
+    "carla-visual-director": "simulator_visual_director",
+    "carla-sim-auditor": "simulator_visual_director",
 }
 
 
