@@ -8,28 +8,35 @@ import subprocess
 import time
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any
+from typing import TYPE_CHECKING, Any
 from urllib.parse import urljoin, urlparse
 
 import httpx
-from playwright.sync_api import (
-    Browser,
-    BrowserContext,
-    Dialog,
-    Download,
-    Locator,
-    Page,
-    Playwright,
-    Request,
-    Route,
-    sync_playwright,
-)
 
 from ..errors import AdapterError
 from ..models import ActionKind, ActionResult, AdapterAction, Observation, ProjectProfile
 from ..observation import analyze_image, compare_observations, dom_visual_heuristics
 from ..utils import atomic_write_json, ensure_dir, process_group_kwargs, terminate_process_tree
 from .base import Adapter
+
+if TYPE_CHECKING:
+    from playwright.sync_api import (
+        Browser,
+        BrowserContext,
+        Dialog,
+        Download,
+        Locator,
+        Page,
+        Playwright,
+        Request,
+        Route,
+    )
+
+
+def sync_playwright():
+    from playwright.sync_api import sync_playwright as real_sync_playwright
+
+    return real_sync_playwright()
 
 
 @dataclass

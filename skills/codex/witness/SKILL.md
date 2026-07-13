@@ -1,6 +1,6 @@
 ---
 name: witness
-description: Run evidence-backed QA on local web apps, Electron desktop apps, CLIs, APIs, Unity/Unreal/Godot games, screenshots, and visual flows. Use when asked to test, visually inspect, reproduce, find UX defects, verify a fix, or exercise a real user journey. Prefer the native host session so the current signed-in coding agent reasons without separate API keys.
+description: Run evidence-backed QA on local web apps, Flutter mobile apps, Electron desktop apps, CLIs, APIs, Unity/Unreal/Godot games, screenshots, and visual flows. Use when asked to test, visually inspect, reproduce, find UX defects, verify a fix, or exercise a real user journey. Prefer the native host session so the current signed-in coding agent reasons without separate API keys.
 ---
 
 # Witness QA
@@ -49,6 +49,7 @@ Witness verifies `codex login status`, then uses schema-constrained, image-enabl
 
 - **Web:** use accessible locators; collect screenshots, DOM geometry, console/page errors, request failures, dialogs, downloads, and responsive evidence.
 - **Electron:** select `desktop`; Witness launches with loopback-only CDP, a disposable user-data profile, and WebAdapter evidence. Do not silently automate privileged OS dialogs or keychains.
+- **Flutter mobile:** select `mobile`; run through Appium against Android or iOS with real screenshots, native accessibility/source capture, and user-like touch/text/scroll actions. Prefer explicit `witness.yaml` Appium settings and accessible Flutter semantics labels.
 - **CLI:** use the real PTY and isolated copy workspace. Treat command denylisting as defense-in-depth, not the sandbox boundary.
 - **API:** use documented public endpoints; redact auth headers and sensitive body values.
 - **Unity/Unreal/Godot:** prefer `witness-game.json` and the file bridge. For Unity/Unreal, install packaged bridges with `witness install-engine-bridge unity Packages/com.witness.qa` or `witness install-engine-bridge unreal Plugins/WitnessBridge`. Inspect safe areas, clipping, scale, hierarchy, contrast, z-order, seams, flicker, state continuity, HUD feedback, debug overlays, aspect ratios, localization expansion, accessibility, and reference differences.

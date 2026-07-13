@@ -55,6 +55,33 @@ DEFAULT_JOURNEYS: dict[ProjectType, list[tuple[str, str, str]]] = {
             "Complete the primary action using keyboard focus and shortcuts without losing visible focus state.",
         ),
     ],
+    ProjectType.MOBILE: [
+        (
+            "launch",
+            "App launch and first-run clarity",
+            "Launch the mobile app and verify the first visible screen is understandable without hidden setup knowledge.",
+        ),
+        (
+            "primary-flow",
+            "Primary mobile journey",
+            "Complete the app's main user flow using touch interactions and visible guidance only.",
+        ),
+        (
+            "keyboard",
+            "Text input and keyboard resilience",
+            "Enter realistic mobile input, submit it, and verify the on-screen keyboard does not obscure critical controls or feedback.",
+        ),
+        (
+            "scroll",
+            "Scroll and viewport continuity",
+            "Move through long content and verify sticky controls, navigation, and section boundaries remain coherent.",
+        ),
+        (
+            "interruptions",
+            "Interruption and resume safety",
+            "Background or reopen the app and verify the visible state, progress, and messaging remain coherent.",
+        ),
+    ],
     ProjectType.CLI: [
         (
             "help",
@@ -182,6 +209,12 @@ class TestPlanner:
                     "Desktop keyboard navigation",
                     "Complete the primary action using keyboard focus and shortcuts without losing visible focus state.",
                 ),
+            ],
+            ProjectType.MOBILE: [
+                "touch target ambiguity",
+                "keyboard overlap and safe-area clipping",
+                "scroll-state loss after resume",
+                "platform-specific permission or navigation regressions",
             ],
             ProjectType.CLI: [
                 "incorrect exit codes",

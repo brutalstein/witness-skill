@@ -25,6 +25,17 @@ class ProjectConfig(ConfigModel):
     ready_timeout: float = 45.0
     electron_debug_port: int | None = None
     electron_isolated_profile: bool = True
+    appium_server_url: str | None = None
+    mobile_platform_name: str | None = None
+    mobile_device_name: str | None = None
+    mobile_automation_name: str | None = None
+    mobile_app: str | None = None
+    mobile_app_package: str | None = None
+    mobile_app_activity: str | None = None
+    mobile_bundle_id: str | None = None
+    mobile_udid: str | None = None
+    mobile_no_reset: bool = True
+    mobile_new_command_timeout: int = 180
 
 
 class ProviderConfig(ConfigModel):
@@ -131,6 +142,14 @@ project:
   # Electron launch commands may include {debug_port}; otherwise Witness appends the flag.
   # electron_debug_port: 9222
   electron_isolated_profile: true
+  # Flutter / mobile QA via Appium:
+  # appium_server_url: http://127.0.0.1:4723
+  # mobile_platform_name: android   # or ios
+  # mobile_device_name: emulator-5554
+  # mobile_app: build/app/outputs/flutter-apk/app-debug.apk
+  # mobile_app_package: com.example.app
+  # mobile_app_activity: .MainActivity
+  # mobile_bundle_id: com.example.app
 
 provider:
   name: auto

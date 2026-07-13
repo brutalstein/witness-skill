@@ -41,7 +41,7 @@ from .utils import atomic_write_json, is_url
 
 app = typer.Typer(
     name="witness",
-    help="Evidence-backed agentic QA for web, Electron desktop, CLI, API, and game/visual software.",
+    help="Evidence-backed agentic QA for web, Flutter mobile, Electron desktop, CLI, API, and game/visual software.",
     no_args_is_help=True,
     pretty_exceptions_enable=False,
 )
@@ -127,6 +127,17 @@ def _adapter_options(
         "startup_timeout": config.project.ready_timeout,
         "electron_debug_port": config.project.electron_debug_port,
         "electron_isolated_profile": config.project.electron_isolated_profile,
+        "appium_server_url": config.project.appium_server_url,
+        "mobile_platform_name": config.project.mobile_platform_name,
+        "mobile_device_name": config.project.mobile_device_name,
+        "mobile_automation_name": config.project.mobile_automation_name,
+        "mobile_app": config.project.mobile_app,
+        "mobile_app_package": config.project.mobile_app_package,
+        "mobile_app_activity": config.project.mobile_app_activity,
+        "mobile_bundle_id": config.project.mobile_bundle_id,
+        "mobile_udid": config.project.mobile_udid,
+        "mobile_no_reset": config.project.mobile_no_reset,
+        "mobile_new_command_timeout": config.project.mobile_new_command_timeout,
     }
 
 
@@ -195,7 +206,7 @@ def run(
         typer.Option("--max-cost", min=0.0, help="Maximum estimated direct-provider spend in USD."),
     ] = None,
     adapter: Annotated[
-        str, typer.Option("--adapter", help="auto, web, desktop, cli, api, or game.")
+        str, typer.Option("--adapter", help="auto, web, mobile, desktop, cli, api, or game.")
     ] = "auto",
     provider: Annotated[
         str,
@@ -260,7 +271,7 @@ def run(
                 profile.project_type = ProjectType(adapter.lower())
             except ValueError as exc:
                 raise typer.BadParameter(
-                    "adapter must be auto, web, desktop, cli, api, or game"
+                    "adapter must be auto, web, mobile, desktop, cli, api, or game"
                 ) from exc
         if profile.project_type is ProjectType.UNKNOWN:
             details = "; ".join(signal.detail for signal in profile.raw_signals[-8:])
@@ -362,7 +373,7 @@ def session_start(
     config_path: Annotated[Path | None, typer.Option("--config")] = None,
     max_turns: Annotated[int | None, typer.Option("--max-turns", min=1, max=100)] = None,
     adapter: Annotated[
-        str, typer.Option("--adapter", help="auto, web, desktop, cli, api, or game.")
+        str, typer.Option("--adapter", help="auto, web, mobile, desktop, cli, api, or game.")
     ] = "auto",
     start_command: Annotated[str | None, typer.Option("--start-command")] = None,
     reachable_address: Annotated[str | None, typer.Option("--url")] = None,
@@ -392,7 +403,7 @@ def session_start(
                 profile.project_type = ProjectType(adapter.lower())
             except ValueError as exc:
                 raise typer.BadParameter(
-                    "adapter must be auto, web, desktop, cli, api, or game"
+                    "adapter must be auto, web, mobile, desktop, cli, api, or game"
                 ) from exc
         if profile.project_type is ProjectType.UNKNOWN:
             raise typer.BadParameter(

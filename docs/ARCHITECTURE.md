@@ -42,7 +42,7 @@ A fixer cannot rewrite the QA trace that justified a change. Remediation consume
 - `detection.py`: weighted target profiling and entry-point inference.
 - `planning.py`: journey/risk plan generation.
 - `campaign.py`: independent persona/journey sessions and finding deduplication.
-- `adapters/`: Web, Electron desktop, CLI, API, and Game implementations.
+- `adapters/`: Web, Flutter mobile, Electron desktop, CLI, API, and Game implementations.
 - `observation.py`: visual metrics, heuristic warnings, and state deltas.
 - `reasoning/`: strict schema, prompts, API providers, Codex CLI OAuth provider, command provider, and scripted provider.
 - `orchestrator.py`: adapter-agnostic provider-driven state machine.

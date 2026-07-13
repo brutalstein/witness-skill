@@ -21,6 +21,10 @@ Locator recovery prefers accessible role/name, label, placeholder, test id, text
 
 Launches Electron with a loopback-only Chromium remote-debugging endpoint and connects Playwright over CDP. Renderer interactions and observations reuse WebAdapter, including accessible locators, screenshots, DOM geometry, console/network failures, dialogs, downloads, and visual deltas. The adapter does not silently control native OS dialogs, keychains, or privileged main-process APIs. See [Electron testing](ELECTRON.md).
 
+## MobileAdapter
+
+Uses Appium to drive Android and iOS applications with real taps, text input, back/home key equivalents, scroll gestures, screenshots, and native accessibility hierarchies. Flutter projects are detected from `pubspec.yaml`, `android/`, and `ios/` markers; detection also attempts to infer Android package/activity and iOS bundle metadata so Witness can attach to an already-installed app with minimal config. Observations preserve the screenshot, Appium page-source summary, interactive elements, available contexts, viewport, and visual heuristics. See [Mobile testing](MOBILE.md).
+
 ## CLIAdapter
 
 Uses a real pseudo-terminal rather than a plain pipe, preserving prompts, colors, TUI layout behavior, and TTY-sensitive code paths. It supports commands, text input, key presses, and output waits. Observations include a rendered terminal PNG, transcript, exit status, recent output, and changed files.
@@ -39,7 +43,7 @@ Observations contain the current frame, reference comparison, frame index, recen
 
 ## Registry
 
-`adapters/registry.py` maps `ProjectType` to adapter classes. The registry is the only selection point. Future mobile/community adapters should preserve the same contract and return the shared `Observation`/`ActionResult` models.
+`adapters/registry.py` maps `ProjectType` to adapter classes. The registry is the only selection point. Community adapters should preserve the same contract and return the shared `Observation`/`ActionResult` models.
 
 ## Natural-language actions
 

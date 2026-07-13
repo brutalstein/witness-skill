@@ -10,6 +10,7 @@ from .base import Adapter
 from .cli import CLIAdapter
 from .electron import ElectronAdapter
 from .game import GameAdapter
+from .mobile import MobileAdapter
 from .web import WebAdapter
 
 REGISTRY: dict[ProjectType, type[Adapter]] = {
@@ -18,6 +19,7 @@ REGISTRY: dict[ProjectType, type[Adapter]] = {
     ProjectType.API: APIAdapter,
     ProjectType.GAME: GameAdapter,
     ProjectType.DESKTOP: ElectronAdapter,
+    ProjectType.MOBILE: MobileAdapter,
 }
 
 

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import plistlib
 import re
 import tomllib
 from collections import defaultdict
@@ -40,7 +41,7 @@ PORT_RE = re.compile(r"(?:--port(?:=|\s+)|PORT=|localhost:|127\.0\.0\.1:)(\d{2,5
 
 
 class ProjectDetector:
-    """README-first, weighted detector for web, Electron, CLI, API, and game targets."""
+    """README-first, weighted detector for web, mobile, Electron, CLI, API, and game targets."""
 
     def detect(
         self,
@@ -144,6 +145,37 @@ class ProjectDetector:
                 signal(ProjectType.CLI, 8, "package.json", "Node package exposes a bin entry")
             if any(name in package_scripts for name in ("dev", "serve", "start")):
                 signal(ProjectType.WEB, 2.5, "package.json", "Runnable dev/start script detected")
+
+        pubspec_text = self._read_text(root / "pubspec.yaml")
+        android_manifest = root / "android" / "app" / "src" / "main" / "AndroidManifest.xml"
+        bundle_id = self._detect_ios_bundle_id(root)
+        mobile_platforms: list[str] = []
+        if pubspec_text and (
+            re.search(r"^\s*flutter\s*:", pubspec_text, re.MULTILINE)
+            or re.search(r"sdk\s*:\s*flutter", pubspec_text, re.IGNORECASE)
+        ):
+            framework = "flutter"
+            signal(ProjectType.MOBILE, 16, "pubspec.yaml", "Flutter SDK project detected")
+        if (root / "android").is_dir():
+            mobile_platforms.append("android")
+            signal(ProjectType.MOBILE, 4, "filesystem", "Android app directory detected")
+        if (root / "ios").is_dir():
+            mobile_platforms.append("ios")
+            signal(ProjectType.MOBILE, 4, "filesystem", "iOS app directory detected")
+        if (root / "lib" / "main.dart").is_file():
+            signal(ProjectType.MOBILE, 4, "filesystem", "Flutter main.dart entry point detected")
+        android_package, android_activity = self._detect_android_app(android_manifest)
+        if android_package:
+            signal(ProjectType.MOBILE, 6, "AndroidManifest.xml", f"Android package {android_package}")
+        if android_activity:
+            signal(
+                ProjectType.MOBILE,
+                3,
+                "AndroidManifest.xml",
+                f"Android launch activity {android_activity}",
+            )
+        if bundle_id:
+            signal(ProjectType.MOBILE, 6, "ios", f"iOS bundle identifier {bundle_id}")
 
         pyproject = self._read_toml(root / "pyproject.toml")
         if pyproject:
@@ -258,6 +290,10 @@ class ProjectDetector:
                 lowered = command.lower()
                 if self._looks_like_web_command(lowered):
                     signal(ProjectType.WEB, 6, readme_path, f"README run instruction: {command}")
+                elif self._looks_like_mobile_command(lowered):
+                    signal(
+                        ProjectType.MOBILE, 6, readme_path, f"README mobile instruction: {command}"
+                    )
                 elif self._looks_like_cli_command(lowered):
                     signal(ProjectType.CLI, 4, readme_path, f"README invocation: {command}")
 
@@ -274,8 +310,6 @@ class ProjectDetector:
 
         ordered = sorted(scores.items(), key=lambda item: item[1], reverse=True)
         chosen_type, top_score = ordered[0]
-        if chosen_type is ProjectType.MOBILE:
-            chosen_type = ProjectType.UNKNOWN
 
         second_score = ordered[1][1] if len(ordered) > 1 else 0
         margin = top_score - second_score
@@ -323,6 +357,12 @@ class ProjectDetector:
                 "detected_port": port,
                 "scan_file_count": len(files),
                 "framework": framework,
+                "primary_mobile_platform": mobile_platforms[0] if mobile_platforms else "",
+                "mobile_platforms": mobile_platforms,
+                "mobile_app_package": android_package,
+                "mobile_app_activity": android_activity,
+                "mobile_bundle_id": bundle_id,
+                "flutter_project": framework == "flutter",
                 "game_engine": game_engine,
                 "game_manifest": game_manifest,
                 "capture_command": game_manifest.get("capture") if game_manifest else None,
@@ -394,6 +434,13 @@ class ProjectDetector:
             return {}
 
     @staticmethod
+    def _read_text(path: Path) -> str:
+        try:
+            return path.read_text(encoding="utf-8", errors="ignore") if path.is_file() else ""
+        except OSError:
+            return ""
+
+    @staticmethod
     def _extract_commands(text: str) -> list[str]:
         commands: list[str] = []
         for match in SHELL_COMMAND_RE.finditer(text):
@@ -428,6 +475,20 @@ class ProjectDetector:
         return any(
             command.startswith(prefix)
             for prefix in ("python ", "python3 ", "uv run ", "cargo run", "go run", "dotnet run")
+        )
+
+    @staticmethod
+    def _looks_like_mobile_command(command: str) -> bool:
+        return any(
+            marker in command
+            for marker in (
+                "flutter run",
+                "flutter drive",
+                "adb ",
+                "xcodebuild",
+                "gradlew install",
+                "appium",
+            )
         )
 
     @staticmethod
@@ -503,6 +564,14 @@ class ProjectDetector:
                     return f"{manager} run {name}"
             return "npx electron ." if package else None
 
+        if project_type is ProjectType.MOBILE:
+            for command in readme_commands:
+                if self._looks_like_mobile_command(command.lower()):
+                    return command
+            if "pubspec.yaml" in relative_names:
+                return "flutter run"
+            return None
+
         if project_type is ProjectType.GAME:
             if game_manifest.get("start"):
                 return str(game_manifest["start"])
@@ -575,3 +644,31 @@ class ProjectDetector:
             if candidates
             else None
         )
+
+    @classmethod
+    def _detect_android_app(cls, manifest_path: Path) -> tuple[str, str]:
+        text = cls._read_text(manifest_path)
+        if not text:
+            return "", ""
+        package_match = re.search(r'<manifest[^>]+package="([^"]+)"', text)
+        activity_match = re.search(r'<activity[^>]+android:name="([^"]+)"', text)
+        package = package_match.group(1) if package_match else ""
+        activity = activity_match.group(1) if activity_match else ""
+        if activity.startswith(".") and package:
+            activity = f"{package}{activity}"
+        return package, activity
+
+    @classmethod
+    def _detect_ios_bundle_id(cls, root: Path) -> str:
+        plist_path = root / "ios" / "Runner" / "Info.plist"
+        if plist_path.is_file():
+            try:
+                parsed = plistlib.loads(plist_path.read_bytes())
+            except (OSError, ValueError):
+                parsed = {}
+            bundle = str(parsed.get("CFBundleIdentifier", "")).strip()
+            if bundle and "$(" not in bundle:
+                return bundle
+        project_text = cls._read_text(root / "ios" / "Runner.xcodeproj" / "project.pbxproj")
+        match = re.search(r"PRODUCT_BUNDLE_IDENTIFIER\s*=\s*([^;]+);", project_text)
+        return match.group(1).strip() if match else ""

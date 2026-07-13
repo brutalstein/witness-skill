@@ -9,13 +9,18 @@ from pathlib import Path
 from typing import Any
 
 import httpx
-from playwright.sync_api import sync_playwright
 
 from ..errors import AdapterError
 from ..models import ProjectProfile
 from ..safety import validate_command
 from ..utils import ensure_dir, process_group_kwargs, shell_quote, terminate_process_tree
 from .web import WebAdapter, WebSession
+
+
+def sync_playwright():
+    from playwright.sync_api import sync_playwright as real_sync_playwright
+
+    return real_sync_playwright()
 
 
 class ElectronAdapter(WebAdapter):

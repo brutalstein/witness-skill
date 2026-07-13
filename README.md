@@ -2,7 +2,7 @@
 
 > **Agentic QA that uses software like a person, observes what actually happened, and reports evidence—not guesses.**
 
-Witness is an open-source QA harness for **web apps, Electron desktop apps, CLIs, HTTP APIs, browser games, Unity/Unreal builds, screenshots, and visual frame sequences**. It performs real actions, preserves screenshots/terminal output/HTTP exchanges, compares observations across turns, and requires every model decision to follow the same load-bearing loop:
+Witness is an open-source QA harness for **web apps, Flutter mobile apps, Electron desktop apps, CLIs, HTTP APIs, browser games, Unity/Unreal builds, screenshots, and visual frame sequences**. It performs real actions, preserves screenshots/terminal output/HTTP exchanges, compares observations across turns, and requires every model decision to follow the same load-bearing loop:
 
 **expectation → observation → judgment → next action**
 
@@ -27,7 +27,7 @@ Every finding includes a stable fingerprint, persona, expectation, observed fact
 
 ## What ships in 1.2
 
-- README-first weighted detection for web, Electron desktop, CLI, API, Unity, Unreal, Godot, and game/visual targets
+- README-first weighted detection for web, Flutter mobile, Electron desktop, CLI, API, Unity, Unreal, Godot, and game/visual targets
 - Real Playwright browser actions, screenshots, DOM geometry, console errors, request failures, downloads, dialogs, and observation deltas
 - Real PTY-backed CLI sessions with safe command policy, isolated copy workspaces, terminal screenshots, exit codes, and changed-file tracking
 - OpenAPI discovery and stateful HTTP action sequences with sensitive-value redaction
@@ -214,6 +214,32 @@ witness run --project http://127.0.0.1:3000 \
   --adapter web \
   --persona low-vision-user
 ```
+
+## Flutter mobile QA
+
+MobileAdapter uses Appium to drive Android and iOS applications with real taps, text entry, scroll gestures, screenshots, and native accessibility/source snapshots. Flutter projects are detected from `pubspec.yaml`, `android/`, `ios/`, and `lib/main.dart`; Witness also tries to infer Android package/activity and iOS bundle metadata so an already-installed app can be attached with minimal config.
+
+```yaml
+project:
+  type: mobile
+  appium_server_url: http://127.0.0.1:4723
+  mobile_platform_name: android   # or ios
+  mobile_device_name: emulator-5554
+  mobile_app: build/app/outputs/flutter-apk/app-debug.apk
+  # Alternative for an installed app:
+  # mobile_app_package: com.example.app
+  # mobile_app_activity: .MainActivity
+  # mobile_bundle_id: com.example.app
+```
+
+```bash
+witness run --project . \
+  --adapter mobile \
+  --persona first-time-user \
+  --journey "Sign in and reach the home screen"
+```
+
+Flutter semantics/accessibility labels materially improve locator quality. For the highest-signal runs, use a real device or production-like emulator/simulator image. See [Mobile testing](docs/MOBILE.md).
 
 ## Electron desktop QA
 

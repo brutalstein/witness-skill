@@ -5,13 +5,13 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "witness-qa"
 version = "1.2.0"
-description = "Evidence-backed agentic QA for web, Electron desktop, CLI, API, Unity, Unreal, and visual software."
+description = "Evidence-backed agentic QA for web, Flutter mobile, Electron desktop, CLI, API, Unity, Unreal, and visual software."
 readme = "README.md"
 requires-python = ">=3.11"
 license = "MIT"
 license-files = ["LICENSE"]
 authors = [{ name = "Witness contributors" }]
-keywords = ["qa", "testing", "playwright", "agents", "claude", "codex", "vision", "game-testing", "api-testing"]
+keywords = ["qa", "testing", "playwright", "appium", "flutter", "mobile-testing", "agents", "claude", "codex", "vision", "game-testing", "api-testing"]
 classifiers = [
   "Development Status :: 4 - Beta",
   "Programming Language :: Python :: 3",
@@ -21,6 +21,7 @@ classifiers = [
   "Topic :: Software Development :: Testing",
 ]
 dependencies = [
+  "Appium-Python-Client>=4.2,<6",
   "httpx>=0.27,<1",
   "pexpect>=4.9,<5; os_name != 'nt'",
   "pillow>=10.4,<13",

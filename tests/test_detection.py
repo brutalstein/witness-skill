@@ -159,3 +159,29 @@ def test_game_manifest_selects_engine_bridge_and_packaged_build(tmp_path: Path) 
     assert profile.entry_point == "Builds/TestGame.exe"
     assert profile.metadata["game_engine"] == "unity"
     assert profile.metadata["game_manifest"]["bridge"]["type"] == "file"
+
+
+def test_detects_flutter_mobile_project(tmp_path: Path) -> None:
+    (tmp_path / "android" / "app" / "src" / "main").mkdir(parents=True)
+    (tmp_path / "ios" / "Runner.xcodeproj").mkdir(parents=True)
+    (tmp_path / "lib").mkdir()
+    (tmp_path / "pubspec.yaml").write_text(
+        "name: demo\nflutter:\n  uses-material-design: true\n",
+        encoding="utf-8",
+    )
+    (tmp_path / "lib" / "main.dart").write_text("void main() {}\n", encoding="utf-8")
+    (tmp_path / "android" / "app" / "src" / "main" / "AndroidManifest.xml").write_text(
+        '<manifest package="com.example.demo"><application><activity android:name=".MainActivity" /></application></manifest>',
+        encoding="utf-8",
+    )
+    (tmp_path / "ios" / "Runner.xcodeproj" / "project.pbxproj").write_text(
+        "PRODUCT_BUNDLE_IDENTIFIER = com.example.demo;",
+        encoding="utf-8",
+    )
+    profile = ProjectDetector().detect(str(tmp_path))
+    assert profile.project_type is ProjectType.MOBILE
+    assert profile.entry_point == "flutter run"
+    assert profile.metadata["framework"] == "flutter"
+    assert profile.metadata["mobile_app_package"] == "com.example.demo"
+    assert profile.metadata["mobile_app_activity"] == "com.example.demo.MainActivity"
+    assert profile.metadata["mobile_bundle_id"] == "com.example.demo"
